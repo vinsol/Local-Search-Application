@@ -1,0 +1,27 @@
+#photo_col {
+	margin-top:50px;
+	width: 120px;
+	float:left;
+	height: 160px;
+	background-color: black;
+	}
+
+#member_profile {
+	margin-top:50px;
+	margin-left: 50px;
+	width:auto;
+	float:left;
+	font-size:120%;
+	}
+
+td#label {
+	width: 100px
+	}
+
+td#member_details {
+	width:250px
+	}
+
+#manage_links	{
+	margin-top: 20px
+	}

@@ -1,0 +1,6 @@
+<% if session[:logged_in] == true %>
+<p><h3>Welcome,<br/>
+<%= @member.first_name %> <%= @member.last_name %></h3>
+</p>
+<p><%= link_to "View Profile", :action => :profile %></p>
+<% end %>

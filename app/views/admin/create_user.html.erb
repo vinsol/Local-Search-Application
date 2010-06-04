@@ -1,0 +1,35 @@
+<h1>Create User</h1>
+<div class="form">
+
+<% form_for :user, @user, :url => { :action => "save_user"} do |f| %>
+	<%= f.error_messages %>
+	<fieldset>	
+	<div>	
+		<%= f.label (:full_name, "Full Name") %>
+		<%= f.text_field :full_name %>
+	</div>
+	<div>
+		<%= f.label (:email, "Email") %>
+		<%= f.text_field :email %>
+	</div>
+	<div>
+		<%= f.label (:employee_id, "Employee Id") %>
+		<%= f.text_field :employee_id %>
+	</div>		
+	<div>
+		<%= f.label (:role, "Role") %>
+		<%= f.select :role, %w{ admin dbguy bpo }  %>
+	<div>
+		<%= f.label (:password, "Password") %>
+		<%= f.password_field :password %>
+	</div>
+	<div>
+		<%= f.label (:password_confirmation, "Confirm") %>
+		<%= f.password_field :password_confirmation %>
+	</div>
+	<div>
+		<%= f.submit "Create" %>
+	</div>
+	</fieldset>
+<% end %>
+</div>
