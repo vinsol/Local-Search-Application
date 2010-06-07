@@ -5952,3 +5952,139 @@ Processing SessionsController#new (for 127.0.0.1 at 2010-06-07 11:45:54) [GET]
 Rendering template within layouts/sessions
 Rendering sessions/new
 Completed in 24ms (View: 13, DB: 3) | 200 OK [http://localhost/sessions/new]
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-07 14:54:01) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/index
+Completed in 78ms (View: 21, DB: 6) | 200 OK [http://localhost/members]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#delete (for 127.0.0.1 at 2010-06-07 14:54:04) [GET]
+Redirected to http://localhost:3000/sessions/new
+Completed in 4ms (DB: 1) | 302 Found [http://localhost/logout]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-07 14:54:04) [GET]
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 73ms (View: 62, DB: 3) | 200 OK [http://localhost/sessions/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-07 14:54:37) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (1.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` IS NULL) LIMIT 1[0m
+Redirected to http://localhost:3000/login
+Filter chain halted as [:authorize] rendered_or_redirected.
+Completed in 12ms (DB: 4) | 302 Found [http://localhost/]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-07 14:54:37) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 18ms (View: 7, DB: 3) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-07 15:07:18) [GET]
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.7ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` IS NULL) LIMIT 1[0m
+Redirected to http://localhost:3000/login
+Filter chain halted as [:authorize] rendered_or_redirected.
+Completed in 89ms (DB: 3) | 302 Found [http://localhost/]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-07 15:07:18) [GET]
+  [4;35;1mMember Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 19ms (View: 8, DB: 2) | 200 OK [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-07 15:07:33) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"password"=>"google12345", "remember_me"=>"1", "email"=>"jagira@gmail.com"}}
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira@gmail.com') LIMIT 1[0m
+Redirected to http://localhost:3000/members
+Completed in 251ms (DB: 5) | 302 Found [http://localhost/sessions/authenticate]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-07 15:07:34) [GET]
+  [4;36;1mMember Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (48.7ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;36;1mMember Load (0.2ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/index
+Completed in 67ms (View: 2, DB: 52) | 200 OK [http://localhost/members]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-07 15:07:45) [GET]
+  [4;36;1mMember Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.4ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/index
+Completed in 21ms (View: 4, DB: 3) | 200 OK [http://localhost/]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#delete (for 127.0.0.1 at 2010-06-07 15:07:48) [GET]
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.6ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+Redirected to http://localhost:3000/sessions/new
+Completed in 16ms (DB: 3) | 302 Found [http://localhost/logout]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-07 15:07:48) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 20ms (View: 9, DB: 3) | 200 OK [http://localhost/sessions/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-07 15:07:56) [GET]
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.6ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` IS NULL) LIMIT 1[0m
+Redirected to http://localhost:3000/login
+Filter chain halted as [:authorize] rendered_or_redirected.
+Completed in 12ms (DB: 3) | 302 Found [http://localhost/]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-07 15:07:56) [GET]
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 18ms (View: 7, DB: 3) | 200 OK [http://localhost/login]
