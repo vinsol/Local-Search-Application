@@ -1,0 +1,27 @@
+<h3>Business Details</h3>
+
+<div id="business_details">
+	<table id="profile">
+		<tr>
+			<td id="label">Name:</td>
+			<td id="member_details"><%= @business.name %> </td>
+		</tr>
+		<tr>
+			<td id="label">Location:</td>
+			<td id="member_details"><%= @business.location %></td>
+		</tr>
+		<tr>
+			<td id="label">City:</td>
+			<td id="member_details"><%= @business.city %></td>
+		</tr>
+		<tr>
+			<td id="label">Category:</td>
+			<td id="member_details"><%= @business.category %></td>
+		</tr>
+	</table>
+	<div id="manage_links">
+		<p><%= link_to "Edit Business" , edit_member_business_path(session[:member_id],@business.id) %>
+		<p><%= link_to "Delete Business", member_business_path(session[:member_id], @business.id), :method => :delete, :confirm => "Are you sure?"%></p>
+		<p><%= link_to "Profile Page", member_path(session[:member_id])%></p>
+	</div>
+</div>

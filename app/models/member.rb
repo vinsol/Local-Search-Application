@@ -1,5 +1,6 @@
 require 'digest/sha1'
 class Member < ActiveRecord::Base
+  has_many :businesses
   validates_presence_of :email, :first_name, :last_name, :phone_number, :address
   validates_uniqueness_of :email
   validates_format_of :phone_number, 

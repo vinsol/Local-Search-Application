@@ -1,0 +1,29 @@
+<h2>Welcome <%= @member.first_name %></h2>
+<h3>Add a New Business</h3>
+<div class="form">
+	
+<% form_for [@member,@business] do |f| %>
+  	<%= f.error_messages %>
+  	<fieldset>
+	<div>
+		<%= f.label (:name, "Business Name") %>
+		<%= f.text_field :name %>
+	</div>
+	<div>
+		<%= f.label (:location, "Location") %>
+		<%= f.select (:location, %w{Patel_Nagar Rajiv_Chowk}) %>
+	</div>
+	<div>
+		<%= f.label (:city, "City") %>
+		<%= f.select (:city, %w{Delhi}) %>
+	</div>
+	<div>
+		<%= f.label (:category, "Category") %>
+		<%= f.select (:category, %w{Chemist Restaurant Healtcare}) %>
+	</div><br/>
+ 	<div>
+    	<%= f.submit 'Add Business' %>
+  	</div>
+	</fieldset>
+<% end %>
+

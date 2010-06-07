@@ -10,6 +10,7 @@ class MembersController < ApplicationController
  
   def show
     @member = Member.find_by_id(session[:member_id])
+    @businesses = @member.businesses
     @title = @member.first_name + " " + @member.last_name
 
   end
@@ -53,7 +54,7 @@ class MembersController < ApplicationController
       redirect_to member_path(session[:member_id])
     else
       flash.now[:notice] = "Profile not saved. Please check it again"
-      render :action => :edit
+      redirect_to edit_member_path(session[:member_id])
     end
   end
 

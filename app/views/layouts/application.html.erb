@@ -4,12 +4,8 @@
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Language" content="en-us" />
-	<% if session[:logged_in] != true %>
-		<%= stylesheet_link_tag "askme", "form" %>
-	<% else %>
-		<%= stylesheet_link_tag "askme", "profile" %>
-	<% end %>
-	
+		<%= stylesheet_link_tag "askme", "form", "profile" %>
+		
 	<title> 
 		<% if @title -%>
 			<%= @title %> | AskMe Clone
@@ -43,7 +39,7 @@
 	</div>
 
 	<div id="footer">
-		<%= link_to "Admin User?", {:controller => :admin, :action => :login} %>
+	
 	</div>
 
 </body>

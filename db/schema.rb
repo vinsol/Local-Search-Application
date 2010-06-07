@@ -9,7 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100604121103) do
+ActiveRecord::Schema.define(:version => 20100607094719) do
+
+  create_table "businesses", :force => true do |t|
+    t.integer  "member_id"
+    t.string   "name"
+    t.string   "location"
+    t.string   "city"
+    t.string   "category"
+    t.string   "status",     :default => "unverified"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "members", :force => true do |t|
     t.string   "email"
