@@ -1,14 +1,13 @@
-<h1>Signup</h1>
+<h1>Signup Form</h1>
 <div class="form">
-
-<% form_for :member, @member, :url => { :action => "create"} do |f| %>
-	<%= f.error_messages %>
-	<fieldset>	
-	<div>	
+<% form_for(@member) do |f| %>
+  	<%= f.error_messages %>
+  	<fieldset>
+	<div>
 		<%= f.label (:first_name, "First Name") %>
 		<%= f.text_field :first_name %>
 	</div>
-	<div>		
+	<div>
 		<%= f.label (:last_name, "Last Name") %>
 		<%= f.text_field :last_name %>
 	</div>
@@ -24,7 +23,6 @@
 		<%= f.label (:address, "Address") %>
 		<%= f.text_area :address, :cols => 29, :rows => 3 %>
 	</div>
-		
 	<div>
 		<%= f.label (:password, "Password") %>
 		<%= f.password_field :password %>
@@ -36,6 +34,9 @@
 	<div>
 		<%= f.submit "Signup" %>
 	</div>
-	</fieldset>
+</fieldset>
+  
 <% end %>
 </div>
+
+<%= link_to 'Back', members_path %>

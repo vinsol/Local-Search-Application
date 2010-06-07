@@ -4,9 +4,11 @@
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Language" content="en-us" />
-	
-		<%= stylesheet_link_tag "askme", "form", "profile" %>
-	
+	<% if session[:logged_in] != true %>
+		<%= stylesheet_link_tag "askme", "form" %>
+	<% else %>
+		<%= stylesheet_link_tag "askme", "profile" %>
+	<% end %>
 	
 	<title> 
 		<% if @title -%>
@@ -26,7 +28,7 @@
 		<% if session[:logged_in] == true -%>
 			<%= link_to "Logout", logout_path %>
 		<% else -%>
-			<%= link_to "Signup",new_member_path %> |
+			<%= link_to "Signup", :action => "signup" %> |
 			<%= link_to "Login", login_path %>
 		<% end -%>
 	</div>

@@ -1,8 +1,7 @@
 class CreateMembers < ActiveRecord::Migration
   def self.up
     create_table :members do |t|
-			
-			t.string :email, :first_name, :last_name, :salt, :hashed_password
+      t.string :email, :first_name, :last_name, :salt, :hashed_password
       t.timestamps
     end
   end

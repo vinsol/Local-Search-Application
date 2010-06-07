@@ -1,0 +1,34 @@
+<h2>Profile: <%= @member.first_name %> <%= @member.last_name %></h2>
+<div id="photo_col">
+Photo
+</div>
+
+<div id="member_profile">
+<table id="profile">
+<tr>
+<td id="label">Name:</td>
+<td id="member_details"><%= @member.first_name %> <%= @member.last_name %></td>
+</tr>
+<tr>
+<td id="label">Email:</td>
+<td id="member_details"><%= @member.email %></td>
+</tr>
+<tr>
+<td id="label">Phone No:</td>
+<td id="member_details"><%= @member.phone_number %></td>
+</tr>
+<tr>
+<td id="label">Address:</td>
+<td id="member_details"><%= @member.address %></td>
+</tr>
+<tr>
+<td id="label">Businesses:</td>
+<td id="member_details">Empty</td>
+</tr>
+</table>
+<div id="manage_links">
+<p><%= link_to "Change Password", change_password_member_path(session[:member_id]) %></p>
+<%= link_to "Edit Profile", edit_member_path(session[:member_id]) %> |
+<%= link_to "Delete Profile", member_path(session[:member_id]), :method => :delete, :confirm => "Are you sure?" %>
+</div>
+</div>
