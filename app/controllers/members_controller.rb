@@ -53,7 +53,7 @@ class MembersController < ApplicationController
       redirect_to member_path(session[:member_id])
     else
       flash.now[:notice] = "Profile not saved. Please check it again"
-      render :action => :edit_profile
+      render :action => :edit
     end
   end
 

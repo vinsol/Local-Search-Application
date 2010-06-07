@@ -2,14 +2,20 @@ require 'digest/sha1'
 class Member < ActiveRecord::Base
   validates_presence_of :email, :first_name, :last_name, :phone_number, :address
   validates_uniqueness_of :email
+  validates_format_of :phone_number, 
+      :message => "must be a 10 digit valid telephone number.",
+      :with => /^[\(\)0-9\- \+\.]{10}$/
   validates_format_of :email, :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i
+ 
+      
+      
   validates_presence_of :password, :if => :password_present
   validates_confirmation_of :password
   attr_accessor :password_confirmation, :password_change, :remember_me
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :remember_me
   attr_accessible :phone_number, :address
 
-  #after_save :signup_notification
+  after_save :signup_notification
 
   def password
   @password
