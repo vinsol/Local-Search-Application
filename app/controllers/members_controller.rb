@@ -18,7 +18,7 @@ class MembersController < ApplicationController
   
   def new
     if session[:logged_in] == true
-      flash[:notice] = "You are a registered user"
+      flash[:message] = "You are a registered user"
       redirect_to members_path
     else
       @title = "Signup"
@@ -39,10 +39,10 @@ class MembersController < ApplicationController
     if @member.save
       session[:member_id] = @member.id
       session[:logged_in]= true
-      flash[:notice] = 'Member was successfully created.'
+      flash[:message] = 'Member was successfully created.'
       redirect_to member_path(session[:member_id])
     else
-      redirect_to new_member_path
+      render :action => :new
     end
   end
 
@@ -50,7 +50,7 @@ class MembersController < ApplicationController
   def update
     @member = Member.find_by_id(session[:member_id])
     if @member.update_attributes(params[:member])
-      flash[:notice] = "Profile was successfully edited"
+      flash[:message] = "Profile was successfully edited"
       redirect_to member_path(session[:member_id])
     else
       flash.now[:notice] = "Profile not saved. Please check it again"
@@ -61,12 +61,7 @@ class MembersController < ApplicationController
  
   def destroy
     Member.find(session[:member_id]).destroy
-    session[:member_id] = nil
-    session[:logged_in]= false
-    if cookies[:remember_me_id] then cookies.delete :remember_me_id end
-    if cookies[:remember_me_code] then cookies.delete :remember_me_code end
-    flash[:notice] = "Profile Sucessfully Deleted"
-    redirect_to login_path
+    redirect_to logout_path
     
   end
   
@@ -78,7 +73,7 @@ class MembersController < ApplicationController
       @member = Member.find_by_id(session[:member_id])
       @member.password_change = true
       if @member.update_attributes(params[:member])
-        flash[:notice] = "Password was successfully changed"
+        flash[:message] = "Password was successfully changed"
         redirect_to :action => :profile
       else
         flash.now[:notice] = "Password not changed. Try again"
@@ -89,15 +84,15 @@ class MembersController < ApplicationController
   
   def forgot_password
     if request.post?
-      member = Member.find_by_email(params[:member][:email])
-      p member.email
-      if member and member.send_new_password
-        p "=====>>>>>"
-        flash[:notice] = "A new password has been sent by email."
-        redirect_to login_path
-      else
-        flash[:notice] = "Unable to send the password. Try again"
-        render :action => :forgot_password
+      if params[:member][:email]
+        member = Member.find_by_email(params[:member][:email])
+        if member and member.send_new_password
+          flash[:message] = "A new password has been sent by email."
+          redirect_to login_path
+        else
+          flash[:notice] = "Unable to send the password. Try again"
+          render :action => :forgot_password
+        end
       end
     end
   end

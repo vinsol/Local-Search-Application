@@ -11596,3 +11596,736 @@ Processing BusinessesController#show (for 127.0.0.1 at 2010-06-07 18:44:56) [GET
 Rendering template within layouts/application
 Rendering businesses/show
 Completed in 34ms (View: 9, DB: 6) | 200 OK [http://localhost/members/2/businesses/10]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#delete (for 127.0.0.1 at 2010-06-07 18:53:53) [GET]
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.7ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+Redirected to http://localhost:3000/sessions/new
+Completed in 15ms (DB: 3) | 302 Found [http://localhost/logout]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-07 18:53:53) [GET]
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 18ms (View: 7, DB: 3) | 200 OK [http://localhost/sessions/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-07 18:54:01) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"password"=>"google12345", "remember_me"=>"1", "email"=>"jagira@gmail.com"}}
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira@gmail.com') LIMIT 1[0m
+Redirected to http://localhost:3000/members
+Completed in 16ms (DB: 3) | 302 Found [http://localhost/sessions/authenticate]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-07 18:54:01) [GET]
+  [4;35;1mMember Columns (3.4ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;35;1mMember Load (0.2ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/index
+Completed in 20ms (View: 2, DB: 4) | 200 OK [http://localhost/members]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#show (for 127.0.0.1 at 2010-06-07 18:54:03) [GET]
+  Parameters: {"id"=>"2"}
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;35;1mMember Load (0.2ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/show
+  [4;35;1mBusiness Load (0.4ms)[0m   [0mSELECT * FROM `businesses` WHERE (`businesses`.member_id = 2) [0m
+  [4;36;1mBusiness Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `businesses`[0m
+Completed in 34ms (View: 12, DB: 5) | 200 OK [http://localhost/members/2]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BusinessesController#new (for 127.0.0.1 at 2010-06-07 18:55:14) [GET]
+  Parameters: {"member_id"=>"2"}
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (2.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;35;1mMember Load (1.4ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;36;1mBusiness Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `businesses`[0m
+Rendering template within layouts/application
+Rendering businesses/new
+Completed in 34ms (View: 8, DB: 8) | 200 OK [http://localhost/members/2/businesses/new]
+  [4;35;1mSQL (0.3ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BusinessesController#create (for 127.0.0.1 at 2010-06-07 18:55:21) [POST]
+  Parameters: {"business"=>{"city"=>"Delhi", "name"=>"asdasdasdasd", "category"=>"Restaurant", "location"=>"Rajiv_Chowk"}, "commit"=>"Add Business", "member_id"=>"2", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c="}
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;36;1mBusiness Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `businesses`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mBusiness Create (0.3ms)[0m   [0;1mINSERT INTO `businesses` (`name`, `city`, `status`, `category`, `updated_at`, `member_id`, `location`, `created_at`) VALUES('asdasdasdasd', 'Delhi', 'unverified', 'Restaurant', '2010-06-07 13:25:21', 2, 'Rajiv_Chowk', '2010-06-07 13:25:21')[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/members/2
+Completed in 28ms (DB: 6) | 302 Found [http://localhost/members/2/businesses]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#show (for 127.0.0.1 at 2010-06-07 18:55:21) [GET]
+  Parameters: {"id"=>"2"}
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;36;1mMember Load (0.2ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/show
+  [4;36;1mBusiness Load (0.3ms)[0m   [0;1mSELECT * FROM `businesses` WHERE (`businesses`.member_id = 2) [0m
+  [4;35;1mBusiness Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `businesses`[0m
+Completed in 35ms (View: 12, DB: 5) | 200 OK [http://localhost/members/2]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BusinessesController#show (for 127.0.0.1 at 2010-06-07 18:55:23) [GET]
+  Parameters: {"member_id"=>"2", "id"=>"10"}
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.7ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;36;1mBusiness Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `businesses`[0m
+  [4;35;1mBusiness Load (0.4ms)[0m   [0mSELECT * FROM `businesses` WHERE (`businesses`.`id` = 10) [0m
+Rendering template within layouts/application
+Rendering businesses/show
+Completed in 32ms (View: 9, DB: 6) | 200 OK [http://localhost/members/2/businesses/10]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#delete (for 127.0.0.1 at 2010-06-07 18:55:40) [GET]
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.8ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+Redirected to http://localhost:3000/sessions/new
+Completed in 15ms (DB: 3) | 302 Found [http://localhost/logout]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-07 18:55:40) [GET]
+  [4;36;1mMember Columns (89.3ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 106ms (View: 7, DB: 90) | 200 OK [http://localhost/sessions/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-07 18:55:46) [GET]
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 12ms (View: 10, DB: 1) | 200 OK [http://localhost/members/forgot_password]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-07 18:55:47) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"email"=>""}}
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.7ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+
+NoMethodError (undefined method `email' for nil:NilClass):
+  app/controllers/members_controller.rb:93:in `forgot_password'
+
+Rendered rescues/_trace (39.0ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#new (for 127.0.0.1 at 2010-06-07 18:55:54) [GET]
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/members
+Rendering members/new
+Completed in 29ms (View: 18, DB: 3) | 200 OK [http://localhost/members/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#create (for 127.0.0.1 at 2010-06-07 18:55:57) [POST]
+  Parameters: {"commit"=>"Signup", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"password_confirmation"=>"", "phone_number"=>"", "first_name"=>"", "password"=>"", "address"=>"", "last_name"=>"", "email"=>""}}
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT `members`.id FROM `members` WHERE (`members`.`email` = BINARY '') LIMIT 1[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mROLLBACK[0m
+Redirected to http://localhost:3000/members/new
+Completed in 16ms (DB: 3) | 302 Found [http://localhost/members]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#new (for 127.0.0.1 at 2010-06-07 18:55:57) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/members
+Rendering members/new
+Completed in 21ms (View: 10, DB: 3) | 200 OK [http://localhost/members/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#create (for 127.0.0.1 at 2010-06-07 18:57:09) [POST]
+  Parameters: {"commit"=>"Signup", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"password_confirmation"=>"", "phone_number"=>"", "first_name"=>"", "password"=>"", "address"=>"", "last_name"=>"", "email"=>""}}
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT `members`.id FROM `members` WHERE (`members`.`email` = BINARY '') LIMIT 1[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mROLLBACK[0m
+Redirected to http://localhost:3000/members/new
+Completed in 16ms (DB: 3) | 302 Found [http://localhost/members]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#new (for 127.0.0.1 at 2010-06-07 18:57:09) [GET]
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/members
+Rendering members/new
+Completed in 118ms (View: 19, DB: 3) | 200 OK [http://localhost/members/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#create (for 127.0.0.1 at 2010-06-07 18:57:49) [POST]
+  Parameters: {"commit"=>"Signup", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"password_confirmation"=>"", "phone_number"=>"", "first_name"=>"", "password"=>"", "address"=>"", "last_name"=>"", "email"=>""}}
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT `members`.id FROM `members` WHERE (`members`.`email` = BINARY '') LIMIT 1[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mROLLBACK[0m
+Rendering template within layouts/members
+Rendering members/new
+Completed in 51ms (View: 33, DB: 3) | 200 OK [http://localhost/members]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#create (for 127.0.0.1 at 2010-06-07 18:59:20) [POST]
+  Parameters: {"commit"=>"Signup", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"password_confirmation"=>"", "phone_number"=>"", "first_name"=>"", "password"=>"", "address"=>"", "last_name"=>"", "email"=>""}}
+  [4;36;1mMember Columns (2.7ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT `members`.id FROM `members` WHERE (`members`.`email` = BINARY '') LIMIT 1[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mROLLBACK[0m
+Rendering template within layouts/members
+Rendering members/new
+Completed in 63ms (View: 43, DB: 5) | 200 OK [http://localhost/members]
+  [4;36;1mSQL (3.9ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#create (for 127.0.0.1 at 2010-06-07 18:59:29) [POST]
+  Parameters: {"commit"=>"Signup", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"password_confirmation"=>"", "phone_number"=>"", "first_name"=>"", "password"=>"", "address"=>"", "last_name"=>"", "email"=>"asdasdasdasdasdas"}}
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT `members`.id FROM `members` WHERE (`members`.`email` = BINARY 'asdasdasdasdasdas') LIMIT 1[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mROLLBACK[0m
+Rendering template within layouts/members
+Rendering members/new
+Completed in 47ms (View: 30, DB: 7) | 200 OK [http://localhost/members]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#create (for 127.0.0.1 at 2010-06-07 19:02:30) [POST]
+  Parameters: {"commit"=>"Signup", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"password_confirmation"=>"", "phone_number"=>"", "first_name"=>"", "password"=>"", "address"=>"", "last_name"=>"", "email"=>"asdasdasdasdasdas"}}
+  [4;36;1mMember Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT `members`.id FROM `members` WHERE (`members`.`email` = BINARY 'asdasdasdasdasdas') LIMIT 1[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mROLLBACK[0m
+Rendering template within layouts/members
+Rendering members/new
+Completed in 46ms (View: 29, DB: 4) | 200 OK [http://localhost/members]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#create (for 127.0.0.1 at 2010-06-07 19:02:32) [POST]
+  Parameters: {"commit"=>"Signup", "authenticity_token"=>"TPEvLmsKBO6xcHZBvTVy1Lbq7umQwH6fSRlfyySot/c=", "member"=>{"password_confirmation"=>"", "phone_number"=>"", "first_name"=>"", "password"=>"", "address"=>"", "last_name"=>"", "email"=>"asdasdasdasdasdas"}}
+  [4;36;1mMember Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT `members`.id FROM `members` WHERE (`members`.`email` = BINARY 'asdasdasdasdasdas') LIMIT 1[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mROLLBACK[0m
+Rendering template within layouts/members
+Rendering members/new
+Completed in 138ms (View: 31, DB: 4) | 200 OK [http://localhost/members]
+  [4;36;1mSQL (33.9ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-08 10:35:38) [GET]
+  [4;36;1mMember Columns (33.8ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` IS NULL) LIMIT 1[0m
+Redirected to http://localhost:3000/login
+Filter chain halted as [:authorize] rendered_or_redirected.
+Completed in 310ms (DB: 152) | 302 Found [http://localhost/]
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:35:39) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 94ms (View: 81, DB: 3) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#new (for 127.0.0.1 at 2010-06-08 10:35:46) [GET]
+  [4;35;1mMember Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/members
+Rendering members/new
+Completed in 79ms (View: 67, DB: 3) | 200 OK [http://localhost/members/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:35:48) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 19ms (View: 7, DB: 3) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:35:56) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"google", "remember_me"=>"1", "email"=>"alok@vinsol.com"}}
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`email` = 'alok@vinsol.com') LIMIT 1[0m
+Redirected to http://localhost:3000/members
+Completed in 327ms (DB: 3) | 302 Found [http://localhost/sessions/authenticate]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-08 10:35:57) [GET]
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.4ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '3') LIMIT 1[0m
+  [4;35;1mMember Load (1.1ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 3) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 3) LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/index
+Completed in 45ms (View: 26, DB: 4) | 200 OK [http://localhost/members]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#show (for 127.0.0.1 at 2010-06-08 10:35:58) [GET]
+  Parameters: {"id"=>"3"}
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.4ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '3') LIMIT 1[0m
+  [4;35;1mMember Load (0.2ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 3) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 3) LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/show
+  [4;35;1mBusiness Load (36.6ms)[0m   [0mSELECT * FROM `businesses` WHERE (`businesses`.member_id = 3) [0m
+Completed in 127ms (View: 25, DB: 40) | 200 OK [http://localhost/members/3]
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#destroy (for 127.0.0.1 at 2010-06-08 10:36:02) [DELETE]
+  Parameters: {"authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "id"=>"3"}
+  [4;36;1mMember Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '3') LIMIT 1[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 3) LIMIT 1[0m
+  [4;35;1mMember Load (5.9ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 3) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mMember Destroy (0.6ms)[0m   [0mDELETE FROM `members` WHERE `id` = 3[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/logout
+Completed in 28ms (DB: 11) | 302 Found [http://localhost/members/3]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#delete (for 127.0.0.1 at 2010-06-08 10:36:02) [GET]
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '3') LIMIT 1[0m
+Redirected to http://localhost:3000/login
+Completed in 14ms (DB: 3) | 302 Found [http://localhost/logout]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:36:02) [GET]
+  [4;35;1mMember Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 19ms (View: 7, DB: 3) | 200 OK [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:38:34) [GET]
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 30ms (View: 28, DB: 1) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:38:35) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"email"=>""}}
+  [4;36;1mMember Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.8ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 102ms (View: 4, DB: 4) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:38:47) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"email"=>""}}
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.7ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 17ms (View: 4, DB: 3) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:38:48) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"email"=>""}}
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.4ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 16ms (View: 4, DB: 3) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:38:51) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"email"=>""}}
+  [4;36;1mMember Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.4ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 23ms (View: 6, DB: 3) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:38:55) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"email"=>""}}
+  [4;36;1mMember Columns (2.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.4ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 24ms (View: 5, DB: 4) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:38:57) [GET]
+  [4;36;1mMember Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 19ms (View: 7, DB: 3) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:38:58) [GET]
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 19ms (View: 7, DB: 3) | 200 OK [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:39:00) [GET]
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 7ms (View: 4, DB: 1) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:39:01) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"email"=>""}}
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.6ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 17ms (View: 3, DB: 3) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:39:15) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"email"=>""}}
+  [4;36;1mMember Columns (2.3ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.5ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 20ms (View: 4, DB: 4) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:39:16) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"email"=>""}}
+  [4;36;1mMember Columns (2.4ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.7ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 18ms (View: 4, DB: 4) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#forgot_password (for 127.0.0.1 at 2010-06-08 10:39:16) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"email"=>""}}
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = '') LIMIT 1[0m
+Rendering template within layouts/members
+Rendering members/forgot_password
+Completed in 17ms (View: 4, DB: 3) | 200 OK [http://localhost/members/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:39:17) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 19ms (View: 7, DB: 3) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:39:20) [GET]
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/sessions
+Rendering sessions/new
+Completed in 18ms (View: 7, DB: 3) | 200 OK [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:44:41) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"gogole", "remember_me"=>"0", "email"=>"jagira@gmail.com"}}
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira@gmail.com') LIMIT 1[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 28ms (View: 13, DB: 3) | 200 OK [http://localhost/sessions/authenticate]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:44:47) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"google12345", "remember_me"=>"0", "email"=>"jagira@gmail.com"}}
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira@gmail.com') LIMIT 1[0m
+Redirected to http://localhost:3000/members
+Completed in 16ms (DB: 3) | 302 Found [http://localhost/sessions/authenticate]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-08 10:44:47) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.4ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;36;1mMember Load (0.2ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/application
+Rendering members/index
+Completed in 23ms (View: 2, DB: 3) | 200 OK [http://localhost/members]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#delete (for 127.0.0.1 at 2010-06-08 10:44:53) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.8ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+Redirected to http://localhost:3000/login
+Completed in 15ms (DB: 3) | 302 Found [http://localhost/logout]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:44:53) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 20ms (View: 9, DB: 3) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.7ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:45:53) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"gogole12345", "remember_me"=>"0", "email"=>"jagira@gmail.com"}}
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira@gmail.com') LIMIT 1[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 22ms (View: 7, DB: 3) | 200 OK [http://localhost/sessions/authenticate]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:46:37) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"google12345", "remember_me"=>"0", "email"=>"jagira@gmail.com"}}
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira@gmail.com') LIMIT 1[0m
+Redirected to http://localhost:3000/members
+Completed in 17ms (DB: 3) | 302 Found [http://localhost/sessions/authenticate]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-08 10:46:37) [GET]
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.6ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;35;1mMember Load (0.5ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/application
+Rendering members/index
+Completed in 22ms (View: 2, DB: 4) | 200 OK [http://localhost/members]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#delete (for 127.0.0.1 at 2010-06-08 10:46:51) [GET]
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.4ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+Redirected to http://localhost:3000/login
+Completed in 15ms (DB: 3) | 302 Found [http://localhost/logout]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:46:51) [GET]
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 21ms (View: 9, DB: 3) | 200 OK [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:46:54) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"", "remember_me"=>"0", "email"=>"jagira"}}
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira') LIMIT 1[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 19ms (View: 5, DB: 3) | 200 OK [http://localhost/sessions/authenticate]
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:47:03) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"google12345", "remember_me"=>"0", "email"=>"jagira@gmail.com"}}
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira@gmail.com') LIMIT 1[0m
+Redirected to http://localhost:3000/members
+Completed in 15ms (DB: 3) | 302 Found [http://localhost/sessions/authenticate]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-08 10:47:03) [GET]
+  [4;36;1mMember Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;36;1mMember Load (0.5ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/application
+Rendering members/index
+Completed in 20ms (View: 3, DB: 3) | 200 OK [http://localhost/members]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#delete (for 127.0.0.1 at 2010-06-08 10:47:13) [GET]
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+  [4;35;1mMember Load (0.3ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+Redirected to http://localhost:3000/login
+Completed in 15ms (DB: 3) | 302 Found [http://localhost/logout]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-06-08 10:47:13) [GET]
+  [4;36;1mMember Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `members`[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 21ms (View: 9, DB: 3) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.5ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:47:18) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"google", "remember_me"=>"0", "email"=>"alok@vinsol.com"}}
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`email` = 'alok@vinsol.com') LIMIT 1[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 18ms (View: 5, DB: 3) | 200 OK [http://localhost/sessions/authenticate]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:47:26) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"gogole", "remember_me"=>"0", "email"=>"mohit@vinsol.com"}}
+  [4;35;1mMember Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`email` = 'mohit@vinsol.com') LIMIT 1[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 21ms (View: 6, DB: 3) | 200 OK [http://localhost/sessions/authenticate]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:47:32) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"google", "remember_me"=>"0", "email"=>"jagira@gmail.com"}}
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira@gmail.com') LIMIT 1[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 21ms (View: 7, DB: 3) | 200 OK [http://localhost/sessions/authenticate]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#authenticate (for 127.0.0.1 at 2010-06-08 10:47:37) [POST]
+  Parameters: {"commit"=>"Login", "authenticity_token"=>"KG6PxPBtuHpEPHtxOt4QahPMApZt6wF+xOhYwjMG/1c=", "member"=>{"password"=>"google12345", "remember_me"=>"0", "email"=>"jagira@gmail.com"}}
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`email` = 'jagira@gmail.com') LIMIT 1[0m
+Redirected to http://localhost:3000/members
+Completed in 16ms (DB: 4) | 302 Found [http://localhost/sessions/authenticate]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing MembersController#index (for 127.0.0.1 at 2010-06-08 10:47:37) [GET]
+  [4;35;1mMember Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `members`[0m
+  [4;36;1mMember Load (0.3ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = '2') LIMIT 1[0m
+  [4;35;1mMember Load (0.4ms)[0m   [0mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `members` WHERE (`members`.`id` = 2) LIMIT 1[0m
+Rendering template within layouts/application
+Rendering members/index
+Completed in 21ms (View: 2, DB: 3) | 200 OK [http://localhost/members]

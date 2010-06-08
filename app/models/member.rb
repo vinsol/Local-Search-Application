@@ -6,7 +6,7 @@ class Member < ActiveRecord::Base
   validates_format_of :phone_number, 
       :message => "must be a 10 digit valid telephone number.",
       :with => /^[\(\)0-9\- \+\.]{10}$/
-  validates_format_of :email, :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i
+  validates_format_of :email, :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i , :unless => lambda{|a| a.email.blank?}
  
       
       
@@ -19,36 +19,36 @@ class Member < ActiveRecord::Base
   after_save :signup_notification
 
   def password
-  @password
+    @password
   end
 
   def password=(pass)
-  @password = pass
-  return if pass.blank?
-  create_new_salt(15)
-  self.hashed_password = Member.encrypted_password(self.password, self.salt)
+    @password = pass
+    return if pass.blank?
+    create_new_salt(15)
+    self.hashed_password = Member.encrypted_password(self.password, self.salt)
   end
 
   def self.authenticate(email,password)
-  member = Member.find_by_email(email)
-  if member
-  expected_password = encrypted_password(password, member.salt)
-  if expected_password != member.hashed_password
-  member = nil
-  end
-  end
-  member
+    member = Member.find_by_email(email)
+    if member
+      expected_password = encrypted_password(password, member.salt)
+      if expected_password != member.hashed_password
+        member = nil
+      end
+    end
+    member
   end
 
   def signup_notification
-  Notifications.deliver_send_notification_mail(self.first_name, self.last_name, self.email)
+    Notifications.deliver_send_notification_mail(self.first_name, self.last_name, self.email)
   end
 
   def send_new_password
-  new_password = create_new_salt(7)
-  self.password = self.password_confirmation = new_password
-  self.save
-  Notifications.deliver_forgot_password(self.email, self.first_name, self.last_name, new_password)
+    new_password = create_new_salt(7)
+    self.password = self.password_confirmation = new_password
+    self.save
+    Notifications.deliver_forgot_password(self.email, self.first_name, self.last_name, new_password)
   end
 
   private
@@ -63,12 +63,12 @@ class Member < ActiveRecord::Base
 
 
   def self.encrypted_password(password,salt)
-  string_to_hash = password + "jagira" + salt
-  Digest::SHA1.hexdigest(string_to_hash)
+    string_to_hash = password + "jagira" + salt
+    Digest::SHA1.hexdigest(string_to_hash)
   end
 
   def password_present
-  password_change == true || hashed_password.blank?
+    password_change == true || hashed_password.blank?
   end
   
 

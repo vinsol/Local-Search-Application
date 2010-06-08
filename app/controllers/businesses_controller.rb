@@ -42,7 +42,7 @@ class BusinessesController < ApplicationController
     @business = Business.new(params[:business]) 
     @business.member_id = @member.id
       if @business.save
-        flash[:notice] = 'Business was successfully added.'
+        flash[:message] = 'Business was successfully added.'
         redirect_to member_path(session[:member_id]) 
       else
         render  :action => :new
@@ -70,6 +70,7 @@ class BusinessesController < ApplicationController
   def destroy
     @business = Business.find(params[:id])
     @business.destroy
+    flash[:message] = "Business was successfully deleted"
     redirect_to member_path(session[:member_id])
   end
   

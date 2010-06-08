@@ -33,7 +33,9 @@
 
 	<% if flash[:notice] -%>
 		<div id="notice"><%= flash[:notice] %></div>
-	<% end -%>
+	<% elsif flash[:message] %>
+		<div id="message"><%= flash[:message] %></div>
+	<% end %>
 
 	<%= yield %>
 	</div>

@@ -19,6 +19,14 @@ color: red;
 border: 2px solid red;
 padding: 3px;
 }
+
+#message {
+margin:10px;
+color: green;
+border: 2px solid green;
+padding: 3px;
+}
+
 td#label {
 font-weight:bold
 }

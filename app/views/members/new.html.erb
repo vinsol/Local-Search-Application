@@ -1,7 +1,7 @@
 <h1>Signup Form</h1>
 <div class="form">
 <% form_for(@member) do |f| %>
-  	<%= f.error_messages %>
+  	<%= error_messages_for 'member' %>
   	<fieldset>
 	<div>
 		<%= f.label (:first_name, "First Name") %>

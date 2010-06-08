@@ -5,8 +5,10 @@ Status as of 07 June :
 
 Controllers	=> 	"Members" , Actions	=> 	index, new, create, update, show, edit, destroy, change_password, forgot_password
 				"Sessions", Action	=> 	new, destroy, authenticate
+				"Businesses" CRUD actions
 				
-Models		=> member 
+Models		=> member, business 
+				A member can have many businesses.
 
 			
 				

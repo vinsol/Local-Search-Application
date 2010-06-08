@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   
   def new
       if session[:logged_in] == true
-        flash[:notice] = "You are already logged in"
+        flash[:message] = "You are already logged in"
         redirect_to member_path(session[:member_id])
       else
       @title = "Login"
@@ -15,8 +15,8 @@ class SessionsController < ApplicationController
       session[:logged_in]= false
       if cookies[:remember_me_id] then cookies.delete :remember_me_id end
       if cookies[:remember_me_code] then cookies.delete :remember_me_code end
-      flash[:notice] = "Logged Out"
-      redirect_to :action => :new
+      flash[:message] = "Logged Out"
+      redirect_to login_path
   end
 
   def authenticate
@@ -32,6 +32,7 @@ class SessionsController < ApplicationController
             memberCode = Digest::SHA1.hexdigest( member.email )
             cookies[:remember_me_code] = { :value => memberCode, :expires => 14.days.from_now }
           end
+          flash[:message] = "Welcome #{member.first_name}"
           redirect_to members_path
         else
         flash.now[:notice] = "Invalid login credentials"
