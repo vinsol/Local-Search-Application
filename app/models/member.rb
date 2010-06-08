@@ -1,6 +1,9 @@
 require 'digest/sha1'
 class Member < ActiveRecord::Base
-  has_many :businesses
+  has_many :business_relations
+  has_many :businesses, :through => :business_relations
+  has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => "business_relations.status = 1"
+  has_many :favorite_businesses, :through => :business_relations, :source => :business, :conditions => "business_relations.status = 0"
   validates_presence_of :email, :first_name, :last_name, :phone_number, :address
   validates_uniqueness_of :email
   validates_format_of :phone_number, 

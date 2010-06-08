@@ -24,7 +24,7 @@
 		<% if session[:logged_in] == true -%>
 			<%= link_to "Logout", logout_path %>
 		<% else -%>
-			<%= link_to "Signup", :action => "signup" %> |
+			<%= link_to "Signup", new_member_path %> |
 			<%= link_to "Login", login_path %>
 		<% end -%>
 	</div>
@@ -43,7 +43,7 @@
 	<div id="footer">
 	
 	</div>
-
+<br style="clear:both" />
 </body>
 
 </html>

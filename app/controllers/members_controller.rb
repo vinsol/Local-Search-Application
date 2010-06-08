@@ -10,7 +10,8 @@ class MembersController < ApplicationController
  
   def show
     @member = Member.find_by_id(session[:member_id])
-    @businesses = @member.businesses
+    @owned_businesses = @member.owned_businesses
+    @favorite_businesses = @member.favorite_businesses
     @title = @member.first_name + " " + @member.last_name
 
   end
@@ -18,7 +19,7 @@ class MembersController < ApplicationController
   
   def new
     if session[:logged_in] == true
-      flash[:message] = "You are a registered user"
+      flash[:notice] = "Logged in users cannot signup"
       redirect_to members_path
     else
       @title = "Signup"
@@ -83,6 +84,7 @@ class MembersController < ApplicationController
   end
   
   def forgot_password
+    @title = "Forgot Password"
     if request.post?
       if params[:member][:email]
         member = Member.find_by_email(params[:member][:email])

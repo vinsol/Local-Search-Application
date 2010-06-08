@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     def authorize
       if !Member.find_by_id(session[:member_id])
         session[:logged_in]= false
-        flash[:notice] = "Please login"
+        flash[:message] = "Please login"
         redirect_to login_path
       end
     end

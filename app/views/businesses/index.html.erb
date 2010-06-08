@@ -1,18 +1,23 @@
-<h1>Listing businesses</h1>
+<h2>Listing businesses</h2>
 
-<table>
-  <tr>
-  </tr>
-
-<% @businesses.each do |business| %>
-  <tr>
-    <td><%= link_to 'Show', business %></td>
-    <td><%= link_to 'Edit', edit_business_path(business) %></td>
-    <td><%= link_to 'Destroy', business, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+	<table>
+		<tr id="label">
+			<td>Business Name</td>
+			<td>Owner Name</td>
+			<td>Category</td>
+			<td>Locality</td>
+			<td>City</td>
+		</tr>
+		<% @businesses.each do |business| %>
+  		<tr>
+			<td><%= link_to "#{business.name}", business_path(business.id)%></td> 
+			<td><%= business.owner %></td>
+			<td><%= business.category %></td>
+			<td><%= business.location %></td>
+			<td><%= business.city %></td>
+		</tr>
+		<% end %>
+	</table>
+<% if session[:logged_in] == true %>
+	<p><%= link_to "Profile", member_path(session[:member_id])%></p>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New business', new_business_path %>

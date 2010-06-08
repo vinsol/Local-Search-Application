@@ -1,12 +1,11 @@
 html { background-color: #436083; }
 body {
 font-family: Verdana, Helvetica, Arial, sans-serif;
-margin: 32px auto;
+margin: 32px auto ;
 padding: 10px 32px 32px 32px;
 min-width: 600px;
 max-width: 800px;
-min-height: 600px;
-max-height: auto;
+
 font-size: 0.8em;
 background-color: #EEE;
 color: #333;
@@ -27,7 +26,12 @@ border: 2px solid green;
 padding: 3px;
 }
 
-td#label {
+#title_row{
+	font-size:130%;
+	font-weight:bold;
+}
+
+tr#label, td#label {
 font-weight:bold
 }
 td {
