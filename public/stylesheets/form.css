@@ -22,7 +22,7 @@ legend
 
 
 label
-{ font-weight:bold; float:left; width:9em; display:block; clear:left; margin-right:1em; text-align:left; cursor:hand; }
+{ font-weight:bold; float:left; height:auto;width:9em; display:block; clear:left; margin-right:1em; text-align:left; cursor:hand; }
 
 textarea, input, select, label, button, optgroup
 { margin-top:5px; }

@@ -9,7 +9,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100608104937) do
+ActiveRecord::Schema.define(:version => 20100609060609) do
+
+  create_table "business_details", :force => true do |t|
+    t.string   "state"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.string   "contact_email"
+    t.string   "contact_website"
+    t.string   "contact_address"
+    t.datetime "opening_time"
+    t.datetime "closing_time"
+    t.text     "description"
+    t.string   "photo_album"
+    t.string   "map"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "business_id"
+  end
 
   create_table "business_relations", :force => true do |t|
     t.integer  "member_id"
