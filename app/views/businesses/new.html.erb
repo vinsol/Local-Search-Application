@@ -1,0 +1,71 @@
+<h2>Welcome <%= @member.first_name %></h2>
+<h3>Add a New Business</h3>
+<div class="form">
+	
+<% form_for [@member,@business] do |f| %>
+  	<%= f.error_messages %>
+  	<fieldset>
+	<p>
+		<%= f.label (:name, "Business Name") %>
+		<%= f.text_field :name %>
+	</p>
+	<p>
+		<%= f.label (:location, "Location") %>
+		<%= f.select (:location, %w{Patel_Nagar Rajiv_Chowk}) %>
+	</p>
+	<p>
+		<%= f.label (:city, "City") %>
+		<%= f.select (:city, %w{Delhi}) %>
+	</p>
+	<p>
+		<%= f.label (:category, "Category") %>
+		<%= f.select (:category, %w{Chemist Restaurant Healtcare}) %>
+	</p>
+		<% f.fields_for :business_detail do |detail| %>
+			<p>
+				<%= detail.label (:contact_name, "Contact Name:") %>
+				<%= detail.text_field :contact_name %>
+			</p>
+			<p>
+				<%= detail.label (:contact_phone, "Contact Phone:") %>
+				<%= detail.text_field :contact_phone %>
+			</p>
+			<p>
+				<%= detail.label (:contact_email, "Contact Email:") %>
+				<%= detail.text_field :contact_email %>
+			</p>
+			<p>
+				<%= detail.label (:contact_website, "Contact Website:") %>
+				<%= detail.text_field :contact_website %>
+			</p>
+			<p>
+				<%= detail.label (:contact_address, "Contact Address:") %>
+				<%= detail.text_field :contact_address %>
+			</p>
+			<p>
+				<%= detail.label (:opening_tim, "Opening Time:") %>
+				<%= detail.time_select :opening_time %>
+			</p>
+			<p>
+				<%= detail.label (:closing_tim, "Closing Time:") %>
+				<%= detail.time_select :closing_time %>
+			</p>
+			<p>
+				<%= detail.label (:description, "Description:") %>
+				<%= detail.text_area :description, :size => "26x3" %>
+			</p>
+			<p>
+				<%= detail.label (:photo_album, "Photo Album:") %>
+				<%= detail.text_field :photo_album %>
+			</p>
+			<p>
+				<%= detail.label (:map, "Map:") %>
+				<%= detail.text_field :map %>
+			</p>
+			<% end %>
+ 	<div>
+    	<%= f.submit 'Add Business' %>
+  	</div>
+	</fieldset>
+<% end %>
+

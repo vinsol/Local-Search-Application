@@ -1,39 +1,53 @@
 html { background-color: #436083; }
-body { 
-	font-family: Verdana, Helvetica, Arial, sans-serif; 
-	margin: 32px auto; 
-	padding: 10px 32px 10px 32px;
-	min-width: 600px; 
-	max-width: 800px; 
-	height: 450px;
-	font-size: 0.8em; 
-	background-color: #EEE; 
-	color: #333; 
-	}
+body {
+font-family: Verdana, Helvetica, Arial, sans-serif;
+margin: 32px auto ;
+padding: 10px 32px 32px 32px;
+min-width: 600px;
+max-width: 800px;
+
+font-size: 0.8em;
+background-color: #EEE;
+color: #333;
+}
 
 
 #notice, #errorExplanation {
-	margin:10px;
-	color: red;
-	border: 2px solid red;
-	padding: 3px;
-	}
-td#label {
-	font-weight:bold
-	}
+margin:10px;
+color: red;
+border: 2px solid red;
+padding: 3px;
+}
+
+#message {
+margin:10px;
+color: green;
+border: 2px solid green;
+padding: 3px;
+}
+
+#title_row{
+	font-size:130%;
+	font-weight:bold;
+}
+
+tr#label, td#label {
+font-weight:bold
+}
 td {
-	width:100px
-	}
+width:100px
+}
 #nav_bar {
-	float: right
-	}
+float: right
+}
 
 #container {
-	margin-top: 50px;
-	margin-top: 50px;
-	min-height:300px
-	}
+margin-top: 50px;
+margin-top: 50px;
+min-height:300px
+}
 
 #footer {
-	float:right
-	}
+float:right
+}
+

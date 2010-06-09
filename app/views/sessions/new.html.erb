@@ -1,0 +1,26 @@
+<h2>Login</h2>
+<div class="form">
+
+	<% form_for :member, @member, :url => { :action => "authenticate"} do |f| %>
+		<%= f.error_messages %>
+		<fieldset>
+			<div>
+			<%= f.label (:email, "Email") %>
+			<%= f.text_field :email %>
+		</div>
+		<div>
+			<%= f.label (:password, "Password") %>
+			<%= f.password_field :password %>
+		</div>
+		<div>
+			<%= f.label (:remember_me, "Remember Me") %>
+			<%= f.check_box :remember_me %>
+		</div>
+		<div>
+			<%= f.submit "Login" %>
+		</div>
+		</fieldset>
+		<%= link_to "Can't access your account?", forgot_password_members_path %>
+	<% end %>
+</div>
+

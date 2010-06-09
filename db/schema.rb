@@ -9,7 +9,43 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100602124155) do
+ActiveRecord::Schema.define(:version => 20100609060609) do
+
+  create_table "business_details", :force => true do |t|
+    t.string   "state"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.string   "contact_email"
+    t.string   "contact_website"
+    t.string   "contact_address"
+    t.datetime "opening_time"
+    t.datetime "closing_time"
+    t.text     "description"
+    t.string   "photo_album"
+    t.string   "map"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "business_id"
+  end
+
+  create_table "business_relations", :force => true do |t|
+    t.integer  "member_id"
+    t.integer  "business_id"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "businesses", :force => true do |t|
+    t.string   "name"
+    t.string   "location"
+    t.string   "city"
+    t.string   "category"
+    t.string   "status",     :default => "unverified"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "owner"
+  end
 
   create_table "members", :force => true do |t|
     t.string   "email"
@@ -32,16 +68,5 @@ ActiveRecord::Schema.define(:version => 20100602124155) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
-
-  create_table "users", :force => true do |t|
-    t.string   "email"
-    t.string   "full_name"
-    t.string   "salt"
-    t.string   "hashed_password"
-    t.string   "role"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "employee_id"
-  end
 
 end

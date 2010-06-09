@@ -1,82 +1,79 @@
-/*  Formy - CSS Framework 0.8   */
+/* Formy - CSS Framework 0.8 */
 
-/* 
-	reset.css  
+/*
+reset.css
 */
 form {
-	border: 2px solid black; padding:5px;
-	}
+border: 2px solid black; padding:5px;
+}
 fieldset, label, legend
  { margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline; }
 
-/* 
-	Structural
+/*
+Structural
 */
 
 
 fieldset
-	{ margin: 0 0 1.5em 0; padding: 1.4em;  }
+{ margin: 0 0 1.5em 0; padding: 1.4em; }
 
 legend
-	{ padding: 0 .4em; font-size:1.2em;  }
+{ padding: 0 .4em; font-size:1.2em; }
 
 
-label	 
-	{ font-weight:bold; float:left; width:9em; display:block; clear:left; margin-right:1em; text-align:left;  cursor:hand; }
+label
+{ font-weight:bold; float:left; height:auto;width:9em; display:block; clear:left; margin-right:1em; text-align:left; cursor:hand; }
 
 textarea, input, select, label, button, optgroup
-	{ margin-top:5px; }
+{ margin-top:5px; }
 
 
 input[type="checkbox"] ,input[type="radio"]
-	{ margin-bottom:7px; }	
+{ margin-bottom:7px; }
 
-	
-	
-	
-/* 
-	Color palette
+
+
+
+/*
+Color palette
 */
 
 fieldset
-	{ border:none; }
-	
-legend
-	{ background-color: #e3dfdf; color: #333; }
-	
-label
-	{ color:#333; }
-	
-textarea
-	{ border: 1px solid black; }
+{ border:none; }
 
-textarea:focus, input[type="text"]:focus,input[type="password"]:focus  
-	{ border: 2px solid #666; }
+legend
+{ background-color: #e3dfdf; color: #333; }
+
+label
+{ color:#333; }
+
+textarea
+{ border: 1px solid black; }
+
+textarea:focus, input[type="text"]:focus,input[type="password"]:focus
+{ border: 2px solid #666; }
 
 select
-	{  border: 1px solid black; background-color: #fff; color: #000; }
+{ border: 1px solid black; background-color: #fff; color: #000; }
 
 input
-	{ border: 1px solid black; }
+{ border: 1px solid black; }
 
 input[type="submit"]
-	{ font-size:120%, font-weight:bold; border:1px solid black; color: black; }
+{ font-size:120%, font-weight:bold; border:1px solid black; color: black; }
 
 input[type="checkbox"]
-	{ color: #000; }
+{ color: #000; }
 
 input[type="radio"]
-	{  background-color: #fff; color: #000; }
+{ background-color: #fff; color: #000; }
 
 option
-	{ background-color:#fff; color:#000; }
+{ background-color:#fff; color:#000; }
 
 optgroup
-	{ background-color:#ccc; color:#000; }
+{ background-color:#ccc; color:#000; }
 
 button
-	{ background-color: #ccc; color: #333; }
-
-
-
+{ background-color: #ccc; color: #333; }
 

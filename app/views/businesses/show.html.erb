@@ -1,0 +1,38 @@
+<h3>Business Details</h3>
+
+<div id="business_details">
+	<table id="profile">
+		<tr>
+			<td id="label">Name:</td>
+			<td id="member_details"><%= @business.name %> </td>
+		</tr>
+		<tr>
+			<td id="label">Owner:</td>
+			<td id="member_details"><%= @business.owner %></td>
+		</tr>
+		<tr>
+			<td id="label">Location:</td>
+			<td id="member_details"><%= @business.location %></td>
+		</tr>
+		<tr>
+			<td id="label">City:</td>
+			<td id="member_details"><%= @business.city %></td>
+		</tr>
+		<tr>
+			<td id="label">Category:</td>
+			<td id="member_details"><%= @business.category %></td>
+		</tr>
+	</table>
+	<div id="manage_links">
+		<% if session[:logged_in] == true%>
+			<% if @owner == true %>
+			<p><%= link_to "Edit" , edit_member_business_path(session[:member_id],@business.id) %> |
+			<%= link_to "Delete", member_business_path(session[:member_id], @business.id), :method => :delete, :confirm => "Are you sure?"%></p>
+			<% end %>
+			<% if @favorite == true %>
+				<p><%= link_to "Add to My List", add_favorite_business_path(@business.id) %>
+			<% end  %>
+			<p><%= link_to "Profile Page", member_path(session[:member_id])%></p>
+		<% end %>
+	</div>
+</div>

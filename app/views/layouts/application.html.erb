@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="en-us" />
+		<%= stylesheet_link_tag "askme", "form", "profile" %>
+		
+	<title> 
+		<% if @title -%>
+			<%= @title %> | AskMe Clone
+		<% else %>
+			AskMe Clone
+		<% end %>
+	</title>
+</head>
+
+<body>
+	<div id="header">
+		<h1>Local Product Search Engine</h1>
+	</div>
+
+	<div id="nav_bar">
+		<% if session[:logged_in] == true -%>
+			<%= link_to "Logout", logout_path %>
+		<% else -%>
+			<%= link_to "Signup", new_member_path %> |
+			<%= link_to "Login", login_path %>
+		<% end -%>
+	</div>
+
+	<div id="container">
+
+	<% if flash[:notice] -%>
+		<div id="notice"><%= flash[:notice] %></div>
+	<% elsif flash[:message] %>
+		<div id="message"><%= flash[:message] %></div>
+	<% end %>
+
+	<%= yield %>
+	</div>
+
+	<div id="footer">
+	
+	</div>
+<br style="clear:both" />
+</body>
+
+</html>
+

@@ -1,27 +1,42 @@
 #photo_col {
-	margin-top:50px;
-	width: 120px;
-	float:left;
-	height: 160px;
-	background-color: black;
-	}
+margin-top:50px;
+width: 120px;
+float:left;
+height: 160px;
+background-color: black;
+}
 
 #member_profile {
-	margin-top:50px;
-	margin-left: 50px;
-	width:auto;
-	float:left;
-	font-size:120%;
-	}
-
+margin-top:50px;
+margin-left: 50px;
+width:250px;
+float:left;
+font-size:120%;
+}
+#member_favorites {
+margin-top:50px;
+margin-left: 100px;
+width:220px;
+float:left;
+font-size:120%;
+}
 td#label {
-	width: 100px
-	}
+width: 100px
+}
 
 td#member_details {
-	width:250px
-	}
+width:250px
+}
+td#member_details_address {
+	font-size:80%;
+width:250px
+}
 
-#manage_links	{
-	margin-top: 20px
-	}
+#manage_links {
+margin-top: 20px
+}
+#profile_links{
+	margin-top:30px;
+	font-size:80%;
+}
+
