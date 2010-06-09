@@ -19,7 +19,7 @@ Photo
 		</tr>
 		<tr>
 			<td id="label">Address:</td>
-			<td id="member_details"><%= @member.address %></td>
+			<td id="member_details_address"><%= @member.address %></td>
 		</tr>
 		<tr>
 			<td id="label">My Businesses:</td>
@@ -31,9 +31,23 @@ Photo
 				</ul>
 			</td>
 		</tr>
+	</table>
+	<div id="manage_links">
+		<p><%= link_to "Add Business" , new_member_business_path(session[:member_id]) %></p>
+		<p><%= link_to "List of Businesses", businesses_path%>
+	</div>
+	<div id="profile_links">  
+		<p><%= link_to "Change Password", change_password_member_path(session[:member_id]) %></p>
+		<%= link_to "Edit Profile", edit_member_path(session[:member_id]) %> |
+		<%= link_to "Delete Profile", member_path(session[:member_id]), :method => :delete, :confirm => "Are you sure?" %>
+	</div>
+</div>
+<div id="member_favorites">
+	<table id="profile">
 		<tr>
-			<td id="label">My Favorites:
-							[Add favorite businesses from List of businesses]</td>
+			<td id="label">My List:</td>
+		</tr>
+		<tr>
 			<td id="member_details">
 				<ul><% for business in @favorite_businesses do %>
 						<li><%= link_to "#{business.name}" , business_path(business.id) %></li>
@@ -43,11 +57,4 @@ Photo
 			</td>
 		</tr>
 	</table>
-	<div id="manage_links">
-		<p><%= link_to "Add Business" , new_member_business_path(session[:member_id]) %></p>
-		<p><%= link_to "List of Businesses", businesses_path%>
-		<p><%= link_to "Change Password", change_password_member_path(session[:member_id]) %></p>
-		<%= link_to "Edit Profile", edit_member_path(session[:member_id]) %> |
-		<%= link_to "Delete Profile", member_path(session[:member_id]), :method => :delete, :confirm => "Are you sure?" %>
-		</div>
 </div>

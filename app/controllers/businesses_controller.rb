@@ -12,12 +12,14 @@ class BusinessesController < ApplicationController
   
   def show
     @member = Member.find_by_id(session[:member_id])
-    @title = "Business Details"
     @business = Business.find(params[:id])
-    @title = "Business Details - "#{@business.name}""
-    if is_owner(@business)
-      @owner = true
+    @title = "Business Details - #{@business.name}"
+    #Do not show Add to favorite list to owners 
+    #or to the people who have already added the business as favorite
+    if !is_favorite(@business)
+      @favorite = true
     end
+   
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @business }
@@ -35,13 +37,13 @@ class BusinessesController < ApplicationController
   def edit
     @member = Member.find_by_id(session[:member_id])
     @business = Business.find(params[:id])
-    if !is_owner(@business)
+    if !is_owner(@business) 
       flash[:notice] = "Mind your own fu**ing business"
       redirect_to member_path(@member.id)
     end
   end
 
-  
+  #Status = 1 for owners and status = 0 for favorites
   def create
     @member = Member.find_by_id(session[:member_id])
     @business = Business.new(params[:business]) 
@@ -67,10 +69,10 @@ class BusinessesController < ApplicationController
     if request.put?
       @member = Member.find_by_id(session[:member_id])
       @business = Business.find(params[:id])
-      if is_owner(@business)
+      if is_owner(@business) 
         if @business.update_attributes(params[:business])
-          flash[:notice] = 'Business was successfully updated.'
-          redirect_to member_path(session[:member_id]) 
+          flash[:message] = 'Business was successfully updated.'
+          redirect_to business_path(params[:id])
         else
           render :action => :new
         end
@@ -84,7 +86,7 @@ class BusinessesController < ApplicationController
  
   def destroy
     @business = Business.find(params[:id])
-    if is_owner(@business)
+    if is_owner(@business) 
       @business.destroy
       flash[:message] = "Business was successfully deleted"
       redirect_to member_path(session[:member_id])
@@ -96,16 +98,21 @@ class BusinessesController < ApplicationController
   
   def add_favorite
     @business = Business.find_by_id(params[:id])
-    @business_relation = BusinessRelation.new
-    @business_relation.member_id = session[:member_id]
-    @business_relation.business_id = @business.id
-    @business_relation.status = 0
-    if @business_relation.save
-      flash[:message] = "Business added to your list"
-      redirect_to member_path(session[:member_id])
-    else
-      flash[:notice] = "Unable to add business to your list. Try again."
+    if is_favorite(@business) 
+      flash[:notice] = "Business already in your favorite list"
       redirect_to business_path(params[:id])
+    else
+      @business_relation = BusinessRelation.new
+      @business_relation.member_id = session[:member_id]
+      @business_relation.business_id = @business.id
+      @business_relation.status = 0
+      if @business_relation.save
+        flash[:message] = "Business added to your list"
+        redirect_to member_path(session[:member_id])
+      else
+        flash[:notice] = "Unable to add business to your list. Try again."
+        redirect_to business_path(params[:id])
+      end
     end
   end
   
@@ -121,5 +128,15 @@ class BusinessesController < ApplicationController
         return false
       end
     end
-  
+    #checks whether the person has added the business as favorite. Also checks whether he owns the business or not.
+    def is_favorite(business)
+      if business.business_relations.find_by_member_id(session[:member_id]) 
+        if business.business_relations.find_by_member_id(session[:member_id]).status >= 0
+          return true
+        end
+      else
+        return false
+      end
+    end
+    
 end
