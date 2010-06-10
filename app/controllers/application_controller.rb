@@ -10,23 +10,30 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   protected
     def authorize
-      if session[:logged_in] != true
+      unless is_logged_in
         flash[:message] = "Please login"
         redirect_to login_path
       end
     end
     
     def check_remember_me
-      unless session[:logged_in] 
+      unless is_logged_in
         if cookies[:remember_me_id] 
           member = Member.find_by_id(cookies[:remember_me_id])
-          if member and cookies[:remember_me_code] == member.remember_me_token
+          if member.remember_me_time >= 14.days.ago and member and cookies[:remember_me_code] == member.remember_me_token
             session[:member_id] = member.id
-            session[:logged_in] = true
-            redirect_to member_path(member.id)
+            redirect_to root_path
           end
         end
       end
+    end
+    
+    def generate_random_string(len)
+         #generate a salt consisting of strings and digits
+         chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+         random_string = ""
+         1.upto(len) { |i| random_string << chars[rand(chars.size-1)] }
+         return random_string
     end
     
     def redirect_to_profile(msg,type)
@@ -38,5 +45,14 @@ class ApplicationController < ActionController::Base
       redirect_to member_path(session[:member_id])
     end
 
+    def is_logged_in
+      if Member.find_by_id(session[:member_id])
+        @logged_in = true
+        return true
+      else
+        @logged_in = false
+        return false
+      end
+    end
 end
 

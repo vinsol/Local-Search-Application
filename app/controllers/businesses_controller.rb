@@ -43,7 +43,7 @@ class BusinessesController < ApplicationController
     @member = Member.find_by_id(session[:member_id])
     @business = Business.new(params[:business])
     @business.owner = @member.first_name + " " + @member.last_name
-    if @business.save and BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => OWNED)
+    if @business.save and BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:OWNED])
       redirect_to_profile('Business was successfully added.','message')
     else
       @business.destroy
@@ -90,7 +90,7 @@ class BusinessesController < ApplicationController
       flash[:notice] = "Business already in your favorite list"
       redirect_to business_path(params[:id])
     else
-      if BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => FAVORITE)
+      if BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:FAVORITE])
         redirect_to_profile("Business added to your list","message")
       else
         flash[:notice] = "Unable to add business to your list. Try again."
@@ -103,7 +103,7 @@ class BusinessesController < ApplicationController
     
     #Checks whether the person is owner or not.
     def is_owner(business)
-      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],OWNED])
+      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],RELATION[:OWNED]])
         return true
       else
         return false
@@ -113,7 +113,7 @@ class BusinessesController < ApplicationController
     #checks whether the person has added the business as favorite.
     
     def is_favorite(business)
-      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],FAVORITE])
+      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],RELATION[:FAVORITE]])
         return true
       else
         return false

@@ -38,7 +38,6 @@ class MembersController < ApplicationController
     @member = Member.new(params[:member])
     if @member.save and @member.signup_notification
       session[:member_id] = @member.id
-      session[:logged_in]= true
       redirect_to_profile('Member was successfully created.',"message")
     else
       render :action => :new

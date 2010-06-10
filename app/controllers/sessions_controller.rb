@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   
   def new
-    if session[:logged_in] == true
+    if is_logged_in
      redirect_to_profile("You are already logged in",'message')
     else
         @title = "Login"
@@ -23,12 +23,13 @@ class SessionsController < ApplicationController
       member = Member.authenticate(params[:member][:email], params[:member][:password])
       if member
         session[:member_id] = member.id
-        session[:logged_in] = true
         if params[:member][:remember_me] == "1"
           memberId = (member.id).to_s
           cookies[:remember_me_id] = { :value => memberId, :expires => 14.days.from_now }
-          memberCode = Digest::SHA1.hexdigest( member.email )
-          member.update_attribute(:remember_me_token, memberCode)
+          remember_me_time = Time.now
+          memberCode = Digest::SHA1.hexdigest( generate_random_string(10) )
+          member.update_attribute(:remember_me_token,memberCode)
+          member.update_attribute(:remember_me_time, remember_me_time)
           cookies[:remember_me_code] = { :value => memberCode, :expires => 14.days.from_now }
         end
           flash[:message] = "Welcome #{member.first_name}"

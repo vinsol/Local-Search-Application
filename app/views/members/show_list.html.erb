@@ -1,4 +1,13 @@
 <h3>List of Favorite businesses</h3>
-<ul><% for business in @favorite_businesses do %>
-		<li><%= link_to "#{business.name}" , business_path(business.id) %></li>
+<table>
+	<tr><td id="label">Business</td>
+		<td id="label">Owner</td>
+		<td id="label">City</td>
+	</tr>
+	<% for business in @favorite_businesses do %>
+		<tr><td><%= link_to "#{business.name}" , business_path(business.id) %></td>
+			<td><%= business.owner %></td>  
+			<td><%= business.city %></td>
+		</tr>
 	<% end %>
+</table>

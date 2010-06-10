@@ -1,10 +1,10 @@
 
 class Member < ActiveRecord::Base
-  has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "120x150>" }
+  has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "160x190>" }
   has_many :business_relations
   has_many :businesses, :through => :business_relations
-  has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => "business_relations.status = 1"
-  has_many :favorite_businesses, :through => :business_relations, :source => :business, :conditions => "business_relations.status = 0"
+  has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
+  has_many :favorite_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:FAVORITE]]
   
   validates_presence_of :email, :first_name, :last_name, :phone_number, :address
   validates_uniqueness_of :email
