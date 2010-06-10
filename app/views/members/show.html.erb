@@ -1,6 +1,6 @@
 <h2>Profile: <%= @member.first_name %> <%= @member.last_name %></h2>
 <div id="photo_col">
-Photo
+<%= image_tag @member.photo.url(:thumb) %>
 </div>
 
 <div id="member_profile">

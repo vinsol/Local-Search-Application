@@ -1,6 +1,6 @@
 <h1>Signup Form</h1>
 <div class="form">
-<% form_for(@member) do |f| %>
+<% form_for @member, :html => { :multipart => true }  do |f| %>
   	<%= error_messages_for 'member' %>
   	<fieldset>
 	<div>
@@ -23,6 +23,9 @@
 		<%= f.label (:address, "Address") %>
 		<%= f.text_area :address, :cols => 29, :rows => 3 %>
 	</div>
+	<div>
+		<%= f.label :photo, "Photo" %>
+		<%= f.file_field :photo %>
 	<div>
 		<%= f.label (:password, "Password") %>
 		<%= f.password_field :password %>

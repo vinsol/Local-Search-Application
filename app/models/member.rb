@@ -1,26 +1,25 @@
 
 class Member < ActiveRecord::Base
+  has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "120x150>" }
   has_many :business_relations
   has_many :businesses, :through => :business_relations
   has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => "business_relations.status = 1"
   has_many :favorite_businesses, :through => :business_relations, :source => :business, :conditions => "business_relations.status = 0"
+  
   validates_presence_of :email, :first_name, :last_name, :phone_number, :address
   validates_uniqueness_of :email
   validates_format_of :phone_number, 
       :message => "must be a 10 digit valid telephone number.",
       :with => PHONE
   validates_format_of :email, :with => EMAIL , :unless => lambda{|a| a.email.blank?}
- 
-      
-      
   validates_presence_of :password, :if => :password_present
   validates_confirmation_of :password
+  
   attr_accessor :password_confirmation, :password_change, :remember_me
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :remember_me
-  attr_accessible :phone_number, :address, :remember_me_token
+  attr_accessible :phone_number, :address, :remember_me_token, :photo
 
   
-
   def password
     @password
   end
