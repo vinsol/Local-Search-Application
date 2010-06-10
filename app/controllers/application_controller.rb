@@ -1,6 +1,6 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
-require 'digest/sha1'
+
 class ApplicationController < ActionController::Base
   before_filter :check_remember_me
   helper :all # include all helpers, all the time
@@ -10,25 +10,32 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   protected
     def authorize
-      if !Member.find_by_id(session[:member_id])
-        session[:logged_in]= false
+      if session[:logged_in] != true
         flash[:message] = "Please login"
         redirect_to login_path
       end
     end
     
     def check_remember_me
-      if cookies[:remember_me_id]
-        member = Member.find_by_id(cookies[:remember_me_id])
-        if member
-          code = Digest::SHA1.hexdigest(member.email)
-          remember_me_code = cookies[:remember_me_code]
-          if code = remember_me_code
-              session[:member_id] = member.id
-              session[:logged_in] = true
+      unless session[:logged_in] 
+        if cookies[:remember_me_id] 
+          member = Member.find_by_id(cookies[:remember_me_id])
+          if member and cookies[:remember_me_code] == member.remember_me_token
+            session[:member_id] = member.id
+            session[:logged_in] = true
+            redirect_to member_path(member.id)
           end
         end
       end
+    end
+    
+    def redirect_to_profile(msg,type)
+      if type == 'notice'
+        flash[:notice] = msg
+      elsif type == 'message'
+          flash[:message] = msg
+      end
+      redirect_to member_path(session[:member_id])
     end
 
 end

@@ -9,66 +9,53 @@ class BusinessesController < ApplicationController
     end
   end
 
-  
   def show
     @member = Member.find_by_id(session[:member_id])
     @business = Business.find(params[:id])
     @title = "Business Details - #{@business.name}"
-    #Do not show Add to favorite list to owners 
-    #or to the people who have already added the business as favorite
-    if !is_favorite(@business)
-      @favorite = true
-    end
-   
+    #Edit and Delete for owners and Add to Favorites for those who haven't added it yet.
+    @favorite = true unless is_favorite(@business)
+    @owner = true if is_owner(@business)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @business }
     end
   end
 
-  
   def new
     @title = "Add Business"
     @member = Member.find_by_id(session[:member_id])
-    @business = Business.new 
+    @business = Business.new
   end
 
  
   def edit
+    @title = "Edit Business"
     @member = Member.find_by_id(session[:member_id])
     @business = Business.find(params[:id])
-    if !is_owner(@business) 
-      flash[:notice] = "Mind your own fu**ing business"
-      redirect_to member_path(@member.id)
+    unless is_owner(@business) 
+      redirect_to_profile('Business was successfully added.', 'notice')
     end
   end
 
-  #Status = 1 for owners and status = 0 for favorites
+ 
   def create
     @member = Member.find_by_id(session[:member_id])
-    @business = Business.new(params[:business]) 
+    @business = Business.new(params[:business])
     @business.owner = @member.first_name + " " + @member.last_name
-    if @business.save
-        @business_relation = BusinessRelation.new
-        @business_relation.member_id = session[:member_id]
-        @business_relation.business_id = @business.id
-        @business_relation.status = 1
-        if @business_relation.save
-          flash[:message] = 'Business was successfully added.'
-          redirect_to member_path(session[:member_id]) 
-        else
-          @business.destroy
-        end
+    if @business.save and BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => OWNED)
+      redirect_to_profile('Business was successfully added.','message')
     else
-        render  :action => :new
-      end
-    
+      @business.destroy
+      render  :action => :new
+    end
   end
 
   def update
     if request.put?
       @member = Member.find_by_id(session[:member_id])
       @business = Business.find(params[:id])
+      #### Allow only if the user owns the business
       if is_owner(@business) 
         if @business.update_attributes(params[:business])
           flash[:message] = 'Business was successfully updated.'
@@ -77,8 +64,7 @@ class BusinessesController < ApplicationController
           render :action => :new
         end
       else
-        flash[:notice] = "Nice Try Dumbass."
-        redirect_to member_path(@member.id)
+        redirect_to_profile("Nice Try","notice")
       end 
     end
   end
@@ -87,28 +73,25 @@ class BusinessesController < ApplicationController
   def destroy
     @business = Business.find(params[:id])
     if is_owner(@business) 
-      @business.destroy
-      flash[:message] = "Business was successfully deleted"
-      redirect_to member_path(session[:member_id])
+      if @business.destroy
+        redirect_to_profile("Business was successfully deleted","message")
+      else
+        redirect_to business_path(@business.id)
+      end
     else
-      flash[:notice] = "You can delete your own businesses"
-      redirect_to member_path(session[:member_id])
+      redirect_to_profile("You can delete your own businesses only","notice")
     end
   end
   
   def add_favorite
     @business = Business.find_by_id(params[:id])
+    #Adding same business twice in the list is not allowed
     if is_favorite(@business) 
       flash[:notice] = "Business already in your favorite list"
       redirect_to business_path(params[:id])
     else
-      @business_relation = BusinessRelation.new
-      @business_relation.member_id = session[:member_id]
-      @business_relation.business_id = @business.id
-      @business_relation.status = 0
-      if @business_relation.save
-        flash[:message] = "Business added to your list"
-        redirect_to member_path(session[:member_id])
+      if BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => FAVORITE)
+        redirect_to_profile("Business added to your list","message")
       else
         flash[:notice] = "Unable to add business to your list. Try again."
         redirect_to business_path(params[:id])
@@ -120,23 +103,22 @@ class BusinessesController < ApplicationController
     
     #Checks whether the person is owner or not.
     def is_owner(business)
-      if business.business_relations.find_by_member_id(session[:member_id]) 
-        if business.business_relations.find_by_member_id(session[:member_id]).status == 1
-          return true
-        end
+      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],OWNED])
+        return true
       else
         return false
       end
     end
-    #checks whether the person has added the business as favorite. Also checks whether he owns the business or not.
+    
+    #checks whether the person has added the business as favorite.
+    
     def is_favorite(business)
-      if business.business_relations.find_by_member_id(session[:member_id]) 
-        if business.business_relations.find_by_member_id(session[:member_id]).status >= 0
-          return true
-        end
+      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],FAVORITE])
+        return true
       else
         return false
       end
     end
+    
     
 end

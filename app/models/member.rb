@@ -1,4 +1,4 @@
-require 'digest/sha1'
+
 class Member < ActiveRecord::Base
   has_many :business_relations
   has_many :businesses, :through => :business_relations
@@ -8,8 +8,8 @@ class Member < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_format_of :phone_number, 
       :message => "must be a 10 digit valid telephone number.",
-      :with => /^[\(\)0-9\- \+\.]{10}$/
-  validates_format_of :email, :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i , :unless => lambda{|a| a.email.blank?}
+      :with => PHONE
+  validates_format_of :email, :with => EMAIL , :unless => lambda{|a| a.email.blank?}
  
       
       
@@ -17,9 +17,9 @@ class Member < ActiveRecord::Base
   validates_confirmation_of :password
   attr_accessor :password_confirmation, :password_change, :remember_me
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :remember_me
-  attr_accessible :phone_number, :address
+  attr_accessible :phone_number, :address, :remember_me_token
 
-  after_save :signup_notification
+  
 
   def password
     @password

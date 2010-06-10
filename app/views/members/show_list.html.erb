@@ -1,0 +1,4 @@
+<h3>List of Favorite businesses</h3>
+<ul><% for business in @favorite_businesses do %>
+		<li><%= link_to "#{business.name}" , business_path(business.id) %></li>
+	<% end %>

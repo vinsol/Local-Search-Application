@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100609060609) do
+ActiveRecord::Schema.define(:version => 20100609103734) do
 
   create_table "business_details", :force => true do |t|
     t.string   "state"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(:version => 20100609060609) do
     t.string   "map"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "business_id"
   end
 
   create_table "business_relations", :force => true do |t|
@@ -41,10 +40,20 @@ ActiveRecord::Schema.define(:version => 20100609060609) do
     t.string   "location"
     t.string   "city"
     t.string   "category"
-    t.string   "status",     :default => "unverified"
+    t.string   "status",          :default => "unverified"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "owner"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.string   "contact_email"
+    t.string   "contact_website"
+    t.string   "contact_address"
+    t.string   "photo_album"
+    t.string   "map"
+    t.text     "description"
+    t.datetime "opening_time"
+    t.datetime "closing_time"
   end
 
   create_table "members", :force => true do |t|
@@ -57,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20100609060609) do
     t.datetime "updated_at"
     t.string   "phone_number"
     t.string   "address"
+    t.string   "remember_me_token"
   end
 
   create_table "sessions", :force => true do |t|

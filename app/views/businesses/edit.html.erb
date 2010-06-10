@@ -5,26 +5,68 @@
 	
 <% form_for [@member, @business] do |f| %>
   	<%= f.error_messages %>
-  	<fieldset>
-	<div>
+	<fieldset>
+	<p>
 		<%= f.label (:name, "Business Name") %>
 		<%= f.text_field :name %>
-	</div>
-	<div>
+	</p>
+	<p>
 		<%= f.label (:location, "Location") %>
 		<%= f.select (:location, %w{Patel_Nagar Rajiv_Chowk}) %>
-	</div>
-	<div>
+	</p>
+	<p>
 		<%= f.label (:city, "City") %>
 		<%= f.select (:city, %w{Delhi}) %>
-	</div>
-	<div>
+	</p>
+	<p>
 		<%= f.label (:category, "Category") %>
 		<%= f.select (:category, %w{Chemist Restaurant Healtcare}) %>
-	</div><br/>
- 	<div>
-    	<%= f.submit 'Update' %>
-  	</div>
+	</p>
+	<p>
+		<%= f.label (:contact_name, "Contact Name:") %>
+		<%= f.text_field :contact_name %>
+	</p>
+	<p>
+		<%= f.label (:contact_phone, "Contact Phone:") %>
+		<%= f.text_field :contact_phone %>
+	</p>
+	<p>
+		<%= f.label (:contact_email, "Contact Email:") %>
+		<%= f.text_field :contact_email %>
+	</p>
+	<p>
+		<%= f.label (:contact_website, "Contact Website:") %>
+		<%= f.text_field :contact_website %>
+	</p>
+	<p>
+		<%= f.label (:contact_address, "Contact Address:") %>
+		<%= f.text_area :contact_address, :size => "26x3" %>
+	</p>
+	<p>
+		<%= f.label (:opening_tim, "Opening Time:") %>
+		<%= f.time_select :opening_time %>
+	</p>
+	<p>
+		<%= f.label (:closing_tim, "Closing Time:") %>
+		<%= f.time_select :closing_time %>
+	</p>
+	<p>
+		<%= f.label (:description, "Description:") %>
+		<%= f.text_area :description, :size => "26x3" %>
+	</p>
+	<p>
+		<%= f.label (:photo_album, "Photo Album:") %>
+		<%= f.text_field :photo_album %>
+	</p>
+	<p>
+		<%= f.label (:map, "Map:") %>
+		<%= f.text_field :map %>
+	</p>
+		
+	<p>
+  	<%= f.submit 'Edit Business' %>
+	</p>
 	</fieldset>
 <% end %>
+<p><%= link_to "Profile", member_path(session[:member_id])%></p>
 

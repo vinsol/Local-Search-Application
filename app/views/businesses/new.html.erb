@@ -21,51 +21,50 @@
 		<%= f.label (:category, "Category") %>
 		<%= f.select (:category, %w{Chemist Restaurant Healtcare}) %>
 	</p>
-		<% f.fields_for :business_detail do |detail| %>
-			<p>
-				<%= detail.label (:contact_name, "Contact Name:") %>
-				<%= detail.text_field :contact_name %>
-			</p>
-			<p>
-				<%= detail.label (:contact_phone, "Contact Phone:") %>
-				<%= detail.text_field :contact_phone %>
-			</p>
-			<p>
-				<%= detail.label (:contact_email, "Contact Email:") %>
-				<%= detail.text_field :contact_email %>
-			</p>
-			<p>
-				<%= detail.label (:contact_website, "Contact Website:") %>
-				<%= detail.text_field :contact_website %>
-			</p>
-			<p>
-				<%= detail.label (:contact_address, "Contact Address:") %>
-				<%= detail.text_field :contact_address %>
-			</p>
-			<p>
-				<%= detail.label (:opening_tim, "Opening Time:") %>
-				<%= detail.time_select :opening_time %>
-			</p>
-			<p>
-				<%= detail.label (:closing_tim, "Closing Time:") %>
-				<%= detail.time_select :closing_time %>
-			</p>
-			<p>
-				<%= detail.label (:description, "Description:") %>
-				<%= detail.text_area :description, :size => "26x3" %>
-			</p>
-			<p>
-				<%= detail.label (:photo_album, "Photo Album:") %>
-				<%= detail.text_field :photo_album %>
-			</p>
-			<p>
-				<%= detail.label (:map, "Map:") %>
-				<%= detail.text_field :map %>
-			</p>
-			<% end %>
- 	<div>
+	<p>
+		<%= f.label (:contact_name, "Contact Name:") %>
+		<%= f.text_field :contact_name %>
+	</p>
+	<p>
+		<%= f.label (:contact_phone, "Contact Phone:") %>
+		<%= f.text_field :contact_phone %>
+	</p>
+	<p>
+		<%= f.label (:contact_email, "Contact Email:") %>
+		<%= f.text_field :contact_email %>
+	</p>
+	<p>
+		<%= f.label (:contact_website, "Contact Website:") %>
+		<%= f.text_field :contact_website %>
+	</p>
+	<p>
+		<%= f.label (:contact_address, "Contact Address:") %>
+		<%= f.text_area :contact_address, :size => "26x3" %>
+	</p>
+	<p>
+		<%= f.label (:opening_tim, "Opening Time:") %>
+		<%= f.time_select :opening_time %>
+	</p>
+	<p>
+		<%= f.label (:closing_tim, "Closing Time:") %>
+		<%= f.time_select :closing_time %>
+	</p>
+	<p>
+		<%= f.label (:description, "Description:") %>
+		<%= f.text_area :description, :size => "26x3" %>
+	</p>
+	<p>
+		<%= f.label (:photo_album, "Photo Album:") %>
+		<%= f.text_field :photo_album %>
+	</p>
+	<p>
+		<%= f.label (:map, "Map:") %>
+		<%= f.text_field :map %>
+	</p>
+		
+ 	<p>
     	<%= f.submit 'Add Business' %>
-  	</div>
+  	</p>
 	</fieldset>
 <% end %>
-
+<p><%= link_to "Profile", member_path(session[:member_id])%></p>

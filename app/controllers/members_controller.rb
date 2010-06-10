@@ -1,9 +1,8 @@
 class MembersController < ApplicationController
   before_filter :authorize , :except => [:new, :create,:forgot_password]
+  
   def index
-    if session[:logged_in] == true
-      @member = Member.find_by_id(session[:member_id])
-    end
+    @member = Member.find_by_id(session[:member_id])
     @title = "AskMe's Clone"
   end
 
@@ -13,35 +12,34 @@ class MembersController < ApplicationController
     @owned_businesses = @member.owned_businesses
     @favorite_businesses = @member.favorite_businesses
     @title = @member.first_name + " " + @member.last_name
-
   end
 
+  def show_list
+     @member = Member.find_by_id(session[:member_id])
+     @favorite_businesses = @member.favorite_businesses
+     @title = @member.first_name + " " + @member.last_name
+   end
+  
   
   def new
-    if session[:logged_in] == true
-      flash[:notice] = "Logged in users cannot signup"
-      redirect_to members_path
-    else
-      @title = "Signup"
-      @member = Member.new
-    end
+    redirect_to_profile("Logged in users can not register","notice") unless session[:logged_in] != true
+    @title = "Signup"
+    @member = Member.new
   end
 
   
   def edit
     @member = Member.find_by_id(session[:member_id])
     @title = "Edit Profile"
-    
   end
 
  
   def create
     @member = Member.new(params[:member])
-    if @member.save
+    if @member.save and @member.signup_notification
       session[:member_id] = @member.id
       session[:logged_in]= true
-      flash[:message] = 'Member was successfully created.'
-      redirect_to member_path(session[:member_id])
+      redirect_to_profile('Member was successfully created.',"message")
     else
       render :action => :new
     end
@@ -49,10 +47,8 @@ class MembersController < ApplicationController
 
 
   def update
-    @member = Member.find_by_id(session[:member_id])
-    if @member.update_attributes(params[:member])
-      flash[:message] = "Profile was successfully edited"
-      redirect_to member_path(session[:member_id])
+    if Member.find_by_id(session[:member_id]).update_attributes(params[:member])
+      redirect_to_profile("Profile was successfully edited","message") 
     else
       flash.now[:notice] = "Profile not saved. Please check it again"
       redirect_to edit_member_path(session[:member_id])
@@ -62,20 +58,17 @@ class MembersController < ApplicationController
  
   def destroy
     Member.find(session[:member_id]).destroy
-    redirect_to logout_path
-    
+    redirect_to logout_path 
   end
   
   def change_password
+    @member = Member.find_by_id(session[:member_id])
     if request.get?
-      @member = Member.find_by_id(session[:member_id])
       @title = "Change Password"
     elsif request.post?
-      @member = Member.find_by_id(session[:member_id])
       @member.password_change = true
       if @member.update_attributes(params[:member])
-        flash[:message] = "Password was successfully changed"
-        redirect_to :action => :profile
+       redirect_to_profile("Password was successfully changed","message")
       else
         flash.now[:notice] = "Password not changed. Try again"
         render :action => :change_password
@@ -87,8 +80,8 @@ class MembersController < ApplicationController
     @title = "Forgot Password"
     if request.post?
       if params[:member][:email]
-        member = Member.find_by_email(params[:member][:email])
-        if member and member.send_new_password
+        @member = Member.find_by_email(params[:member][:email])
+        if @member and @member.send_new_password
           flash[:message] = "A new password has been sent by email."
           redirect_to login_path
         else
@@ -98,8 +91,5 @@ class MembersController < ApplicationController
       end
     end
   end
-
-  
-  
  
 end
