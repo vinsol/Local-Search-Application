@@ -17,3 +17,6 @@ coverage/*
 db/*.sqlite3
 *.tmproj
 *.sw?
+*.png
+*.jpg
+*.jpeg
