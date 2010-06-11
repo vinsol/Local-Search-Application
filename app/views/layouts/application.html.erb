@@ -8,16 +8,16 @@
 		
 	<title> 
 		<% if @title -%>
-			<%= @title %> | AskMe Clone
+			<%= @title %> | Local Product Search Engine
 		<% else %>
-			AskMe Clone
+			Local Product Search Engine
 		<% end %>
 	</title>
 </head>
 
 <body>
 	<div id="header">
-		<div id="nav_bar">
+		<div class="nav_bar">
 			<% if @logged_in == true %>
 				<%= link_to "Profile", member_path(session[:member_id])%> | 
 				<%= link_to "Businesses", businesses_path %> |
@@ -28,22 +28,23 @@
 				<%= link_to "Login", login_path %>
 			<% end -%>
 		</div>		
-		<h1>Local Product Search Engine</h1>
+		<h1><%= link_to "Local Product Search Engine", root_path %></h1>
 	</div>
 
 	<div id="container">
 
-	<% if flash[:notice] -%>
-		<div id="notice"><%= flash[:notice] %></div>
-	<% elsif flash[:message] %>
-		<div id="message"><%= flash[:message] %></div>
-	<% end %>
+		<% if flash[:notice] -%>
+			<div id="notice"><%= flash[:notice] %></div>
+		<% elsif flash[:message] %>
+			<div id="message"><%= flash[:message] %></div>
+		<% end %>
 
-	<%= yield %>
+		<%= yield %>
+		<br style="clear:both" />
 	</div>
 
 	<div id="footer">
-	
+		<h3>Footer</h3>
 	</div>
 <br style="clear:both" />
 </body>

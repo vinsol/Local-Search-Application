@@ -47,12 +47,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :members, :member => {:change_password => [:get,:post], :show_list => [:get]}, :collection => {:forgot_password => [:get,:post]} do |members|
     members.resources :businesses, :except => [:index, :show]
   end
-  map.resources :businesses, :has_one => :business_detail, :only => [:index, :show], :member => {:add_favorite => [:get]}
+  map.resources :businesses, :has_one => :business_detail, :only => [:index, :show], :member => {:add_favorite => [:get], :remove_favorite => [:delete]}
 
   
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'delete'
   
-    map.connect ':controller/:action/:id'
+  map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end

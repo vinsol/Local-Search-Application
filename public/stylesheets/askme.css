@@ -1,51 +1,102 @@
-html { background-color: #436083; }
 body {
-font-family: Verdana, Helvetica, Arial, sans-serif;
-margin: 32px 150px 32px 150px ;
-max-width:auto;;
-padding: 10px 32px 32px 32px;
-font-size: 0.8em;
-background-color: #EEE;
-color: #333;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	width:auto;
+	background-color:white;
+	}
+	
+#header {
+	display:block;
+	margin:10px 100px 10px 100px;
 }
 
+#container {
+	margin: 30px 100px 10px 100px;
+	width:auto;
+	min-height:500px;
+	height:100%;
+	border-top:3px solid #33CCFF;
+		}
 
+#footer {
+	margin:10px 100px 10px 100px;
+	border-top:3px solid #33CCFF;
+	}
 #notice, #errorExplanation {
-margin:10px;
-color: red;
-border: 2px solid red;
-padding: 3px;
-}
+	margin:10px;
+	color: red;
+	border: 2px solid red;
+	padding: 3px;
+	}
 
 #message {
-margin:10px;
-color: green;
-border: 2px solid green;
-padding: 3px;
+	margin:10px;
+	color: green;
+	border: 2px solid green;
+	padding: 3px;
+	}
+	
+/****BUSINESS DETAILS*****/
+
+#business_list {
+	margin:10px;
+	
 }
+
+.business_box {
+	width:800px;
+	height:300px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:10px;
+	background-color: #FFFFAA;
+	border-top:2px solid #127EEB;
+	border-bottom:2px solid #127EEB;
+}
+
+span.business_title{
+	margin-left:20px;
+}
+.business_box_details{
+	width:400px;
+	margin-left:20px;
+	border-right:3px solid black;
+	float:left;
+}
+
+.business_box_products{
+	width:auto;
+	margin-left:20px;
+	float:left;
+}
+span.label{
+	font-weight:bold;
+}
+.business_box_links{
+	margin-left:50px;
+}
+/* TABLE */
 
 #title_row{
 	font-size:130%;
 	font-weight:bold;
-}
+	}
 
 tr#label, td#label {
-font-weight:bold
-}
+	font-weight:bold;
+	}
+	
 td {
-width:100px
-}
-#nav_bar {
-float: right
-}
+	width:150px;
+	}
+/*TABLE END */
 
-#container {
-margin-top: 50px;
-margin-top: 50px;
-min-height:300px
-}
+.nav_bar {
+	float: right
+	}
+
+
 
 #footer {
-float:right
-}
+	
+	}
 

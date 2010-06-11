@@ -1,23 +1,29 @@
-<h2>Listing businesses</h2>
-
-	<table>
-		<tr id="label">
-			<td>Business Name</td>
-			<td>Owner Name</td>
-			<td>Category</td>
-			<td>Locality</td>
-			<td>City</td>
-		</tr>
+<h2>Registered Businesses</h2>
+	
+	<div id="business_list">
 		<% @businesses.each do |business| %>
-  		<tr>
-			<td><%= link_to "#{business.name}", business_path(business.id)%></td> 
-			<td><%= business.owner %></td>
-			<td><%= business.category %></td>
-			<td><%= business.location %></td>
-			<td><%= business.city %></td>
-		</tr>
+			<div class="business_box">
+				<h3><span class="business_title"><%= business.name %></span></h3>
+				<div class="business_box_details">
+					<h4>Business Details</h4>
+					<p><span class="label">Phone:</span><%= business.contact_phone %></p>
+					<p><span class="label">Email:</span><%= business.contact_email %></p>
+					<p><span class="label">Address:</span><span class="address"><%= business.contact_address %></span></p>
+				</div>
+				<div class="business_box_products">
+					<h4>Products/Services</h4>
+					<p><%= business.category %></p>
+				</div>
+				<BR CLEAR=BOTH>
+				<div class="business_box_links">
+					<% if !is_favorite(business) %>
+						<%= link_to "Add to My List", add_favorite_business_path(business.id) %>
+					<% else %>
+						<%= link_to "Remove from List", remove_favorite_business_path(business.id),:method => :delete, :confirm => "Are you sure?" %>
+					<% end %>
+				</div>
+			</div>
 		<% end %>
-	</table>
-<% if session[:logged_in] == true %>
-	<p><%= link_to "Profile", member_path(session[:member_id])%></p>
-<% end %>
+	</div>
+	
+	

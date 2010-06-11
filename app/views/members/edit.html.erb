@@ -1,4 +1,4 @@
-<h1>Edit Profile</h1>
+<h4>Edit Profile</h4>
 <div class="form">
 <% form_for @member, :html => { :multipart => true } do |f| %>
   	<%= f.error_messages %>
@@ -35,7 +35,5 @@
 <% end %>
 </div>
 
-
-<%= link_to 'Profile', @member %> |
 <%= link_to 'Back', members_path %>
 

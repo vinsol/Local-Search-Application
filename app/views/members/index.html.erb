@@ -1,5 +1,6 @@
-
-<p><h3>Welcome,<br/>
-<%= @member.first_name %> <%= @member.last_name %></h3>
-</p>
-<p><%= link_to "View Profile", member_path(session[:member_id]) %></p>
+<div id="welcome_message">
+	<% if @logged_in == true %>
+		Welcome,
+		<%= @member.first_name %> <%= @member.last_name %>
+	<% end %>
+</div>

@@ -88,17 +88,34 @@ class BusinessesController < ApplicationController
     #Adding same business twice in the list is not allowed
     if is_favorite(@business) 
       flash[:notice] = "Business already in your favorite list"
-      redirect_to business_path(params[:id])
+      redirect_to :back
     else
       if BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:FAVORITE])
-        redirect_to_profile("Business added to your list","message")
+        flash[:message] = "Business added to your profile"
+        redirect_to :back
       else
         flash[:notice] = "Unable to add business to your list. Try again."
-        redirect_to business_path(params[:id])
+        redirect_to :back
       end
     end
   end
   
+  def remove_favorite
+    @business = Business.find_by_id(params[:id])
+    #Cannot remove business if it is not in favorite
+    if !is_favorite(@business)
+      flash[:notice] = "Business not in your list"
+      redirect_to :back
+    else
+      if BusinessRelation.destroy(@favorite.id)
+        flash[:message] = "Business removed from your list"
+        redirect_to :back
+      else
+        flash[:notice] = "Unable to remove from list. Please try again."
+        redirect_to :back
+      end
+    end
+  end
   protected
     
     #Checks whether the person is owner or not.
@@ -113,7 +130,8 @@ class BusinessesController < ApplicationController
     #checks whether the person has added the business as favorite.
     
     def is_favorite(business)
-      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],RELATION[:FAVORITE]])
+      @favorite = business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],RELATION[:FAVORITE]])
+      if @favorite
         return true
       else
         return false

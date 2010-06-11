@@ -1,9 +1,9 @@
 class MembersController < ApplicationController
-  before_filter :authorize , :except => [:new, :create,:forgot_password]
+  before_filter :authorize , :except => [:index, :new, :create,:forgot_password]
   
   def index
     @member = Member.find_by_id(session[:member_id])
-    @title = "AskMe's Clone"
+    @title = "Home"
   end
 
  

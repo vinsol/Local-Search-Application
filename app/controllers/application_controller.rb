@@ -3,6 +3,9 @@
 
 class ApplicationController < ActionController::Base
   before_filter :check_remember_me
+  before_filter :jumpback
+  
+  
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
@@ -54,5 +57,22 @@ class ApplicationController < ActionController::Base
         return false
       end
     end
+    
+    
+      def jumpback
+        session[:jumpback] = session[:jumpcurrent]
+        session[:jumpcurrent] = request.request_uri
+      end
+      
+      def rescue_action_in_public(exception)
+          case exception
+           when ::ActionController::RedirectBackError
+             jumpto = session[:jumpback] || {:controller => "/my_overview"}
+             redirect_to jumpto
+           else
+             super
+           end
+        end
+      
 end
 
