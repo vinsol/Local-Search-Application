@@ -3,13 +3,17 @@
 	<tr><td id="label">Business</td>
 		<td id="label">Owner</td>
 		<td id="label">City</td>
-		<td id="label">Remove from List</td>
+		<td id="label_wide">Remove from List</td>
 	</tr>
-	<% for business in @favorite_businesses do %>
-		<tr><td><%= link_to "#{business.name}" , business_path(business.id) %></td>
-			<td><%= business.owner %></td>  
-			<td><%= business.city %></td>
-			<td><%= link_to "Remove", remove_favorite_business_path(business.id),:method => :delete, :confirm => "Are you sure?" %>
-		</tr>
-	<% end %>
+		<% for business in @favorite_businesses do %>
+			<%="<tr id=#{business.id}>"%><td><%= link_to "#{business.name}" , business_path(business.id) %></td>
+				<td><%= business.owner %></td>  
+				<td><%= business.city %></td>
+				<td><%= link_to_remote "Remove", 
+					{:url => remove_favorite_business_path(business.id),:complete => visual_effect(:DropOut,"#{business.id}"),
+					:method => :delete, :confirm => "Are you sure?"}%>
+			</tr>
+		<% end %>
 </table>
+
+	<p><%= link_to "Add businesses to your list", businesses_path %></p>

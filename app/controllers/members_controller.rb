@@ -10,13 +10,14 @@ class MembersController < ApplicationController
   def show
     @member = Member.find_by_id(session[:member_id])
     @owned_businesses = @member.owned_businesses
-    @favorite_businesses = @member.favorite_businesses
+    @favorite_businesses = @member.favorite_businessess
     @title = @member.first_name + " " + @member.last_name
   end
 
   def show_list
      @member = Member.find_by_id(session[:member_id])
      @favorite_businesses = @member.favorite_businesses
+     puts @favorite_businesses
      @title = @member.first_name + " " + @member.last_name
    end
   

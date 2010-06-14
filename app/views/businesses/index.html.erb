@@ -2,7 +2,7 @@
 	
 	<div id="business_list">
 		<% @businesses.each do |business| %>
-			<div class="business_box">
+			<%= "<div class=business_box id=#{business.id} >"%>
 				<h3><span class="business_title"><%= business.name %></span></h3>
 				<div class="business_box_details">
 					<h4>Business Details</h4>
@@ -15,15 +15,19 @@
 					<p><%= business.category %></p>
 				</div>
 				<BR CLEAR=BOTH>
-				<div class="business_box_links">
+				<%= "<div class=business_box_links >"%>
 					<% if !is_favorite(business) %>
 						<%= link_to "Add to My List", add_favorite_business_path(business.id) %>
 					<% else %>
-						<%= link_to "Remove from List", remove_favorite_business_path(business.id),:method => :delete, :confirm => "Are you sure?" %>
+						<%= link_to_remote "Remove from My List", 
+							{:url => remove_favorite_business_path(business.id),:method => :delete, :confirm => "Are you sure?"}%>
+
 					<% end %>
 				</div>
 			</div>
 		<% end %>
 	</div>
+	<%= will_paginate @businesses %>
+	
 	
 	

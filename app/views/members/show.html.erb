@@ -28,7 +28,7 @@
 			<td id="member_details_address"><%= @member.address %></td>
 		</tr>
 		<tr>
-			<td id="label">My Businesses:</td>
+			<td id="label_wide">My Businesses:</td>
 			<td id="member_details">
 				<ul><% for business in @owned_businesses do %>
 						<li><%= link_to "#{business.name}" , business_path(business.id) %></li>

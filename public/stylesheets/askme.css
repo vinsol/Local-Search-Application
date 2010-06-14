@@ -27,7 +27,9 @@ body {
 	border: 2px solid red;
 	padding: 3px;
 	}
-
+#welcome_message{
+	margin-top:5px;
+}
 #message {
 	margin:10px;
 	color: green;
@@ -39,12 +41,13 @@ body {
 
 #business_list {
 	margin:10px;
+	line-height:15px;
 	
 }
 
 .business_box {
 	width:800px;
-	height:300px;
+	height:250px;
 	margin-left:auto;
 	margin-right:auto;
 	margin-top:10px;

@@ -1,7 +1,7 @@
 class BusinessesController < ApplicationController
  
   def index
-    @businesses = Business.all
+    @businesses = Business.paginate :page => params[:page], :order => 'name ASC'
     @title = "Listing Businesses"
     respond_to do |format|
       format.html # index.html.erb

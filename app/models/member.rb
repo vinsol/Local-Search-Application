@@ -18,7 +18,8 @@ class Member < ActiveRecord::Base
   attr_accessor :password_confirmation, :password_change, :remember_me
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :remember_me
   attr_accessible :phone_number, :address, :remember_me_token, :photo
-
+  
+  
   
   def password
     @password

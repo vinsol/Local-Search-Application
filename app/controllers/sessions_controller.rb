@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
           member.update_attribute(:remember_me_time, remember_me_time)
           cookies[:remember_me_code] = { :value => memberCode, :expires => 14.days.from_now }
         end
-          flash[:message] = "Welcome #{member.first_name}"
+          #flash[:message] = "Welcome #{member.first_name}"
           redirect_to members_path
       else
         flash.now[:notice] = "Invalid login credentials"
