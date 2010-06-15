@@ -1,4 +1,4 @@
-<h2>Registered Businesses</h2>
+<h2>Registered Businesses</h2> <%= link_to "Add your own business" , new_member_business_path(session[:member_id]) %>
 	
 	<div id="business_list">
 		<% @businesses.each do |business| %>
@@ -15,12 +15,27 @@
 					<p><%= business.category %></p>
 				</div>
 				<BR CLEAR=BOTH>
-				<%= "<div class=business_box_links >"%>
+					<div class=business_box_links >
 					<% if !is_favorite(business) %>
-						<%= link_to "Add to My List", add_favorite_business_path(business.id) %>
+						<%= "<div id=Business_box_links_add_to_favorite_#{business.id}>"%>
+							<%= link_to_remote "Add to My List", 
+									{:url => add_favorite_business_path(business.id),
+									 :method => :get} %>
+						</div>
+						<%= "<div id=Business_box_links_remove_favorite_#{business.id} style='display:none'>"%>
+							<%= link_to_remote "Remove from My List", 
+								{:url => remove_favorite_business_path(business.id), 
+								:method => :delete, :confirm => "Are you sure?"}%>
 					<% else %>
-						<%= link_to_remote "Remove from My List", 
-							{:url => remove_favorite_business_path(business.id),:method => :delete, :confirm => "Are you sure?"}%>
+					<%= "<div id=Business_box_links_add_to_favorite_#{business.id} style='display:none'>"%>
+							<%= link_to_remote "Add to My List", 
+									{:url => add_favorite_business_path(business.id),
+									 :method => :get} %>
+					</div>
+						<%= "<div id=Business_box_links_remove_favorite_#{business.id}>"%>
+							<%= link_to_remote "Remove from My List", 
+								{:url => remove_favorite_business_path(business.id), 
+								:method => :delete, :confirm => "Are you sure?"}%>
 
 					<% end %>
 				</div>
@@ -28,6 +43,7 @@
 		<% end %>
 	</div>
 	<%= will_paginate @businesses %>
+	
 	
 	
 	

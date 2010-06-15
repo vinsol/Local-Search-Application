@@ -10,20 +10,20 @@ class MembersController < ApplicationController
   def show
     @member = Member.find_by_id(session[:member_id])
     @owned_businesses = @member.owned_businesses
-    @favorite_businesses = @member.favorite_businessess
+    @favorite_businesses = @member.favorite_businesses
     @title = @member.first_name + " " + @member.last_name
   end
 
   def show_list
      @member = Member.find_by_id(session[:member_id])
-     @favorite_businesses = @member.favorite_businesses
+     @favorite_businesses = @member.favorite_businesses.paginate :page => params[:page], :per_page => 5
      puts @favorite_businesses
      @title = @member.first_name + " " + @member.last_name
    end
   
   
   def new
-    redirect_to_profile("Logged in users can not register","notice") unless session[:logged_in] != true
+    redirect_to_profile("Logged in users can not register","notice") if is_logged_in
     @title = "Signup"
     @member = Member.new
   end

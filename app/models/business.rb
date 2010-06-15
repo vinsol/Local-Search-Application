@@ -4,7 +4,10 @@ class Business < ActiveRecord::Base
 
   validates_presence_of :name, :location, :city, :category, :contact_name, :contact_email
   validates_presence_of :contact_phone, :contact_website, :contact_address, :description, :opening_time, :closing_time
-  
+  validates_format_of :contact_website,
+      :message => "must be a valid url",
+      :with => URL
+      
   validates_format_of :contact_phone, 
       :message => "must be a 10 digit valid telephone number.",
       :with => PHONE

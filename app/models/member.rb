@@ -6,6 +6,7 @@ class Member < ActiveRecord::Base
   has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
   has_many :favorite_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:FAVORITE]]
   
+  
   validates_presence_of :email, :first_name, :last_name, :phone_number, :address
   validates_uniqueness_of :email
   validates_format_of :phone_number, 

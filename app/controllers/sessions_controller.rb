@@ -11,7 +11,6 @@ class SessionsController < ApplicationController
 
   def delete
       session[:member_id] = nil
-      session[:logged_in]= false
       if cookies[:remember_me_id] then cookies.delete :remember_me_id end
       if cookies[:remember_me_code] then cookies.delete :remember_me_code end
       flash[:message] = "Logged Out"

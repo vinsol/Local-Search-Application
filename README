@@ -1,14 +1,7 @@
 == Askme.in Clone ==
 Local Product Search Engine
 
-Status as of 07 June :
+Plugins Installed - PaperClip and Will_Paginate [Latest builds of both plugins from their github repositories]
 
-Controllers	=> 	"Members" , Actions	=> 	index, new, create, update, show, edit, destroy, change_password, forgot_password
-				"Sessions", Action	=> 	new, destroy, authenticate
-				"Businesses" CRUD actions
-				
-Models		=> member, business 
-				A member can have many businesses.
-
-			
+Gems and Software required - RMagick Gem 2.5.2 and ImageMagick 6.5.8
 				

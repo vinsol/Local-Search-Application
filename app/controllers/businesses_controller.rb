@@ -91,8 +91,9 @@ class BusinessesController < ApplicationController
       redirect_to :back
     else
       if BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:FAVORITE])
-        flash[:message] = "Business added to your profile"
-        redirect_to :back
+        respond_to do |format|
+          format.js 
+        end
       else
         flash[:notice] = "Unable to add business to your list. Try again."
         redirect_to :back
@@ -108,8 +109,9 @@ class BusinessesController < ApplicationController
       redirect_to :back
     else
       if BusinessRelation.destroy(@favorite.id)
-        flash[:message] = "Business removed from your list"
-        redirect_to :back
+        respond_to do |format|
+          format.js 
+        end
       else
         flash[:notice] = "Unable to remove from list. Please try again."
         redirect_to :back
