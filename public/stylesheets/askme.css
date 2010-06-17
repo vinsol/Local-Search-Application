@@ -21,20 +21,31 @@ body {
 	margin:10px 100px 10px 100px;
 	border-top:3px solid #33CCFF;
 	}
-#notice, #errorExplanation {
-	margin:10px;
-	color: red;
-	border: 2px solid red;
-	padding: 3px;
+#notice {
+	margin:5px;
+	border:1px solid red;
+	background:#fffccc;
+	color:red;
+	font-weight:bold;
+	padding:.5em;
+	margin-bottom:.8em;
 	}
+	
+#errorExplanation{
+	background:#FFEBE8 none repeat scroll 0;
+	border:1px solid #DD3C10;
+	padding:1em;
+	font-weight:bold;
+}
+
 #welcome_message{
 	margin-top:5px;
 }
 #message {
-	margin:10px;
-	color: green;
-	border: 2px solid green;
-	padding: 3px;
+	background:#FFFBE2 none repeat scroll 0;
+	border:2px solid #green;
+	padding:1em;margin:1em 0;
+	font-weight:bold;
 	}
 	
 /****BUSINESS DETAILS*****/
@@ -72,7 +83,13 @@ a {
   font-size:10px;
   position:absolute;
 }
+.business_photo {
+	width:200px;
+	height:150px;
+	float:left;
+}
 .resultInfo {
+  height:150px;
   font-size:12px;
   margin-top:5px;
   padding:4px 4px 1px;
@@ -92,6 +109,14 @@ a {
 }
 
 .links {
+  font-size:12px;
+  font-weight:bold;
+  margin-top:5px;
+  padding:11px 0 11px 7px;  
+  border-top:1px dashed #EAEDF0;
+}
+.show_business_links {
+  margin-left:220px;
   font-size:12px;
   font-weight:bold;
   margin-top:5px;

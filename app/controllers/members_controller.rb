@@ -23,7 +23,7 @@ class MembersController < ApplicationController
   
   def show_my_businesses
     @member = Member.find_by_id(session[:member_id])
-    @owned_businesses = @member.owned_businesses
+    @owned_businesses = @member.owned_businesses.paginate :page => params[:page], :per_page => 5
   end
   
   def new

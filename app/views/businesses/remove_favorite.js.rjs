@@ -7,5 +7,10 @@ page << "if ($('favorite_list')) { "
 page.hide "#{@business.id}"
 page.alert "Business removed from your list"
 page << "}"
+page << "if ($('show_business')) { "
+page.show "Business_box_links_add_to_favorite_#{@business.id}"
+page.hide "Business_box_links_remove_favorite_#{@business.id}"
+page.alert "Business removed from your list"
+page << "}"
 
 

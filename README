@@ -6,4 +6,22 @@ Plugins Installed - PaperClip and Will_Paginate [Latest builds of both plugins f
 Gems and Software required - RMagick Gem 2.5.2 and ImageMagick 6.5.8
 
 Specify the path to ImageMagick in environment config file. [development.rb..]
- ======> Paperclip.options[:command_path] = "/usr/bin"  --> change it according to operating system				
+ ======> Paperclip.options[:command_path] = "/usr/bin"  --> change it according to operating system		
+
+
+Links =>
+
+These links can be placed in the view files:-
+
+1. Site Root/Home				<%= link_to "Home", root_path %>
+2. Login Page					<%= link_to "Login", login_path %>
+3. Logout Path					<%= link_to "Logout", logout_path %>
+4. List of all businesses		<%= link_to "List all Businesses", businesses_path %>
+5. Show a business				<%= link_to "Show Business Details", business_path( Business Id ) %>
+6. New Business Form			<%= link_to "New Business", new_member_business( Member Id ) %>
+6. Edit Business				<%= link_to "Edit Business", edit_member_business( Member Id, Business Id ) %>
+7. New Member Registration		<%= link_to "Signup", new_member_path %>
+8. Edit Member Details			<%= link_to "Edit Profile", edit_member_path( Member Id ) %>
+9. Show Member Profile			<%= link_to "Profile", member_path( Member Id ) %>
+10.Show My businesses			<%= link_to "Show My Businesses", show_my_businesses_member_path( Member Id ) %>
+11. Show Favorite Businesses of a Member 		<%= link_to "Show Favorites", show_list_member( Member Id ) %>

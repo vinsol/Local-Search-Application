@@ -2,7 +2,7 @@
 <h3>Add a New Business</h3>
 <div class="form">
 	
-<% form_for [@member,@business] do |f| %>
+<% form_for [@member,@business],:html => { :multipart => true } do |f| %>
   	<%= f.error_messages %>
   	<fieldset>
 	<p>
@@ -54,8 +54,8 @@
 		<%= f.text_area :description, :size => "26x3" %>
 	</p>
 	<p>
-		<%= f.label (:photo_album, "Photo Album:") %>
-		<%= f.text_field :photo_album %>
+		<%= f.label (:photo, "Photo:") %>
+		<%= f.file_field :photo %>
 	</p>
 	<p>
 		<%= f.label (:map, "Map:") %>

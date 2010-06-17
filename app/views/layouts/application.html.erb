@@ -21,7 +21,8 @@
 		<div class="nav_bar">
 			<% if @logged_in == true %>
 				<%= link_to "Profile", member_path(session[:member_id])%> | 
-				<%= link_to "Businesses", businesses_path %> |
+				<%= link_to "All Businesses", businesses_path %> |
+				<%= link_to "My Businesses", show_my_businesses_member_path(session[:member_id]) %> |
 				<%= link_to "My List", show_list_member_path(session[:member_id])%> |
 				<%= link_to "Logout", logout_path %>
 			<% else -%>
