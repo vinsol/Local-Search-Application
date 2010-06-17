@@ -43,7 +43,7 @@ class MembersController < ApplicationController
     @member = Member.new(params[:member])
     if @member.save and @member.signup_notification
       flash[:message] = "Signup successful. Please login using your credentials."
-      redirect_to root_path
+      redirect_to login_path
     else
       render :action => :new
     end
@@ -67,17 +67,23 @@ class MembersController < ApplicationController
   
   def change_password
     @member = Member.find_by_id(session[:member_id])
-    if request.get?
-      @title = "Change Password"
-    elsif request.post?
-      @member.password_change = true
-      if @member.update_attributes(params[:member])
-       redirect_to_profile("Password was successfully changed","message")
-      else
-        flash.now[:notice] = "Password not changed. Try again"
-        render :action => :change_password
+      respond_to do |format|
+        format.js
       end
-    end    
+  end
+  
+  def update_password
+    @member = Member.find_by_id(session[:member_id])
+    @member.password_change = true
+    if @member.update_attributes(params[:member])
+      flash.now[:message] = "Password Changed"
+       respond_to do |format|
+         format.js
+       end
+    else
+      flash.now[:notice] = "Password not changed. Try again"
+      render :action => :change_password
+    end
   end
   
   def forgot_password

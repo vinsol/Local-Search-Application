@@ -92,6 +92,7 @@ class BusinessesController < ApplicationController
       redirect_to :back
     else
       if BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:FAVORITE])
+        @ajax_alert = "Business added to your list"
         respond_to do |format|
           format.js 
         end
@@ -110,6 +111,7 @@ class BusinessesController < ApplicationController
       redirect_to :back
     else
       if BusinessRelation.destroy(@favorite.id)
+        @message = "Business removed from your list"
         respond_to do |format|
           format.js 
         end

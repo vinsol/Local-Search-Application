@@ -1,4 +1,4 @@
 page.hide "Business_box_links_add_to_favorite_#{@business.id}"
 page.show "Business_box_links_remove_favorite_#{@business.id}"
-page.alert "Business added to your list"
+page.show "ajax_alert"
 

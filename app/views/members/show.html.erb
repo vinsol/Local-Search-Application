@@ -1,8 +1,13 @@
 <h2><%= @member.first_name %> <%= @member.last_name %></h2>
+<div id="ajax_response" style="display:none">
+	<%= flash[:message] %>
+</div>
 <div class="photo_col">
 	<%= image_tag @member.photo.url(:thumb) %>
 	<div class="profile_links">  
-		<p><%= link_to "Change Password", change_password_member_path(session[:member_id]) %></p>
+		<p><%= link_to_remote "Change Password", 
+							{:url => change_password_member_path(session[:member_id]),
+							:method => :get}%></p>
 		<p><%= link_to "Edit Profile", edit_member_path(session[:member_id]) %></p>
 		<p><%= link_to "Delete Profile", member_path(session[:member_id]), :method => :delete, :confirm => "Are you sure?" %></p>
 	</div>
@@ -27,37 +32,31 @@
 			<td id="label">Address:</td>
 			<td id="member_details_address"><%= @member.address %></td>
 		</tr>
-		<tr>
-			<td id="label_wide">My Businesses:</td>
-			<td id="member_details">
-				<ul><% for business in @owned_businesses do %>
-						<li><%= link_to "#{business.name}" , business_path(business.id) %></li>
-					<% end %>
-					
-				</ul>
-			</td>
-		</tr>
-	</table>
-	<div class="manage_links">
-    <p><%= link_to "Show My Businesses", show_my_businesses_member_path(session[:member_id])%></p>
-		<p><%= link_to "Add Business" , new_member_business_path(session[:member_id]) %><br>
-		<%= link_to "List of Businesses", businesses_path%></p>
-	</div>
-	
+	</table><p>
+	<div id="change_password" style="display:none">
+		<div class="form">
+		<% remote_form_for :member, @member, :url => update_password_member_path  do |f| %>
+		  	<%= f.error_messages %>
+		  	<fieldset>
+			<p><b>Change Password</b></p>
+			<div>
+				<%= f.label (:password, "Password") %>
+				<%= f.password_field :password %>
+			</div>
+			<div>
+				<%= f.label (:password_confirmation, "Confirm Password") %>
+				<%= f.password_field :password_confirmation %>
+			</div>
+			<div>
+				<%= f.submit "Change Password" %>
+			</div>
+		</fieldset>
+
+		<% end %>
+		</div>
+
+
+	</div>	
 </div>
-	<div class="member_favorites">
-		<table id="profile">
-			<tr>
-				<td id="label">My List:</td>
-			</tr>
-			<tr>
-				<td id="member_details">
-				<ul><% for business in @favorite_businesses do %>
-						<li><%= link_to "#{business.name}" , business_path(business.id) %></li>
-					<% end %>
-					
-				</ul>
-				</td>
-			</tr>
-		</table>
-	</div>
+
+	

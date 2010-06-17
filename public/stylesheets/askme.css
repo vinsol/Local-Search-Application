@@ -47,6 +47,12 @@ body {
 	padding:1em;margin:1em 0;
 	font-weight:bold;
 	}
+.ajax_response {
+		background:#FFFBE2 none repeat scroll 0;
+		border:2px solid #green;
+		padding:1em;margin:1em 0;
+		font-weight:bold;
+		}
 	
 /****BUSINESS DETAILS*****/
 
@@ -89,7 +95,7 @@ a {
 	float:left;
 }
 .resultInfo {
-  height:150px;
+  
   font-size:12px;
   margin-top:5px;
   padding:4px 4px 1px;

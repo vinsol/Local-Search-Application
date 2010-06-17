@@ -44,7 +44,7 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   map.root :controller => "members"
   
-  map.resources :members, :member => {:change_password => [:get,:post], :show_list => [:get], :show_my_businesses => [:get]}, :collection => {:forgot_password => [:get,:post]} do |members|
+  map.resources :members, :member => {:change_password => [:get], :update_password => [:post], :show_list => [:get], :show_my_businesses => [:get]}, :collection => {:forgot_password => [:get,:post]} do |members|
     members.resources :businesses, :except => [:index, :show]
   end
   map.resources :businesses,:only => [:index, :show], :member => {:add_favorite => [:get], :remove_favorite => [:delete]}

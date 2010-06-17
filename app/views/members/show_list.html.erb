@@ -2,6 +2,7 @@
 <% if @favorite_businesses.empty? %>
 	<p>There are no businesses in your list. <%= link_to "Add some businesses to your list", businesses_path %><p>
 <% else %>
+<p><%= link_to "Add more businesses to your list", businesses_path %></p>
 <div id="favorite_list">
 		<% for business in @favorite_businesses do %>
 				<%= "<div class=business_box id=#{business.id} >"%>
@@ -24,6 +25,6 @@
 			<% end %>
 	
 	<p><%= will_paginate @favorite_businesses %></p>
-	<p><%= link_to "Add more businesses to your list", businesses_path %></p>
+
 </div>
 <% end %>

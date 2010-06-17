@@ -59,20 +59,20 @@ class ApplicationController < ActionController::Base
     end
     
     
-      def jumpback
-        session[:jumpback] = session[:jumpcurrent]
-        session[:jumpcurrent] = request.request_uri
-      end
+    def jumpback
+      session[:jumpback] = session[:jumpcurrent]
+      session[:jumpcurrent] = request.request_uri
+    end
       
-      def rescue_action_in_public(exception)
-          case exception
-           when ::ActionController::RedirectBackError
-             jumpto = session[:jumpback] || {:controller => "/my_overview"}
-             redirect_to jumpto
-           else
-             super
-           end
+    def rescue_action_in_public(exception)
+      case exception
+        when ::ActionController::RedirectBackError
+          jumpto = session[:jumpback] || {:controller => "/my_overview"}
+          redirect_to jumpto
+        else
+          super
         end
+    end
       
 end
 
