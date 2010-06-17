@@ -1,6 +1,6 @@
 
 class Member < ActiveRecord::Base
-  has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "160x190>" }
+  has_attached_file :photo, :styles => {:thumb => "160x190>" }
   has_many :business_relations
   has_many :businesses, :through => :business_relations
   has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]

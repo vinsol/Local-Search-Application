@@ -21,6 +21,10 @@ class MembersController < ApplicationController
      @title = @member.first_name + " " + @member.last_name
    end
   
+  def show_my_businesses
+    @member = Member.find_by_id(session[:member_id])
+    @owned_businesses = @member.owned_businesses
+  end
   
   def new
     redirect_to_profile("Logged in users can not register","notice") if is_logged_in
@@ -38,8 +42,8 @@ class MembersController < ApplicationController
   def create
     @member = Member.new(params[:member])
     if @member.save and @member.signup_notification
-      session[:member_id] = @member.id
-      redirect_to_profile('Member was successfully created.',"message")
+      flash[:message] = "Signup successful. Please login using your credentials."
+      redirect_to root_path
     else
       render :action => :new
     end

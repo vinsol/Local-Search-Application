@@ -3,22 +3,26 @@
 	<p>There are no businesses in your list. <%= link_to "Add some businesses to your list", businesses_path %><p>
 <% else %>
 <div id="favorite_list">
-	<table>
-		<tr><td id="label">Business</td>
-			<td id="label">Owner</td>
-			<td id="label">City</td>
-			<td id="label_wide">Remove from List</td>
-		</tr>
-			<% for business in @favorite_businesses do %>
-				<%="<tr id=#{business.id}>"%><td><%= link_to "#{business.name}" , business_path(business.id) %></td>
-					<td><%= business.owner %></td>  
-					<td><%= business.city %></td>
-					<td><%= link_to_remote "Remove", 
-						{:url => remove_favorite_business_path(business.id),
-						:method => :delete, :confirm => "Are you sure?"}%>
-					</tr>
-					<% end %>
-				</table>
+		<% for business in @favorite_businesses do %>
+				<%= "<div class=business_box id=#{business.id} >"%>
+			  <h2><%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %>    
+    		    <span class="sideDetail">Listed in INFOMEDIA YELLOW PAGES</span> 
+    		</h2> 
+        <div class="resultInfo"> 
+    		  <p class="phone"><%= business.contact_phone %></p> 
+    		  <p><%= business.contact_address %></p> 
+    		  <p class="tags"><%= business.category %></p> 
+    	  </div> 
+    		<div class="links"> 
+    		    <a href="#">Send to Phone</a> 
+							<%= link_to_remote "Remove from My List", 
+								{:url => remove_favorite_business_path(business.id), 
+								:method => :delete, :confirm => "Are you sure?"}%>
+         </div>
+					
+				</div>
+			<% end %>
+	
 	<p><%= will_paginate @favorite_businesses %></p>
 	<p><%= link_to "Add more businesses to your list", businesses_path %></p>
 </div>

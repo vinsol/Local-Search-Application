@@ -44,7 +44,8 @@ class BusinessesController < ApplicationController
     @business = Business.new(params[:business])
     @business.owner = @member.first_name + " " + @member.last_name
     if @business.save and BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:OWNED])
-      redirect_to_profile('Business was successfully added.','message')
+      flash[:message] = "Business successfully added"      
+      redirect_to businesses_path
     else
       @business.destroy
       render  :action => :new

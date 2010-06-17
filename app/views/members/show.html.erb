@@ -39,6 +39,7 @@
 		</tr>
 	</table>
 	<div class="manage_links">
+    <p><%= link_to "Show My Businesses", show_my_businesses_member_path(session[:member_id])%></p>
 		<p><%= link_to "Add Business" , new_member_business_path(session[:member_id]) %><br>
 		<%= link_to "List of Businesses", businesses_path%></p>
 	</div>

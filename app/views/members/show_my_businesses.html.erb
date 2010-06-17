@@ -1,0 +1,27 @@
+<h3>My Businesses</h3>
+<% if @owned_businesses.empty? %>
+	<p>You do not own any businesses. <%= link_to "Add your business to our database", new_member_business_path %><p>
+<% else %>
+<div id="owned_list">
+<p><%= link_to "Add more businesses", new_member_business_path(session[:member_id]) %></p>
+		<% for business in @owned_businesses do %>
+				<%= "<div class=business_box id=#{business.id} >"%>
+			  <h2><%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %>    
+    		    <span class="sideDetail">Listed in INFOMEDIA YELLOW PAGES</span> 
+    		</h2> 
+        <div class="resultInfo"> 
+    		  <p class="phone"><%= business.contact_phone %></p> 
+    		  <p><%= business.contact_address %></p> 
+    		  <p class="tags"><%= business.category %></p> 
+    	  </div> 
+    		<div class="links"> 
+    		    <%= link_to "Edit Business", edit_member_business_path(@member.id, business.id)%>
+            <%= link_to "Delete business", member_business_path(@member.id, business.id), :method => :delete, :confirm => "Are you sure?"%>
+         </div>
+					
+				</div>
+			<% end %>
+	
+	
+</div>
+<% end %>

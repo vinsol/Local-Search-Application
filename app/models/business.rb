@@ -1,9 +1,10 @@
-class Business < ActiveRecord::Base
+class Business < ActiveRecord::Base  
   has_many :business_relations
   has_many :members, :through => :business_relations
 
-  validates_presence_of :name, :location, :city, :category, :contact_name, :contact_email
-  validates_presence_of :contact_phone, :contact_website, :contact_address, :description, :opening_time, :closing_time
+  validates_presence_of :name, :location, :city, :category, :contact_name 
+  validates_presence_of :contact_phone, :contact_address 
+  
   validates_format_of :contact_website,
       :message => "must be a valid url",
       :with => URL

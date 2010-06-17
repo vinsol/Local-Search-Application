@@ -4,4 +4,6 @@ Local Product Search Engine
 Plugins Installed - PaperClip and Will_Paginate [Latest builds of both plugins from their github repositories]
 
 Gems and Software required - RMagick Gem 2.5.2 and ImageMagick 6.5.8
-				
+
+Specify the path to ImageMagick in environment config file. [development.rb..]
+ ======> Paperclip.options[:command_path] = "/usr/bin"  --> change it according to operating system				
