@@ -48,8 +48,13 @@ ActionController::Routing::Routes.draw do |map|
     members.resources :businesses, :except => [:index, :show]
   end
   map.resources :businesses,:only => [:index, :show], :member => {:add_favorite => [:get], :remove_favorite => [:delete]}
-  map.resources :admin_members, :controller => "admin/members", :only => [:index]
-  map.resources :admin_businesses, :controller => "admin/businesses", :only => [:index]
+  map.admin '/admin', :controller => "admin/admin", :action => :index
+  map.admin_members "/admin/members", :controller => "admin/members", :action => :index
+  map.admin_businesses "/admin/businesses", :controller => "admin/businesses", :action => :index
+  map.admin_locations "/admin/locations", :controller => "admin/locations", :action => :index
+  map.admin_cities "/admin/cities", :controller => "admin/cities", :action => :index
+  map.admin_categories "/admin/categories", :controller => "admin/categories", :action => :index
+  map.admin_subcategories "/admin/subcategories", :controller => "admin/subcategories", :action => :index
   
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'delete'

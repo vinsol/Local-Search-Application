@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100618055933) do
+ActiveRecord::Schema.define(:version => 20100618081020) do
 
   create_table "business_relations", :force => true do |t|
     t.integer  "member_id"
@@ -41,6 +41,25 @@ ActiveRecord::Schema.define(:version => 20100618055933) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.string   "sub_category"
+  end
+
+  create_table "categories", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "category"
+  end
+
+  create_table "cities", :force => true do |t|
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "members", :force => true do |t|
@@ -71,5 +90,11 @@ ActiveRecord::Schema.define(:version => 20100618055933) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "sub_categories", :force => true do |t|
+    t.string   "sub_category"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

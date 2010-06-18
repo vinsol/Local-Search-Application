@@ -11,15 +11,19 @@
 	</p>
 	<p>
 		<%= f.label (:location, "Location") %>
-		<%= f.select (:location, %w{Patel_Nagar Rajiv_Chowk}) %>
+		<%= f.collection_select :location, Location.all, :location, :location, :include_blank => 'None' %>
 	</p>
 	<p>
 		<%= f.label (:city, "City") %>
-		<%= f.select (:city, %w{Delhi}) %>
+		<%= f.collection_select :city, City.all, :city, :city, :include_blank => 'None' %>
 	</p>
 	<p>
 		<%= f.label (:category, "Category") %>
-		<%= f.select (:category, %w{Chemist Restaurant Healtcare}) %>
+		<%= f.collection_select :category, Category.all, :category, :category, :include_blank => 'None' %>
+	</p>
+	<p>
+		<%= f.label (:sub_category, "Sub-Category") %>
+		<%= f.collection_select :sub_category, SubCategory.all, :sub_category, :sub_category, :include_blank => 'None' %>
 	</p>
 	<p>
 		<%= f.label (:contact_name, "Contact Name:") %>

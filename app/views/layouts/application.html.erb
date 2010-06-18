@@ -29,8 +29,7 @@
 					<%= link_to "Logout", logout_path %>
 				<% elsif @member.is_admin == true %>
 					<%= link_to "Profile", member_path(session[:member_id])%> | 
-					<%= link_to "Admin Members", admin_members_path %> |
-					<%= link_to "Admin Businesses", admin_businesses_path %> |
+					<%= link_to "Admin Module", admin_path %> |
 					<%= link_to "Logout", logout_path %>
 				<%end%>
 			<% else -%>
