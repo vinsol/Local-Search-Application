@@ -4,6 +4,9 @@
 <% else %>
 <p><%= link_to "Add more businesses to your list", businesses_path %></p>
 <div id="favorite_list">
+	<div id="ajax_response" style="display:none">
+		<div id="message">Business Removed from your list</div>		
+	</div>
 		<% for business in @favorite_businesses do %>
 				<%= "<div class=business_box id=#{business.id} >"%>
 			  <h2><%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %>    

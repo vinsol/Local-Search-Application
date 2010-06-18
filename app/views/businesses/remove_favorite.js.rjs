@@ -1,16 +1,19 @@
 page << "if ($('business_list')) { "
 page.show "Business_box_links_add_to_favorite_#{@business.id}"
 page.hide "Business_box_links_remove_favorite_#{@business.id}"
-page.alert "Business removed from your list"
+page.visual_effect (:appear, "ajax_response_remove", :duration => 3)
+page.visual_effect (:fade, "ajax_response_remove", :duration => 2)
 page << "}"
 page << "if ($('favorite_list')) { "
 page.hide "#{@business.id}"
-page.alert "Business removed from your list"
+page.visual_effect (:appear, "ajax_response", :duration => 3)
+page.visual_effect (:fade, "ajax_response", :duration => 2)
 page << "}"
 page << "if ($('show_business')) { "
 page.show "Business_box_links_add_to_favorite_#{@business.id}"
 page.hide "Business_box_links_remove_favorite_#{@business.id}"
-page.alert "Business removed from your list"
+page.visual_effect (:appear, "ajax_response", :duration => 3)
+page.visual_effect (:fade, "ajax_response", :duration => 2)
 page << "}"
 
 

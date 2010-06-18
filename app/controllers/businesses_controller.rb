@@ -62,7 +62,7 @@ class BusinessesController < ApplicationController
           flash[:message] = 'Business was successfully updated.'
           redirect_to business_path(params[:id])
         else
-          render :action => :new
+          render :action => :edit
         end
       else
         redirect_to_profile("Nice Try","notice")
@@ -93,6 +93,8 @@ class BusinessesController < ApplicationController
     else
       if BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:FAVORITE])
         @ajax_alert = "Business added to your list"
+        p '========>>>>>>>'
+        p @ajax_alert
         respond_to do |format|
           format.js 
         end
@@ -111,7 +113,7 @@ class BusinessesController < ApplicationController
       redirect_to :back
     else
       if BusinessRelation.destroy(@favorite.id)
-        @message = "Business removed from your list"
+        @ajax_alert = "Business removed from your list"
         respond_to do |format|
           format.js 
         end

@@ -43,16 +43,12 @@ body {
 }
 #message {
 	background:#FFFBE2 none repeat scroll 0;
-	border:2px solid #green;
+	color: black;
+	border:2px solid green;
 	padding:1em;margin:1em 0;
 	font-weight:bold;
 	}
-.ajax_response {
-		background:#FFFBE2 none repeat scroll 0;
-		border:2px solid #green;
-		padding:1em;margin:1em 0;
-		font-weight:bold;
-		}
+
 	
 /****BUSINESS DETAILS*****/
 

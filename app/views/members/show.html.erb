@@ -1,6 +1,6 @@
 <h2><%= @member.first_name %> <%= @member.last_name %></h2>
 <div id="ajax_response" style="display:none">
-	<%= flash[:message] %>
+	<div id="message">Password Changed.</div>		
 </div>
 <div class="photo_col">
 	<%= image_tag @member.photo.url(:thumb) %>
@@ -32,7 +32,7 @@
 			<td id="label">Address:</td>
 			<td id="member_details_address"><%= @member.address %></td>
 		</tr>
-	</table><p>
+	</table>
 	<div id="change_password" style="display:none">
 		<div class="form">
 		<% remote_form_for :member, @member, :url => update_password_member_path  do |f| %>

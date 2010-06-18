@@ -1,6 +1,8 @@
 
 class Member < ActiveRecord::Base
   has_attached_file :photo, :styles => {:thumb => "160x190>" }
+  validates_attachment_size :photo, :less_than => 1.megabytes  
+  validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']
   has_many :business_relations
   has_many :businesses, :through => :business_relations
   has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
