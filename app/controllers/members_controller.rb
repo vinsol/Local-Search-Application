@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_filter :authorize , :except => [:index, :new, :create,:forgot_password]
+  skip_before_filter :authorize , :only => [:index, :new, :create,:forgot_password]
   
   def index
     @member = Member.find_by_id(session[:member_id])

@@ -18,7 +18,11 @@
     		  <p class="tags"><%= business.category %></p> 
     	  </div> 
     		<div class="links"> 
-    		    
+    		    <% if @logged_in == false %>
+					<div id=Business_box_links_add_to_favorite_#{business.id}>
+						<a href="#">Send to Phone</a> 
+					</div>
+				<% else %>
     		    <% if !is_favorite(business) %>
 						<%= "<div id=Business_box_links_add_to_favorite_#{business.id}>"%>
               <a href="#">Send to Phone</a> 
@@ -46,8 +50,9 @@
 								:method => :delete, :confirm => "Are you sure?"}%>
             </div>
 					<% end %>
+					<% end %>
     		  </div> 				
-      		
+      			
 				</div>
 			<% end %>
 	</div>

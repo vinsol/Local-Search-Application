@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  
+  skip_before_filter :authorize
   def new
     if is_logged_in
      redirect_to_profile("You are already logged in",'message')

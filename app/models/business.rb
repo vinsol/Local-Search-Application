@@ -1,6 +1,6 @@
 class Business < ActiveRecord::Base  
   has_many :business_relations
-  has_many :members, :through => :business_relations
+  has_many :members, :through => :business_relations, :source => :member
   has_attached_file :photo, :styles => {:thumb => "160x190>", :medium => "640x640>" }
   validates_attachment_size :photo, :less_than => 1.megabytes  
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']

@@ -33,6 +33,9 @@
 			<td id="member_details_address"><%= @member.address %></td>
 		</tr>
 	</table>
+	<%= link_to "All Businesses", businesses_path %> |
+	<%= link_to "My Businesses", show_my_businesses_member_path(session[:member_id]) %> |
+	<%= link_to "My List", show_list_member_path(session[:member_id])%>
 	<div id="change_password" style="display:none">
 		<div class="form">
 		<% remote_form_for :member, @member, :url => update_password_member_path  do |f| %>

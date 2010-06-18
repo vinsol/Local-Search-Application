@@ -3,6 +3,7 @@
 
 class ApplicationController < ActionController::Base
   before_filter :check_remember_me
+  before_filter :authorize
   before_filter :jumpback
   
   
@@ -49,7 +50,7 @@ class ApplicationController < ActionController::Base
     end
 
     def is_logged_in
-      if Member.find_by_id(session[:member_id])
+      if @member = Member.find_by_id(session[:member_id])
         @logged_in = true
         return true
       else
@@ -63,6 +64,15 @@ class ApplicationController < ActionController::Base
       session[:jumpback] = session[:jumpcurrent]
       session[:jumpcurrent] = request.request_uri
     end
+      
+    def check_admin
+      if Member.find_by_id(session[:member_id]).is_admin == true
+        return true
+      else
+        redirect_to root_path
+      end
+    end
+      
       
     def rescue_action_in_public(exception)
       case exception
