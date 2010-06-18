@@ -4,7 +4,7 @@ class Business < ActiveRecord::Base
   has_attached_file :photo, :styles => {:thumb => "160x190>", :medium => "640x640>" }
   validates_attachment_size :photo, :less_than => 1.megabytes, 
                                     :if => Proc.new { |imports| !imports.photo_file_name.blank? }
-  validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png'], 
+  validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
                                     :if => Proc.new { |imports| !imports.photo_file_name.blank? }
 
   validates_presence_of :name, :location, :city, :category, :contact_name 

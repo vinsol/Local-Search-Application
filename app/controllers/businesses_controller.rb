@@ -24,11 +24,31 @@ class BusinessesController < ApplicationController
 
   def new
     @title = "Add Business"
+    @cities = City.find(:all)
     @member = Member.find_by_id(session[:member_id])
     @business = Business.new
   end
 
- 
+  def get_locations
+    unless request.xhr?
+    flash[:error] = ‘Invalid page’
+    redirect_to root_path
+    else
+    @locations = City.find_by_city(params[:business_city]).locations
+    render :partial=> "business_location"
+    end
+  end
+  
+  def get_sub_categories
+    unless request.xhr?
+    flash[:error] = ‘Invalid page’
+    redirect_to root_path
+    else
+    @sub_categories = Category.find_by_category(params[:business_category]).sub_categories
+    render :partial=> "business_sub_category"
+    end
+  end
+    
   def edit
     @title = "Edit Business"
     @member = Member.find_by_id(session[:member_id])

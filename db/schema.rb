@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100618081020) do
+ActiveRecord::Schema.define(:version => 20100618113518) do
 
   create_table "business_relations", :force => true do |t|
     t.integer  "member_id"
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(:version => 20100618081020) do
     t.string   "category"
   end
 
+  create_table "categories_sub_categories", :id => false, :force => true do |t|
+    t.integer "category_id"
+    t.integer "sub_category_id"
+  end
+
+  add_index "categories_sub_categories", ["category_id"], :name => "index_categories_sub_categories_on_category_id"
+  add_index "categories_sub_categories", ["sub_category_id"], :name => "index_categories_sub_categories_on_sub_category_id"
+
   create_table "cities", :force => true do |t|
     t.string   "city"
     t.datetime "created_at"
@@ -60,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20100618081020) do
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "city_id"
   end
 
   create_table "members", :force => true do |t|
