@@ -1,20 +1,17 @@
 class SessionsController < ApplicationController
   skip_before_filter :authorize
+  before_filter :restrict_if_logged_in, :only => :new
+  
   def new
-    if is_logged_in
-     redirect_to_profile("You are already logged in",'message')
-    else
-        @title = "Login"
-        @member = Member.new
-    end
+    @title = "Login"
+    @member = Member.new
   end
 
   def delete
       session[:member_id] = nil
       if cookies[:remember_me_id] then cookies.delete :remember_me_id end
       if cookies[:remember_me_code] then cookies.delete :remember_me_code end
-      flash[:message] = "Logged Out"
-      redirect_to login_path
+      flash_redirect("message","Logged out", login_path)  
   end
 
   def authenticate

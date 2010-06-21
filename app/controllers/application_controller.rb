@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
   before_filter :check_remember_me
   before_filter :authorize
-  before_filter :jumpback
+  before_filter :store_return_path, :except => :flash_redirect
   
   
   helper :all # include all helpers, all the time
@@ -14,10 +14,7 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   protected
     def authorize
-      unless is_logged_in
-        flash[:message] = "Please login"
-        redirect_to login_path
-      end
+      flash_redirect("message", "Please Login", login_path) unless is_logged_in
     end
     
     def check_remember_me
@@ -40,14 +37,6 @@ class ApplicationController < ActionController::Base
          return random_string
     end
     
-    def redirect_to_profile(msg,type)
-      if type == 'notice'
-        flash[:notice] = msg
-      elsif type == 'message'
-          flash[:message] = msg
-      end
-      redirect_to member_path(session[:member_id])
-    end
 
     def is_logged_in
       if @member = Member.find_by_id(session[:member_id])
@@ -59,11 +48,18 @@ class ApplicationController < ActionController::Base
       end
     end
     
-    
-    def jumpback
-      session[:jumpback] = session[:jumpcurrent]
-      session[:jumpcurrent] = request.request_uri
+    def restrict_if_logged_in
+      if @member = Member.find_by_id(session[:member_id])
+        @logged_in = true
+        flash_redirect("message","You are already logged in", member_path(@member.id))
+      end
     end
+    
+    def flash_redirect(type,content,destination)
+      flash[:"#{type}"] = content
+      redirect_to destination
+    end
+    
       
     def check_admin
       if Member.find_by_id(session[:member_id]).is_admin == true
@@ -72,17 +68,11 @@ class ApplicationController < ActionController::Base
         redirect_to root_path
       end
     end
-      
-      
-    def rescue_action_in_public(exception)
-      case exception
-        when ::ActionController::RedirectBackError
-          jumpto = session[:jumpback] || {:controller => "/my_overview"}
-          redirect_to jumpto
-        else
-          super
-        end
+    
+    def store_return_path
+      session[:return_to] = request.referrer
     end
       
+    
 end
 

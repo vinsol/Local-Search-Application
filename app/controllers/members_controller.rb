@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   skip_before_filter :authorize , :only => [:index, :new, :create,:forgot_password]
-  
+  before_filter :restrict_if_logged_in, :only => :new
   def index
     @member = Member.find_by_id(session[:member_id])
     @title = "Home"
@@ -27,7 +27,6 @@ class MembersController < ApplicationController
   end
   
   def new
-    redirect_to_profile("Logged in users can not register","notice") if is_logged_in
     @title = "Signup"
     @member = Member.new
   end
@@ -42,8 +41,7 @@ class MembersController < ApplicationController
   def create
     @member = Member.new(params[:member])
     if @member.save and @member.signup_notification
-      flash[:message] = "Signup successful. Please login using your credentials."
-      redirect_to login_path
+      flash_redirect("message", "Signup successful. Please login using your credentials.", login_path )
     else
       render :action => :new
     end
@@ -51,11 +49,10 @@ class MembersController < ApplicationController
 
 
   def update
-    if Member.find_by_id(session[:member_id]).update_attributes(params[:member])
-      redirect_to_profile("Profile was successfully edited","message") 
+    if @member = Member.find_by_id(session[:member_id]).update_attributes(params[:member])
+      flash_redirect("message","Profile was successfully edited", member_path(@member.id) )
     else
-      flash.now[:notice] = "Profile not saved. Please check it again"
-      redirect_to edit_member_path(session[:member_id])
+      flash_redirect("notice","Profile not saved. Please check it again",edit_member_path(@member.id) )
     end
   end
 
@@ -92,8 +89,7 @@ class MembersController < ApplicationController
       if params[:member][:email]
         @member = Member.find_by_email(params[:member][:email])
         if @member and @member.send_new_password
-          flash[:message] = "A new password has been sent by email."
-          redirect_to login_path
+          flash_redirect("message","A new password has been sent by email.",login_path )
         else
           flash[:notice] = "Unable to send the password. Try again"
           render :action => :forgot_password

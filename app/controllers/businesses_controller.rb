@@ -31,8 +31,7 @@ class BusinessesController < ApplicationController
 
   def get_locations
     unless request.xhr?
-    flash[:error] = ‘Invalid page’
-    redirect_to root_path
+    flash_redirect("error", "Invalid Page", root_path)
     else
     @locations = City.find_by_city(params[:business_city]).locations
     render :partial=> "business_location"
@@ -53,9 +52,7 @@ class BusinessesController < ApplicationController
     @title = "Edit Business"
     @member = Member.find_by_id(session[:member_id])
     @business = Business.find(params[:id])
-    unless is_owner(@business) 
-      redirect_to_profile('Business was successfully added.', 'notice')
-    end
+    flash_redirect ("notice","Business was successfully added", member_path(@member.id)) unless is_owner(@business) 
   end
 
  
@@ -64,8 +61,7 @@ class BusinessesController < ApplicationController
     @business = Business.new(params[:business])
     @business.owner = @member.first_name + " " + @member.last_name
     if @business.save and BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:OWNED])
-      flash[:message] = "Business successfully added"      
-      redirect_to businesses_path
+      flash_redirect("message", "Business was successfully added", businesses_path)
     else
       @business.destroy
       render  :action => :new
@@ -79,13 +75,12 @@ class BusinessesController < ApplicationController
       #### Allow only if the user owns the business
       if is_owner(@business) 
         if @business.update_attributes(params[:business])
-          flash[:message] = 'Business was successfully updated.'
-          redirect_to business_path(params[:id])
+          flash_redirect("message", "Business was successfully added", business_path(params[:id]))
         else
           render :action => :edit
         end
       else
-        redirect_to_profile("Nice Try","notice")
+        flash_redirect("notice", "Nice try", member_path(@member.id))
       end 
     end
   end
@@ -95,32 +90,29 @@ class BusinessesController < ApplicationController
     @business = Business.find(params[:id])
     if is_owner(@business) 
       if @business.destroy
-        redirect_to_profile("Business was successfully deleted","message")
+        flash_redirect("message", "Business was successfully deleted", member_path(session[:member_id]))
       else
         redirect_to business_path(@business.id)
       end
     else
-      redirect_to_profile("You can delete your own businesses only","notice")
+      flash_redirect("notice", "You can delete your own business", member_path(session[:member_id]))
     end
   end
   
   def add_favorite
     @business = Business.find_by_id(params[:id])
     #Adding same business twice in the list is not allowed
+    p "======>>>>>>>>>>"
+    p session[:return_to]
     if is_favorite(@business) 
-      flash[:notice] = "Business already in your favorite list"
-      redirect_to :back
+      flash_redirect("notice", "Business already in your list", session[:return_to])
     else
       if BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:FAVORITE])
-        @ajax_alert = "Business added to your list"
-        p '========>>>>>>>'
-        p @ajax_alert
         respond_to do |format|
           format.js 
         end
       else
-        flash[:notice] = "Unable to add business to your list. Try again."
-        redirect_to :back
+        flash_redirect("notice", "Unable to add business to your list. Try again.", session[:return_to])
       end
     end
   end
@@ -129,17 +121,14 @@ class BusinessesController < ApplicationController
     @business = Business.find_by_id(params[:id])
     #Cannot remove business if it is not in favorite
     if !is_favorite(@business)
-      flash[:notice] = "Business not in your list"
-      redirect_to :back
+      flash_redirect("notice", "Business not in your list", session[:return_to])
     else
       if BusinessRelation.destroy(@favorite.id)
-        @ajax_alert = "Business removed from your list"
         respond_to do |format|
           format.js 
         end
       else
-        flash[:notice] = "Unable to remove from list. Please try again."
-        redirect_to :back
+        flash_redirect("notice", "Unable to remove from list. Please try again.", session[:return_to])
       end
     end
   end
@@ -155,8 +144,7 @@ class BusinessesController < ApplicationController
     end
     
     #checks whether the person has added the business as favorite.
-    
-    def is_favorite(business)
+     def is_favorite(business)
       @favorite = business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],RELATION[:FAVORITE]])
       if @favorite
         return true
