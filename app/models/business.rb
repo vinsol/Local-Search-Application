@@ -1,3 +1,33 @@
+# == Schema Information
+# Schema version: 20100618113518
+#
+# Table name: businesses
+#
+#  id                 :integer(4)      not null, primary key
+#  name               :string(255)
+#  location           :string(255)
+#  city               :string(255)
+#  category           :string(255)
+#  status             :string(255)     default("unverified")
+#  created_at         :datetime
+#  updated_at         :datetime
+#  owner              :string(255)
+#  contact_name       :string(255)
+#  contact_phone      :string(255)
+#  contact_email      :string(255)
+#  contact_website    :string(255)
+#  contact_address    :string(255)
+#  map                :string(255)
+#  description        :text
+#  opening_time       :datetime
+#  closing_time       :datetime
+#  photo_file_name    :string(255)
+#  photo_content_type :string(255)
+#  photo_file_size    :integer(4)
+#  photo_updated_at   :datetime
+#  sub_category       :string(255)
+#
+
 class Business < ActiveRecord::Base  
   has_many :business_relations
   has_many :members, :through => :business_relations, :source => :member
@@ -7,8 +37,8 @@ class Business < ActiveRecord::Base
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
                                     :if => Proc.new { |imports| !imports.photo_file_name.blank? }
 
-  validates_presence_of :name, :location, :city, :category, :contact_name 
-  validates_presence_of :contact_phone, :contact_address 
+  validates_presence_of :name, :location, :city, :category, :contact_name
+  validates_presence_of :contact_phone, :contact_address, :sub_category
   
   validates_format_of :contact_website,
       :message => "must be a valid url",
@@ -29,7 +59,7 @@ class Business < ActiveRecord::Base
   
   protected
   def validate_timings
-     errors.add_to_base "Opening Time must be less than Closing Time" if self.opening_time >= self.closing_time
+     errors.add_to_base "Opening Time must be less than Closing Time" if self.opening_time > self.closing_time
   end
   
   

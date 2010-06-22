@@ -25,3 +25,6 @@ These links can be placed in the view files:-
 9. Show Member Profile			<%= link_to "Profile", member_path( Member Id ) %>
 10.Show My businesses			<%= link_to "Show My Businesses", show_my_businesses_member_path( Member Id ) %>
 11. Show Favorite Businesses of a Member 		<%= link_to "Show Favorites", show_list_member( Member Id ) %>
+
+
+Plugins/Gems installed => rspec, rspec_rails, cucumber, webrat, email_spec

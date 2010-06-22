@@ -1,0 +1,40 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+
+business_1:
+    id: 1
+    name: Test_1
+    location: Rajiv Chowk
+    city: Delhi
+    category: Healthcare
+    sub_category: chemist
+    contact_name: Jigar 
+    contact_phone: 9898989898
+    contact_address: "C-2, West Patel Nagar, Delhi"    
+
+business_2:
+    id: 2
+    name: Test_2
+    location: Patel Nagar
+    city: Delhi
+    category: Healthcare
+    sub_category: chemist
+    contact_name: Jigar 
+    contact_phone: 9898989898
+    contact_address: "C-2, West Patel Nagar, Delhi"    
+    
+business_3:
+    id: 3
+    name: Test_3
+    location: Rajiv Chowk
+    city: Delhi
+    category: Entertainment
+    sub_category: restaurant
+    contact_name: Mohit
+    contact_phone: 9898989898
+    contact_address: "C-2, West Patel Nagar, Delhi"    

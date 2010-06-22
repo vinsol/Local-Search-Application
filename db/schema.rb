@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20100618113518) do
     t.string   "contact_email"
     t.string   "contact_website"
     t.string   "contact_address"
+    t.string   "photo_album"
     t.string   "map"
     t.text     "description"
     t.datetime "opening_time"

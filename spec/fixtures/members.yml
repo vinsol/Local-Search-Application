@@ -1,0 +1,46 @@
+# == Schema Information
+# Schema version: 20100618113518
+#
+# Table name: members
+#
+#  id                 :integer(4)      not null, primary key
+#  email              :string(255)
+#  first_name         :string(255)
+#  last_name          :string(255)
+#  salt               :string(255)
+#  hashed_password    :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  phone_number       :string(255)
+#  address            :string(255)
+#  remember_me_token  :string(255)
+#  photo_file_name    :string(255)
+#  photo_content_type :string(255)
+#  photo_file_size    :integer(4)
+#  photo_updated_at   :datetime
+#  remember_me_time   :datetime
+#  is_admin           :boolean(1)
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+jigar:
+    id: 1
+    email:              jagira@gmail.com
+    first_name:         Jigar
+    last_name:          Patel
+    phone_number:       9898989898
+    address:            "C-2, West Patel Nagar, Delhi"    
+    
+mohit:
+    id: 2
+    email:              mohit@vinsol.com
+    first_name:         mohit
+    last_name:          jain
+    phone_number:       9898989898
+    address:            "C-2, West Patel Nagar, Delhi"    

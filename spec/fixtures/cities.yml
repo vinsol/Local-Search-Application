@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+delhi:
+    id: 1
+    city: delhi
+ahmedabad:
+    id: 2
+    city: ahmedabad

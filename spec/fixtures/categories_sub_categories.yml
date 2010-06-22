@@ -1,0 +1,6 @@
+one:
+    category_id: 1
+    sub_category_id: 1
+two:
+    category_id: 2
+    sub_category_id: 2

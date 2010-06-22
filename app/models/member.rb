@@ -1,3 +1,27 @@
+# == Schema Information
+# Schema version: 20100618113518
+#
+# Table name: members
+#
+#  id                 :integer(4)      not null, primary key
+#  email              :string(255)
+#  first_name         :string(255)
+#  last_name          :string(255)
+#  salt               :string(255)
+#  hashed_password    :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  phone_number       :string(255)
+#  address            :string(255)
+#  remember_me_token  :string(255)
+#  photo_file_name    :string(255)
+#  photo_content_type :string(255)
+#  photo_file_size    :integer(4)
+#  photo_updated_at   :datetime
+#  remember_me_time   :datetime
+#  is_admin           :boolean(1)
+#
+
 class Member < ActiveRecord::Base
   has_attached_file :photo, :styles => {:thumb => "160x190>" }
   validates_attachment_size :photo, :less_than => 1.megabytes, 

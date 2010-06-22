@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+rajiv_chowk:
+    id: 1
+    location: rajiv chowk
+    city_id: 1
+patel_nagar:
+    id: 2
+    location: patel nagar
+    city_id: 1
+satellite:
+    id: 3
+    location: satellite
+    city_id: 2

@@ -52,7 +52,7 @@ class BusinessesController < ApplicationController
     @title = "Edit Business"
     @member = Member.find_by_id(session[:member_id])
     @business = Business.find(params[:id])
-    flash_redirect ("notice","Business was successfully added", member_path(@member.id)) unless is_owner(@business) 
+    flash_redirect("notice","Business was successfully added",member_path(@member.id)) unless is_owner(@business) 
   end
 
  
@@ -60,8 +60,8 @@ class BusinessesController < ApplicationController
     @member = Member.find_by_id(session[:member_id])
     @business = Business.new(params[:business])
     @business.owner = @member.first_name + " " + @member.last_name
-    if @business.save and BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:OWNED])
-      flash_redirect("message", "Business was successfully added", businesses_path)
+    if @business.save and BusinessRelation.create(:member_id => session[:member_id],:business_id => @business.id, :status => RELATION[:OWNED])
+      flash_redirect("message","Business was successfully added",businesses_path)
     else
       @business.destroy
       render  :action => :new
@@ -75,7 +75,7 @@ class BusinessesController < ApplicationController
       #### Allow only if the user owns the business
       if is_owner(@business) 
         if @business.update_attributes(params[:business])
-          flash_redirect("message", "Business was successfully added", business_path(params[:id]))
+          flash_redirect("message","Business was successfully added",business_path(params[:id]))
         else
           render :action => :edit
         end
@@ -90,12 +90,12 @@ class BusinessesController < ApplicationController
     @business = Business.find(params[:id])
     if is_owner(@business) 
       if @business.destroy
-        flash_redirect("message", "Business was successfully deleted", member_path(session[:member_id]))
+        flash_redirect("message","Business was successfully deleted",member_path(session[:member_id]))
       else
         redirect_to business_path(@business.id)
       end
     else
-      flash_redirect("notice", "You can delete your own business", member_path(session[:member_id]))
+      flash_redirect("notice","You can delete your own business",member_path(session[:member_id]))
     end
   end
   
@@ -112,7 +112,7 @@ class BusinessesController < ApplicationController
           format.js 
         end
       else
-        flash_redirect("notice", "Unable to add business to your list. Try again.", session[:return_to])
+        flash_redirect("notice","Unable to add business to your list. Try again.",session[:return_to])
       end
     end
   end
@@ -121,14 +121,14 @@ class BusinessesController < ApplicationController
     @business = Business.find_by_id(params[:id])
     #Cannot remove business if it is not in favorite
     if !is_favorite(@business)
-      flash_redirect("notice", "Business not in your list", session[:return_to])
+      flash_redirect("notice","Business not in your list",session[:return_to])
     else
       if BusinessRelation.destroy(@favorite.id)
         respond_to do |format|
           format.js 
         end
       else
-        flash_redirect("notice", "Unable to remove from list. Please try again.", session[:return_to])
+        flash_redirect("notice","Unable to remove from list. Please try again.",session[:return_to])
       end
     end
   end
