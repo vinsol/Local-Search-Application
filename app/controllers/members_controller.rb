@@ -1,6 +1,7 @@
 class MembersController < ApplicationController
-  skip_before_filter :authorize , :only => [:index, :new, :create,:forgot_password]
+  skip_before_filter :authorize , :only => [:index, :new, :create, :forgot_password]
   before_filter :restrict_if_logged_in, :only => :new
+  
   def index
     @member = Member.find_by_id(session[:member_id])
     @title = "Home"
@@ -17,13 +18,13 @@ class MembersController < ApplicationController
   def show_list
      @member = Member.find_by_id(session[:member_id])
      @favorite_businesses = @member.favorite_businesses.paginate :page => params[:page], :per_page => 5
-     puts @favorite_businesses
      @title = @member.first_name + " " + @member.last_name
    end
   
   def show_my_businesses
     @member = Member.find_by_id(session[:member_id])
     @owned_businesses = @member.owned_businesses.paginate :page => params[:page], :per_page => 5
+    @title = @member.first_name + " " + @member.last_name
   end
   
   def new

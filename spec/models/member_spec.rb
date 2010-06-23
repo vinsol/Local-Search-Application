@@ -78,7 +78,7 @@ describe Member do
     
   end
 
-#Password Encryption
+  #Password Encryption
  
   describe "password encryption" do
     
@@ -161,7 +161,7 @@ describe Member do
   end
   
   #Test Member-Business relationships including owned_businesses and favorite_businesses
-  describe "member relations" do
+  describe "relations" do
     fixtures :members, :businesses, :business_relations
     
     it "should have businesses" do

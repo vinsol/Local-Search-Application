@@ -1,5 +1,5 @@
 <div id="welcome_message">
-	<% if @logged_in == true %>
+	<% if @member %>
 		Welcome,
 		<%= @member.first_name %>
 	<% end %>

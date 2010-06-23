@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_filter :authorize
+  skip_before_filter :authorize, :only => [:new, :authenticate]
   before_filter :restrict_if_logged_in, :only => :new
   
   def new

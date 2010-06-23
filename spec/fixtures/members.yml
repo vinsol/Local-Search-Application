@@ -35,12 +35,15 @@ jigar:
     first_name:         Jigar
     last_name:          Patel
     phone_number:       9898989898
-    address:            "C-2, West Patel Nagar, Delhi"    
+    address:            "C-2, West Patel Nagar, Delhi" 
+    remember_me_token:  "token" 
+    salt:               "fAufFepd4ihxsZG"
+    hashed_password:    "a21e7cf934eba146eadd68b61df45daaa9edcf21"  
     
 mohit:
     id: 2
     email:              mohit@vinsol.com
-    first_name:         mohit
+    first_name:         mohit 
     last_name:          jain
     phone_number:       9898989898
     address:            "C-2, West Patel Nagar, Delhi"    

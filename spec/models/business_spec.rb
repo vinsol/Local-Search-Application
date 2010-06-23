@@ -15,12 +15,12 @@ describe Business do
       
     }
   end
-
+  
   it "should create a new instance given valid attributes" do
     Business.create!(@valid_attributes)
   end
   
-  describe "business validations" do
+  describe "validations" do
     
     it "should require a name" do
       Business.new(@valid_attributes.merge(:name => " ")).should_not be_valid
@@ -48,11 +48,12 @@ describe Business do
     it "should require a valid contact_phone" do
       Business.new(@valid_attributes.merge(:contact_phone => " ")).should_not be_valid
     end
+    
     it "should require a valid contact_address" do
       Business.new(@valid_attributes.merge(:contact_address => " ")).should_not be_valid
     end
     
-    describe "valid formats" do
+    describe "format validations" do
       it "should have a valid phone format" do
         Business.new(@valid_attributes.merge(:contact_phone => "9898")).should_not be_valid
       end
