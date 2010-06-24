@@ -186,7 +186,7 @@ describe Member do
     
     it "should not have businesses of other person" do
       @member = Member.find(members(:mohit).id)
-      @member.owned_businesses.should include(businesses(:business_3))
+      @member.owned_businesses.should_not include(businesses(:business_1))
     end
     
   end

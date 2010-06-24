@@ -5,7 +5,7 @@ class BusinessesController < ApplicationController
     @title = "Listing Businesses"
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @businesses }
+      #format.xml  { render :xml => @businesses }
     end
   end
 
@@ -18,7 +18,7 @@ class BusinessesController < ApplicationController
     @owner = true if is_owner(@business)
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @business }
+      #format.xml  { render :xml => @business }
     end
   end
 

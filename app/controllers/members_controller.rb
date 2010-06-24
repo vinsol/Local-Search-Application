@@ -32,13 +32,11 @@ class MembersController < ApplicationController
     @member = Member.new
   end
 
-  
   def edit
     @member = Member.find_by_id(session[:member_id])
     @title = "Edit Profile"
   end
 
- 
   def create
     @member = Member.new(params[:member])
     if @member.save and @member.signup_notification
@@ -50,7 +48,7 @@ class MembersController < ApplicationController
 
 
   def update
-    if @member = Member.find_by_id(session[:member_id]).update_attributes(params[:member])
+    if @member = Member.find_by_id(session[:member_id]) and @member.update_attributes(params[:member])
       flash_redirect("message","Profile was successfully edited", member_path(@member.id) )
     else
       flash_redirect("notice","Profile not saved. Please check it again",edit_member_path(@member.id) )
