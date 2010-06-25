@@ -20,9 +20,9 @@ class ApplicationController < ActionController::Base
     def check_remember_me
       unless is_logged_in
         if cookies[:remember_me_id] 
-          member = Member.find_by_id(cookies[:remember_me_id])
-          if member.remember_me_time >= 14.days.ago and member and cookies[:remember_me_code] == member.remember_me_token
-            session[:member_id] = member.id
+          @member = Member.find_by_id(cookies[:remember_me_id])
+          if @member.remember_me_time >= 14.days.ago and member and cookies[:remember_me_code] == @member.remember_me_token
+            session[:member_id] = @member.id
             redirect_to root_path
           end
         end

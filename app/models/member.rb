@@ -92,7 +92,7 @@ class Member < ActiveRecord::Base
      self.salt = random_string
   end
 
-
+  
   def self.encrypted_password(password,salt)
     string_to_hash = password + "jagira" + salt
     Digest::SHA1.hexdigest(string_to_hash)

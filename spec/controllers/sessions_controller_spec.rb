@@ -1,10 +1,15 @@
 require 'spec_helper'
 
 describe SessionsController do
-  integrate_views
-  fixtures :members
+ 
   
   describe "new" do
+    before(:each) do
+      @member = mock_model(Member)
+      Member.stub!(:new).and_return(@member)
+      Member.stub!(:find_by_id).with("1").and_return(@member)
+      session[:member_id] = nil
+    end
     
     it "should set page title to login" do
       get :new
@@ -17,43 +22,30 @@ describe SessionsController do
     end
     
     it "should create a new instance of Member class" do
+      Member.should_receive(:new).and_return(@member)
       get :new
-      @member.should be_nil
     end
     
     it "should not allow logged in users" do
-      Member.stub!(:authenticate).and_return(session[:member_id] = 1)
+      session[:member_id] = "1"
       get :new
-      response.should redirect_to(member_path(session[:member_id]))
+      flash[:message].should == "You are already logged in"
+      response.should redirect_to(member_path(@member.id))
     end
     
   end
   
   describe "delete" do
-    
     before(:each) do
-      Member.stub!(:authenticate).and_return(session[:member_id] = 1)
+      session[:member_id] = "1"
     end
     
-   
-    it "should not allow members who have not logged in" do
-      session[:member_id] = nil
-      get :delete
-      response.should redirect_to(login_path)
-    end
-    
-    it "should flash a message to members who have not logged in" do
-      session[:member_id] = nil
-      get :delete
-      flash[:message].should == "Please Login"
-    end
-    
-    it "should clear the session" do
+    it "should empty the session" do
       get :delete
       session[:member_id].should == nil
     end
     
-    it "should flash a message" do
+    it "should set the correct flash message" do
       get :delete
       flash[:message].should == "Logged out"
     end
@@ -64,40 +56,46 @@ describe SessionsController do
     end
   end
   
+  
   describe "authenticate" do
     
-    it "should call authenticate method" do
-      Member.should_receive(:authenticate).with("jagira@gmail.com","google")
-      post :authenticate, :member => {:email => "jagira@gmail.com", :password => "google"}
+    describe "with valid params" do
+      before(:each) do
+        @member = mock_model(Member)
+        Member.stub!(:authenticate).with("valid_emai", "valid_password").and_return(true)
+      end
+    
+      it "should authenticate the member the member" do
+        Member.should_receive(:authenticate).with("valid_email","valid_password").and_return(true)
+        post :authenticate, :member => {:email => "valid_email", :password => "valid_password"}
+      end
+    
+      it "should set session" do
+        Member.should_receive(:authenticate).with("valid_email","valid_password").and_return(true)
+        post :authenticate, :member => {:email => "valid_email", :password => "valid_password"}
+        session[:member_id].should_not == nil
+      end
+    
+      it "should redirect to member profile" do
+        Member.should_receive(:authenticate).with("valid_email","valid_password").and_return(true)
+        post :authenticate, :member => {:email => "valid_email", :password => "valid_password"}
+        response.should redirect_to(members_path)
+      end
     end
     
-    it "should set session for valid members" do
-      post :authenticate, :member => { :email => "jagira@gmail.com", :password => "google"}
-      session[:member_id].should == 1
-    end
+    describe "with invalid attributes" do
+      before(:each) do
+        @member = mock_model(Member)
+        Member.stub!(:authenticate).with("invalid_emai", "invalid_password").and_return(nil)
+      end
     
-    it "should set remember_me id if member has checked remember me" do
-      post :authenticate, :member => { :email => "jagira@gmail.com", :password => "google", :remember_me => "1"}
-      cookies[:remember_me_id].should == "1"
+      it "should render new template" do
+        Member.should_receive(:authenticate).with("invalid_email","invalid_password").and_return(nil)
+        post :authenticate, :member => {:email => "invalid_email", :password => "invalid_password"}
+        response.should render_template("sessions/new.html.erb")
+      end
     end
-    
-    it "should set remember me code if member has checked remember me" do
-      post :authenticate, :member => { :email => "jagira@gmail.com", :password => "google", :remember_me => "1"}
-      cookies[:remember_me_code].should_not be_nil
-    end
-    
-    it "should redirect to members path on successful authentication" do
-      post :authenticate, :member => { :email => "jagira@gmail.com", :password => "google"}
-      response.should redirect_to(members_path)
-    end
-    
-    it "should render login page on unsuccessful authentication" do
-      post :authenticate, :member => { :email => "jagira@gmail.com", :password => "invalid"}
-      response.should render_template('sessions/new.html.erb')
-    end
-    
   end
-  
   
 
 end

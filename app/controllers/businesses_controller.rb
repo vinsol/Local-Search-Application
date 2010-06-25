@@ -40,7 +40,7 @@ class BusinessesController < ApplicationController
   
   def get_sub_categories
     unless request.xhr?
-    flash[:error] = ‘Invalid page’
+    flash[:error] = "Invalid page"
     redirect_to root_path
     else
     @sub_categories = Category.find_by_category(params[:business_category]).sub_categories
@@ -52,7 +52,6 @@ class BusinessesController < ApplicationController
     @title = "Edit Business"
     @member = Member.find_by_id(session[:member_id])
     @business = Business.find(params[:id])
-    flash_redirect("notice","Business was successfully added",member_path(@member.id)) unless is_owner(@business) 
   end
 
  
@@ -102,8 +101,6 @@ class BusinessesController < ApplicationController
   def add_favorite
     @business = Business.find_by_id(params[:id])
     #Adding same business twice in the list is not allowed
-    p "======>>>>>>>>>>"
-    p session[:return_to]
     if is_favorite(@business) 
       flash_redirect("notice", "Business already in your list", session[:return_to])
     else
@@ -123,7 +120,7 @@ class BusinessesController < ApplicationController
     if !is_favorite(@business)
       flash_redirect("notice","Business not in your list",session[:return_to])
     else
-      if BusinessRelation.destroy(@favorite.id)
+      if BusinessRelation.destroy(@business.id)
         respond_to do |format|
           format.js 
         end
