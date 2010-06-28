@@ -69,6 +69,13 @@ a {
     background:none repeat scroll 0 0 #FEFCD6;
 }   
 
+.map {
+	width:600px;
+	height:400px;
+	margin:auto;
+	border:5px solid black;
+	
+}
 .business_box h2{
     margin-top:0px;
     margin-bottom:5px;

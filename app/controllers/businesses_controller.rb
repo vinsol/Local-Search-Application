@@ -15,12 +15,33 @@ class BusinessesController < ApplicationController
     #Edit and Delete for owners and Add to Favorites for those who haven't added it yet.
     @favorite = true unless is_favorite(@business)
     @owner = true if is_owner(@business)
+    if @business.lat != nil and @business.lng != nil
+    @map = GoogleMap::Map.new
+    @map.center = GoogleMap::Point.new(@business.lat+0.008, @business.lng-0.012)
+    @map.zoom = 15
+    @map.markers << GoogleMap::Marker.new(  :map => @map,
+                                            :lat => @business.lat,
+                                            :lng => @business.lng,
+                                            :html => @business.name)
+    end
+    
+    
+   
+    
+    
+    
     respond_to do |format|
       format.html # show.html.erb
       #format.xml  { render :xml => @business }
     end
   end
 
+  def show_on_map
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   def new
     @title = "Add Business"
     @cities = City.find(:all)

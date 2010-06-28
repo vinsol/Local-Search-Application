@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100618113518) do
+ActiveRecord::Schema.define(:version => 20100628093232) do
 
   create_table "business_relations", :force => true do |t|
     t.integer  "member_id"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20100618113518) do
     t.string   "location"
     t.string   "city"
     t.string   "category"
-    t.string   "status",             :default => "unverified"
+    t.string   "status",                                            :default => "unverified"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "owner"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(:version => 20100618113518) do
     t.string   "contact_email"
     t.string   "contact_website"
     t.string   "contact_address"
-    t.string   "photo_album"
     t.string   "map"
     t.text     "description"
     t.datetime "opening_time"
@@ -43,6 +42,8 @@ ActiveRecord::Schema.define(:version => 20100618113518) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.string   "sub_category"
+    t.decimal  "lng",                :precision => 10, :scale => 7
+    t.decimal  "lat",                :precision => 10, :scale => 7
   end
 
   create_table "categories", :force => true do |t|
@@ -89,6 +90,11 @@ ActiveRecord::Schema.define(:version => 20100618113518) do
     t.datetime "photo_updated_at"
     t.datetime "remember_me_time"
     t.boolean  "is_admin",           :default => false
+  end
+
+  create_table "notifications", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sessions", :force => true do |t|

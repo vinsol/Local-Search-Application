@@ -61,7 +61,11 @@
            	</div>
 			<% end %>
     	</div>				
-		
+		<% if show_business_page and @business.lat and @business.lng %>
+			<%= link_to_remote "Show on Map",
+								{ :url => show_on_map_business_path(business.id),
+								  :method => :get} %>
+		<% end %>
 		
 
 	</div>

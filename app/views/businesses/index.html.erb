@@ -5,7 +5,8 @@
 		<% @businesses.each do |business| %>
 			<%= render 	:partial => "business_box", 
 						:locals => {:business => business, :member => @member,
-							 		:owner => @owner, :logged_in => @logged_in
+							 		:owner => @owner, :logged_in => @logged_in,
+									:show_business_page => false
 									}%>
 		<% end %>
 	</div>
