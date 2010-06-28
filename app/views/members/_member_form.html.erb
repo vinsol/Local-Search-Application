@@ -1,0 +1,35 @@
+<div class="form">
+<% form_for member, :html => { :multipart => true } do |f| %>
+  	<%= f.error_messages %>
+  	<fieldset>
+	<div>
+		<%= f.label(:first_name, "First Name") %>
+		<%= f.text_field :first_name %>
+	</div>
+	<div>
+		<%= f.label(:last_name, "Last Name") %>
+		<%= f.text_field :last_name %>
+	</div>
+	<div>
+		<%= f.label(:email, "Email") %>
+		<%= f.text_field :email %>
+	</div>
+	<div>
+		<%= f.label(:phone_number, "Phone Number") %>
+		<%= f.text_field :phone_number %>
+	</div>
+	<div>
+		<%= f.label(:address, "Address") %>
+		<%= f.text_area :address, :cols => 29, :rows => 3 %>
+	</div>
+	<div>
+		<%= f.label :photo, "Photo" %>
+		<%= f.file_field :photo %>
+	</div>
+	<div>
+		<%= f.submit submit_label %>
+	</div>
+</fieldset>
+  
+<% end %>
+</div>

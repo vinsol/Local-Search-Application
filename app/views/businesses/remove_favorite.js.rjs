@@ -12,8 +12,8 @@ page << "}"
 page << "if ($('show_business')) { "
 page.show "Business_box_links_add_to_favorite_#{@business.id}"
 page.hide "Business_box_links_remove_favorite_#{@business.id}"
-page.visual_effect (:appear, "ajax_response", :duration => 3)
-page.visual_effect (:fade, "ajax_response", :duration => 2)
+page.visual_effect (:appear, "ajax_response_remove", :duration => 3)
+page.visual_effect (:fade, "ajax_response_remove", :duration => 2)
 page << "}"
 
 

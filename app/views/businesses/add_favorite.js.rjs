@@ -1,7 +1,8 @@
-page << "if ($('business_list')) { "
 page.hide "Business_box_links_add_to_favorite_#{@business.id}"
 page.show "Business_box_links_remove_favorite_#{@business.id}"
 page.visual_effect (:appear, "ajax_response_add", :duration => 3)
 page.visual_effect (:fade, "ajax_response_add", :duration => 3)
-page << "}"
+
+
+
 

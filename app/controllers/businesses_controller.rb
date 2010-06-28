@@ -10,7 +10,6 @@ class BusinessesController < ApplicationController
   end
 
   def show
-    @member = Member.find_by_id(session[:member_id])
     @business = Business.find(params[:id])
     @title = "Business Details - #{@business.name}"
     #Edit and Delete for owners and Add to Favorites for those who haven't added it yet.
@@ -25,7 +24,6 @@ class BusinessesController < ApplicationController
   def new
     @title = "Add Business"
     @cities = City.find(:all)
-    @member = Member.find_by_id(session[:member_id])
     @business = Business.new
   end
 
@@ -50,16 +48,14 @@ class BusinessesController < ApplicationController
     
   def edit
     @title = "Edit Business"
-    @member = Member.find_by_id(session[:member_id])
     @business = Business.find(params[:id])
   end
 
  
   def create
-    @member = Member.find_by_id(session[:member_id])
     @business = Business.new(params[:business])
     @business.owner = @member.first_name + " " + @member.last_name
-    if @business.save and BusinessRelation.create(:member_id => session[:member_id],:business_id => @business.id, :status => RELATION[:OWNED])
+    if @business.save and BusinessRelation.create(:member_id => @member.id,:business_id => @business.id, :status => RELATION[:OWNED])
       flash_redirect("message","Business was successfully added",businesses_path)
     else
       @business.destroy
@@ -69,7 +65,6 @@ class BusinessesController < ApplicationController
 
   def update
     if request.put?
-      @member = Member.find_by_id(session[:member_id])
       @business = Business.find(params[:id])
       #### Allow only if the user owns the business
       if is_owner(@business) 
@@ -89,12 +84,12 @@ class BusinessesController < ApplicationController
     @business = Business.find(params[:id])
     if is_owner(@business) 
       if @business.destroy
-        flash_redirect("message","Business was successfully deleted",member_path(session[:member_id]))
+        flash_redirect("message","Business was successfully deleted",member_path(@member.id))
       else
         redirect_to business_path(@business.id)
       end
     else
-      flash_redirect("notice","You can delete your own business",member_path(session[:member_id]))
+      flash_redirect("notice","You can delete your own business",member_path(@member.id))
     end
   end
   
@@ -104,7 +99,7 @@ class BusinessesController < ApplicationController
     if is_favorite(@business) 
       flash_redirect("notice", "Business already in your list", session[:return_to])
     else
-      if BusinessRelation.create(:member_id => session[:member_id], :business_id => @business.id, :status => RELATION[:FAVORITE])
+      if BusinessRelation.create(:member_id => @member.id, :business_id => @business.id, :status => RELATION[:FAVORITE])
         respond_to do |format|
           format.js 
         end
@@ -120,7 +115,7 @@ class BusinessesController < ApplicationController
     if !is_favorite(@business)
       flash_redirect("notice","Business not in your list",session[:return_to])
     else
-      if BusinessRelation.destroy(@business.id)
+      if @favorite.destroy
         respond_to do |format|
           format.js 
         end
@@ -129,11 +124,12 @@ class BusinessesController < ApplicationController
       end
     end
   end
+  
   protected
     
     #Checks whether the person is owner or not.
     def is_owner(business)
-      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],RELATION[:OWNED]])
+      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",@member.id,RELATION[:OWNED]])
         return true
       else
         return false
@@ -142,8 +138,7 @@ class BusinessesController < ApplicationController
     
     #checks whether the person has added the business as favorite.
      def is_favorite(business)
-      @favorite = business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],RELATION[:FAVORITE]])
-      if @favorite
+      if @favorite = business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",@member.id,RELATION[:FAVORITE]])
         return true
       else
         return false

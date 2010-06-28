@@ -1,60 +1,13 @@
 <h2>Registered Businesses</h2> <%= link_to "Add your own business" , new_member_business_path(session[:member_id]) %>
 	
 	<div id="business_list">
-		<div id="ajax_response_remove" style="display:none">
-			<div id="message">Business removed from your list</div>		
-		</div>
-		<div id="ajax_response_add" style="display:none">
-			<div id="message">Business added to your list</div>		
-		</div>
+		<%= render :partial => "ajax_response" %>
 		<% @businesses.each do |business| %>
-			<%= "<div class=business_box id=#{business.id} >"%>
-			  <h2><%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %>    
-    		    <span class="sideDetail">Listed in INFOMEDIA YELLOW PAGES</span> 
-    		</h2> 
-        <div class="resultInfo"> 
-    		  <p class="phone"><%= business.contact_phone %></p> 
-    		  <p><%= business.contact_address %></p> 
-    		  <p class="tags"><%= business.category %></p> 
-    	  </div> 
-    		<div class="links"> 
-    		    <% if @logged_in == false %>
-					<div id=Business_box_links_add_to_favorite_#{business.id}>
-						<a href="#">Send to Phone</a> 
-					</div>
-				<% else %>
-    		    <% if !is_favorite(business) %>
-						<%= "<div id=Business_box_links_add_to_favorite_#{business.id}>"%>
-              <a href="#">Send to Phone</a> 
-							<%= link_to_remote "Add to My List", 
-									{:url => add_favorite_business_path(business.id),
-									 :method => :get} %>
-						</div>
-						<%= "<div id=Business_box_links_remove_favorite_#{business.id} style='display:none'>"%>
-              <a href="#">Send to Phone</a> 							
-              <%= link_to_remote "Remove from My List", 
-								{:url => remove_favorite_business_path(business.id), 
-								:method => :delete, :confirm => "Are you sure?"}%>
-            </div>					
-          <% else %>
-					<%= "<div id=Business_box_links_add_to_favorite_#{business.id} style='display:none'>"%>
-              <a href="#">Send to Phone</a> 
-							<%= link_to_remote "Add to My List", 
-									{:url => add_favorite_business_path(business.id),
-									 :method => :get} %>
-					</div>
-						<%= "<div id=Business_box_links_remove_favorite_#{business.id}>"%>
-              <a href="#">Send to Phone</a> 
-							<%= link_to_remote "Remove from My List", 
-								{:url => remove_favorite_business_path(business.id), 
-								:method => :delete, :confirm => "Are you sure?"}%>
-            </div>
-					<% end %>
-					<% end %>
-    		  </div> 				
-      			
-				</div>
-			<% end %>
+			<%= render 	:partial => "business_box", 
+						:locals => {:business => business, :member => @member,
+							 		:owner => @owner, :logged_in => @logged_in
+									}%>
+		<% end %>
 	</div>
 	<%= will_paginate @businesses %>
 	

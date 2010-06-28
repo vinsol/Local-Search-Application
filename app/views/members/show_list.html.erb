@@ -2,32 +2,18 @@
 <% if @favorite_businesses.empty? %>
 	<p>There are no businesses in your list. <%= link_to "Add some businesses to your list", businesses_path %><p>
 <% else %>
-<p><%= link_to "Add more businesses to your list", businesses_path %></p>
-<div id="favorite_list">
-	<div id="ajax_response" style="display:none">
-		<div id="message">Business Removed from your list</div>		
-	</div>
+	<p><%= link_to "Add more businesses to your list", businesses_path %></p>
+	<div id="favorite_list">
+		<div id="ajax_response" style="display:none">
+			<div id="message">Business Removed from your list</div>		
+		</div>
 		<% for business in @favorite_businesses do %>
-				<%= "<div class=business_box id=#{business.id} >"%>
-			  <h2><%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %>    
-    		    <span class="sideDetail">Listed in INFOMEDIA YELLOW PAGES</span> 
-    		</h2> 
-        <div class="resultInfo"> 
-    		  <p class="phone"><%= business.contact_phone %></p> 
-    		  <p><%= business.contact_address %></p> 
-    		  <p class="tags"><%= business.category %></p> 
-    	  </div> 
-    		<div class="links"> 
-    		    <a href="#">Send to Phone</a> 
-							<%= link_to_remote "Remove from My List", 
-								{:url => remove_favorite_business_path(business.id), 
-								:method => :delete, :confirm => "Are you sure?"}%>
-         </div>
-					
-				</div>
-			<% end %>
-	
-	<p><%= will_paginate @favorite_businesses %></p>
+			<%= render 	:partial => "business_box", 
+						:locals => { :member => @member, :business => business,
+									 :owned_business => false }%>
+		<% end %>
+		
+		<p><%= will_paginate @favorite_businesses %></p>
 
-</div>
+	</div>
 <% end %>

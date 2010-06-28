@@ -1,7 +1,0 @@
-<% if @favorite.empty? %>
-	<%= link_to "Add to My List", add_favorite_business_path(business.id) %>
-<% else %>
-	<%= link_to_remote "Remove from My List", 
-		{:url => remove_favorite_business_path(business.id),:method => :delete, :confirm => "Are you sure?"}%>
-
-<% end %>

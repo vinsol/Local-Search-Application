@@ -3,26 +3,22 @@ class MembersController < ApplicationController
   before_filter :restrict_if_logged_in, :only => :new
   
   def index
-    @member = Member.find_by_id(session[:member_id])
     @title = "Home"
   end
 
  
   def show
-    @member = Member.find_by_id(session[:member_id])
     @owned_businesses = @member.owned_businesses
     @favorite_businesses = @member.favorite_businesses
     @title = @member.first_name + " " + @member.last_name
   end
 
   def show_list
-     @member = Member.find_by_id(session[:member_id])
      @favorite_businesses = @member.favorite_businesses.paginate :page => params[:page], :per_page => 5
      @title = @member.first_name + " " + @member.last_name
    end
   
   def show_my_businesses
-    @member = Member.find_by_id(session[:member_id])
     @owned_businesses = @member.owned_businesses.paginate :page => params[:page], :per_page => 5
     @title = @member.first_name + " " + @member.last_name
   end
@@ -33,7 +29,6 @@ class MembersController < ApplicationController
   end
 
   def edit
-    @member = Member.find_by_id(session[:member_id])
     @title = "Edit Profile"
   end
 
@@ -48,7 +43,7 @@ class MembersController < ApplicationController
 
 
   def update
-    if @member = Member.find_by_id(session[:member_id]) and @member.update_attributes(params[:member])
+    if @member.update_attributes(params[:member])
       flash_redirect("message","Profile was successfully edited", member_path(@member.id) )
     else
       flash_redirect("notice","Profile not saved. Please check it again",edit_member_path(@member.id) )
@@ -57,19 +52,17 @@ class MembersController < ApplicationController
 
  
   def destroy
-    Member.find(session[:member_id]).destroy
+    @member.destroy
     redirect_to logout_path 
   end
   
   def change_password
-    @member = Member.find_by_id(session[:member_id])
       respond_to do |format|
         format.js
       end
   end
   
   def update_password
-    @member = Member.find_by_id(session[:member_id])
     @member.password_change = true
     if @member.update_attributes(params[:member])
       flash.now[:message] = "Password Changed"

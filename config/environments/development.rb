@@ -17,7 +17,4 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 Paperclip.options[:command_path] = "/opt/local/bin"
 config.gem 'rspec-rails', :lib => false 
-config.gem 'rspec', :lib => false 
-config.gem 'cucumber' 
-config.gem 'webrat' 
 

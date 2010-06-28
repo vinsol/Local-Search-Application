@@ -1,46 +1,5 @@
 <h3>Signup Form</h3>
-<div class="form">
-<% form_for @member, :html => { :multipart => true }  do |f| %>
-  	<%= error_messages_for 'member' %>
-  	<fieldset>
-	<div>
-		<%= f.label (:first_name, "First Name") %>
-		<%= f.text_field :first_name %>
-	</div>
-	<div>
-		<%= f.label (:last_name, "Last Name") %>
-		<%= f.text_field :last_name %>
-	</div>
-	<div>
-		<%= f.label (:email, "Email") %>
-		<%= f.text_field :email %>
-	</div>
-	<div>
-		<%= f.label (:phone_number, "Phone Number") %>
-		<%= f.text_field :phone_number %>
-	</div>
-	<div>
-		<%= f.label (:address, "Address") %>
-		<%= f.text_area :address, :cols => 29, :rows => 3 %>
-	</div>
-	<div>
-		<%= f.label :photo, "Photo" %>
-		<%= f.file_field :photo %>
-  </div>
-	<div>
-		<%= f.label (:password, "Password") %>
-		<%= f.password_field :password %>
-	</div>
-	<div>
-		<%= f.label (:password_confirmation, "Confirm") %>
-		<%= f.password_field :password_confirmation %>
-	</div>
-	<div>
-		<%= f.submit "Signup" %>
-	</div>
-</fieldset>
-  
-<% end %>
-</div>
+<%= render 	:partial => "member_form",
+			:locals => { :member => @member, :submit_label => "Signup"} %>
 
 
