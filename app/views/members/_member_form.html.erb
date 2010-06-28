@@ -14,6 +14,16 @@
 		<%= f.label(:email, "Email") %>
 		<%= f.text_field :email %>
 	</div>
+	<% if new_form %>
+		<div>
+			<%= f.label(:password, "Password") %>
+			<%= f.password_field :password %>
+		</div>
+		<div>
+			<%= f.label(:password_confirmation, "Confirm Password") %>
+			<%= f.password_field :password_confirmation %>
+		</div>
+	<% end%>
 	<div>
 		<%= f.label(:phone_number, "Phone Number") %>
 		<%= f.text_field :phone_number %>

@@ -1,6 +1,6 @@
 <h4>Edit Profile</h4>
 <%= render 	:partial => "member_form",
-			:locals => { :member => @member, :submit_label => "Update Profile"} %>
+			:locals => { :member => @member, :submit_label => "Update Profile", :new_form => false} %>
 
 <%= link_to 'Back', member_path(@member.id) %>
 

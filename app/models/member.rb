@@ -29,8 +29,8 @@ class Member < ActiveRecord::Base
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
                                             :if => Proc.new { |imports| !imports.photo_file_name.blank? }
   has_many :businesses, :through => :business_relations, :source => :business
-  has_many :business_relations
-  has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
+  has_many :business_relations, :dependent => :destroy
+  has_many :owned_businesses, :through => :business_relations, :dependent => :destroy, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
   has_many :favorite_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:FAVORITE]]
   
   
