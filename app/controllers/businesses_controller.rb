@@ -16,31 +16,25 @@ class BusinessesController < ApplicationController
     @favorite = true unless is_favorite(@business)
     @owner = true if is_owner(@business)
     if @business.lat != nil and @business.lng != nil
-    @map = GoogleMap::Map.new
-    @map.center = GoogleMap::Point.new(@business.lat+0.008, @business.lng-0.012)
-    @map.zoom = 15
-    @map.markers << GoogleMap::Marker.new(  :map => @map,
-                                            :lat => @business.lat,
-                                            :lng => @business.lng,
-                                            :html => @business.name)
+      @map = GoogleMap::Map.new
+      @map.center = GoogleMap::Point.new(@business.lat, @business.lng)
+      @map.zoom = 15
+      @map.markers << GoogleMap::Marker.new(  :map => @map,
+                                              :lat => @business.lat,
+                                              :lng => @business.lng,
+                                              :html => @business.name)
     end
-    
-    
-   
-    
-    
-    
     respond_to do |format|
       format.html # show.html.erb
       #format.xml  { render :xml => @business }
     end
   end
 
-  def show_on_map
-    respond_to do |format|
-      format.js
-    end
-  end
+# def show_on_map
+#  respond_to do |format|
+#      format.js
+#    end
+#  end
   
   def new
     @title = "Add Business"
@@ -136,7 +130,7 @@ class BusinessesController < ApplicationController
     if !is_favorite(@business)
       flash_redirect("notice","Business not in your list",session[:return_to])
     else
-      if @favorite.destroy
+      if @businesss_relation.destroy
         respond_to do |format|
           format.js 
         end
@@ -159,7 +153,7 @@ class BusinessesController < ApplicationController
     
     #checks whether the person has added the business as favorite.
      def is_favorite(business)
-      if @favorite = business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",@member.id,RELATION[:FAVORITE]])
+      if @business_relation = business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",@member.id,RELATION[:FAVORITE]])
         return true
       else
         return false

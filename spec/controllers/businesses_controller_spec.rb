@@ -35,7 +35,7 @@ describe BusinessesController do
     before(:each) do
       @member = mock_model(Member)
       Member.stub!(:find_by_id).with(1).and_return(@member)
-      @business = mock_model(Business)
+      @business = mock_model(Business, {:lat => 77.777777, :lng => 77.777777})
       @business.stub!(:name).and_return("name")
       Business.stub!(:find).and_return(@business)
       @business_relations = mock_model(BusinessRelation)
@@ -68,7 +68,6 @@ describe BusinessesController do
     it "should render show template" do
       get :show, :id => @business.id
       response.should render_template("businesses/show.html.erb")
-      assigns[:favorite].should == true
     end
   end
   
@@ -115,6 +114,8 @@ describe BusinessesController do
     end
     
   end
+  
+  
     
   describe "get locations" do
     before(:each) do
@@ -402,7 +403,7 @@ describe BusinessesController do
         
         it "should redirect to member profile" do
           post :destroy, { :method => :delete, :id => "valid_business_id"}
-          response.should redirect_to(member_path(1))
+          response.should redirect_to(member_path(@member.id))
         end
       end
       
@@ -432,7 +433,7 @@ describe BusinessesController do
       
       it "should redirect to member profile" do
         post :destroy, { :method => :delete, :id => "valid_business_id"}
-        response.should redirect_to(member_path(1))
+        response.should redirect_to(member_path(@member.id))
       end
     end
   end
@@ -526,22 +527,24 @@ describe BusinessesController do
       end
     end
     
-    describe "when business is not in your list" do
+    describe "when business is in your list" do
       before(:each) do
         session[:return_to] = root_path
         @business_relations = mock_model(BusinessRelation)
+        
         @business.stub!(:business_relations).and_return(@business_relations)
         @business_relations.stub!(:find).and_return(true)
+        
       end
       
       it "should render remove favorite rjs template on successful deletion from list" do
-        BusinessRelation.stub!(:destroy).and_return(true)
+        @favorite.stub!(:destroy).and_return(true)
         post :remove_favorite, {:method => :delete, :id => "valid_business_id"}
         response.should render_template("businesses/remove_favorite.js.rjs")
       end
       
       it "should set a flash notice and redirect to back when business is not deleted" do
-        BusinessRelation.stub!(:destroy).and_return(false)
+        @favorite.stub!(:destroy).and_return(false)
         post :remove_favorite, {:method => :delete, :id => "valid_business_id"}
         flash[:notice].should == "Unable to remove from list. Please try again."
         response.should redirect_to(session[:return_to])

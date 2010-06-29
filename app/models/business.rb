@@ -34,7 +34,7 @@ class Business < ActiveRecord::Base
   has_attached_file :photo, :styles => {:thumb => "160x190>", :medium => "640x640>" }
   acts_as_mappable
   before_validation_on_create :geocode_address
-  before_save   :geocode_address
+  before_save :geocode_address
     
   
   

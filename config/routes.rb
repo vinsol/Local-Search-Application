@@ -54,7 +54,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_locations "/admin/locations", :controller => "admin/locations", :action => :index
   map.admin_cities "/admin/cities", :controller => "admin/cities", :action => :index
   map.admin_categories "/admin/categories", :controller => "admin/categories", :action => :index
-  map.admin_subcategories "/admin/subcategories", :controller => "admin/subcategories", :action => :index
+  map.admin_subcategories "/admin/subcategories", :controller => "admin/sub_categories", :action => :index
   
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'delete'

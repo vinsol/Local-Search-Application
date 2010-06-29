@@ -15,7 +15,9 @@ business_1:
     sub_category: chemist
     contact_name: Jigar 
     contact_phone: 9898989898
-    contact_address: "C-2, West Patel Nagar, Delhi"    
+    contact_address: "C-2, West Patel Nagar, Delhi" 
+    lat: 77.777777
+    lng: 77.777777   
 
 business_2:
     id: 2
@@ -26,7 +28,9 @@ business_2:
     sub_category: chemist
     contact_name: Jigar 
     contact_phone: 9898989898
-    contact_address: "C-2, West Patel Nagar, Delhi"    
+    contact_address: "C-2, West Patel Nagar, Delhi" 
+    lat: 77.777777
+    lng: 77.777777   
     
 business_3:
     id: 3
@@ -37,4 +41,6 @@ business_3:
     sub_category: restaurant
     contact_name: Mohit
     contact_phone: 9898989898
-    contact_address: "C-2, West Patel Nagar, Delhi"    
+    contact_address: "C-2, West Patel Nagar, Delhi" 
+    lat: 77.777777
+    lng: 77.777777   

@@ -11,7 +11,9 @@ describe Business do
                           :contact_phone => "9898989898",
                           :contact_address => "C-2, West Patel Nagar, Delhi",
                           :opening_time => Time.now,
-                          :closing_time => Time.now + 5
+                          :closing_time => Time.now + 5,
+                          :lat => 77.777777,
+                          :lng => 77.777777
       
     }
   end

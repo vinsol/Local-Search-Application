@@ -1,6 +1,7 @@
 class Admin::CitiesController < ApplicationController
   before_filter :check_admin
-  active_scaffold :city	do |config|
-    config.columns = [:city]
+  active_scaffold :cities	do |config|
+    
+     
   end
 end
