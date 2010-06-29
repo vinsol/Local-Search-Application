@@ -3,3 +3,17 @@
 		Welcome, <%= @member.first_name %>
 	<% end %>
 </div>
+<div class="search">
+	<div class="search_field">
+		<% form_tag(members_path, :method => "get") do %>  
+			<%= label_tag(:q, "Search Box") %>  <%= text_field_tag(:q) %>  
+			<%= submit_tag("Search") %> 
+		<% end %> 
+	</div>
+</div>
+
+<% if @search_results != nil %>
+
+	<%= render :partial => "business_search_results",
+			  :locals => { :search_results => @search_results} %>
+<% end %>

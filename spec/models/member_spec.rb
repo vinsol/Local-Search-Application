@@ -166,12 +166,12 @@ describe Member do
     
     it "should have businesses" do
       @member = Member.find(members(:jigar).id)
-      @member.businesses.should_not be_empty
+      @member.business_relations.should_not be_empty
     end
     
     it "should have 3 related business" do
       @member = Member.find(members(:jigar).id)
-      @member.businesses.should have(3).records
+      @member.business_relations.should have(3).records
     end
     
     it "should have 2 owned businesses" do

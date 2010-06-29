@@ -33,8 +33,8 @@ class Business < ActiveRecord::Base
   has_many :members, :through => :business_relations, :source => :member
   has_attached_file :photo, :styles => {:thumb => "160x190>", :medium => "640x640>" }
   acts_as_mappable
-  before_validation_on_create :geocode_address
-  before_save :geocode_address
+  before_validation_on_create :geocode_address, :unless => lambda{|a| a.contact_address.blank?}
+  before_save :geocode_address, :unless => lambda{|a| a.contact_address.blank?}
     
   
   
@@ -62,6 +62,16 @@ class Business < ActiveRecord::Base
   
   cattr_reader :per_page
   @@per_page = 5
+  
+  define_index do
+      indexes :name, :sortable => true
+      indexes location
+      indexes city
+      indexes category
+      indexes sub_category
+      
+      
+    end
   
   protected
   def validate_timings

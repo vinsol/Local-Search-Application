@@ -4,6 +4,11 @@ class MembersController < ApplicationController
   
   def index
     @title = "Home"
+    if params[:q] != nil
+      @search_results = Business.search "#{params[:q]}"
+      p @search_results
+      p "====>>>>>>>"
+    end
   end
 
  

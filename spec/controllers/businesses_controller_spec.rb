@@ -538,13 +538,13 @@ describe BusinessesController do
       end
       
       it "should render remove favorite rjs template on successful deletion from list" do
-        @favorite.stub!(:destroy).and_return(true)
+        BusinessRelation.stub!(:destroy).and_return(true)
         post :remove_favorite, {:method => :delete, :id => "valid_business_id"}
         response.should render_template("businesses/remove_favorite.js.rjs")
       end
       
       it "should set a flash notice and redirect to back when business is not deleted" do
-        @favorite.stub!(:destroy).and_return(false)
+        BusinessRelation.stub!(:destroy).and_return(false)
         post :remove_favorite, {:method => :delete, :id => "valid_business_id"}
         flash[:notice].should == "Unable to remove from list. Please try again."
         response.should redirect_to(session[:return_to])

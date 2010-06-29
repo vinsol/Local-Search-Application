@@ -22,6 +22,12 @@ Rails::Initializer.run do |config|
   config.gem "geokit"
   config.gem 'google_static_maps_helper'
   GOOGLE_APPLICATION_ID = "ABQIAAAA3HdfrnxFAPWyY-aiJUxmqRTJQa0g3IQ9GZqIMmInSLzwtGDKaBQ0KYLwBEKSM7F9gCevcsIf6WPuIQ"
+  config.gem(
+    'thinking-sphinx',
+    :lib     => 'thinking_sphinx',
+    :version => '1.3.18'
+  )
+
   
   
 
