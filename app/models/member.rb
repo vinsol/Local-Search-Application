@@ -28,9 +28,9 @@ class Member < ActiveRecord::Base
                                     :if => Proc.new { |imports| !imports.photo_file_name.blank? }
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
                                             :if => Proc.new { |imports| !imports.photo_file_name.blank? }
-  has_many :businesses, :through => :business_relations, :source => :business
-  has_many :business_relations, :dependent => :destroy
-  has_many :owned_businesses, :through => :business_relations, :dependent => :destroy, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
+
+  has_many :business_relations
+  has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
   has_many :favorite_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:FAVORITE]]
   
   
@@ -47,7 +47,7 @@ class Member < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :remember_me
   attr_accessible :phone_number, :address, :remember_me_token, :photo
   
-  
+  before_destroy :delete_associated_businesses
   
   def password
     @password
@@ -102,6 +102,8 @@ class Member < ActiveRecord::Base
     password_change == true || hashed_password.blank?
   end
   
-
-  
+  def delete_associated_businesses
+    self.owned_businesses.each {|business| Business.destroy(business.id)}
+    self.business_relations.each {|business_relation| BusinessRelation.destroy(business_relation.id)}
+  end
 end

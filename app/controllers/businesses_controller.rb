@@ -130,7 +130,7 @@ class BusinessesController < ApplicationController
     if !is_favorite(@business)
       flash_redirect("notice","Business not in your list",session[:return_to])
     else
-      if @businesss_relation.destroy
+      if BusinessRelation.destroy(@business_relation.id)
         respond_to do |format|
           format.js 
         end
