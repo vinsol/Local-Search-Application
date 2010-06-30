@@ -63,15 +63,7 @@ class Business < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 5
   
-  define_index do
-      indexes :name, :sortable => true
-      indexes location
-      indexes city
-      indexes category
-      indexes sub_category
-      
-      
-    end
+ 
   
   protected
   def validate_timings

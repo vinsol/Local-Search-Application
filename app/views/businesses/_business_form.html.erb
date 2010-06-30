@@ -3,12 +3,13 @@
 	<% form_for [member,business],:html => { :multipart => true } do |f| %>
 	  	<%= f.error_messages %>
 	  	<fieldset>
+		<i>Fields marked with * are compulsory</i>
 		<p>
-			<%= f.label(:name, "Business Name") %>
+			<%= f.label(:name, "Business Name*") %>
 			<%= f.text_field :name %>
 		</p>
 		<p>
-			<%= f.label(:city, "City") %>
+			<%= f.label(:city, "City*") %>
 			<%= f.collection_select :city, cities, :city, :city, :include_blank => 'None' %>
 		</p>
 		    <%= observe_field "business_city",
@@ -17,11 +18,11 @@
 		             			:update => "business_location" %>
 
 		<p>
-			<%= f.label(:location, "Location") %>
+			<%= f.label(:location, "Location*") %>
 			<%= f.collection_select :location, locations, :location, :location, :include_blank => 'None' %>
 		</p>
 		<p>
-			<%= f.label(:category, "Category") %>
+			<%= f.label(:category, "Category*") %>
 			<%= f.collection_select :category, categories, :category, :category, :include_blank => 'None' %>
 		</p>
 		<%= observe_field "business_category",
@@ -29,43 +30,43 @@
 	             			:with => "business_category",
 	             			:update => "business_sub_category" %>
 		<p>
-			<%= f.label(:sub_category, "Sub-Category") %>
+			<%= f.label(:sub_category, "Sub-Category*") %>
 			<%= f.collection_select :sub_category, sub_categories, :sub_category, :sub_category, :include_blank => 'None' %>
 		</p>
 		<p>
-			<%= f.label(:contact_name, "Contact Name:") %>
+			<%= f.label(:contact_name, "Contact Name*") %>
 			<%= f.text_field :contact_name %>
 		</p>
 		<p>
-			<%= f.label(:contact_phone, "Contact Phone:") %>
+			<%= f.label(:contact_phone, "Contact Phone*") %>
 			<%= f.text_field :contact_phone %>
 		</p>
 		<p>
-			<%= f.label(:contact_email, "Contact Email:") %>
+			<%= f.label(:contact_email, "Contact Email") %>
 			<%= f.text_field :contact_email %>
 		</p>
 		<p>
-			<%= f.label(:contact_website, "Contact Website:") %>
+			<%= f.label(:contact_website, "Contact Website") %>
 			<%= f.text_field :contact_website %>
 		</p>
 		<p>
-			<%= f.label(:contact_address, "Contact Address:") %>
+			<%= f.label(:contact_address, "Contact Address*") %>
 			<%= f.text_area :contact_address, :size => "26x3" %>
 		</p>
 		<p>
-			<%= f.label(:opening_tim, "Opening Time:") %>
+			<%= f.label(:opening_tim, "Opening Time") %>
 			<%= f.time_select :opening_time %>
 		</p>
 		<p>
-			<%= f.label(:closing_tim, "Closing Time:") %>
+			<%= f.label(:closing_tim, "Closing Time") %>
 			<%= f.time_select :closing_time %>
 		</p>
 		<p>
-			<%= f.label(:description, "Description:") %>
+			<%= f.label(:description, "Description") %>
 			<%= f.text_area :description, :size => "26x3" %>
 		</p>
 		<p>
-			<%= f.label(:photo, "Photo:") %>
+			<%= f.label(:photo, "Photo") %>
 			<%= f.file_field :photo %>
 		</p>
 		

@@ -21,7 +21,7 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "geokit"
   config.gem 'google_static_maps_helper'
-  GOOGLE_APPLICATION_ID = "ABQIAAAA3HdfrnxFAPWyY-aiJUxmqRTJQa0g3IQ9GZqIMmInSLzwtGDKaBQ0KYLwBEKSM7F9gCevcsIf6WPuIQ"
+  GOOGLE_APPLICATION_ID = "ABQIAAAAEL-2mkV03ILb3hRgeHattxQSzmuPMQWtOFI1aNdQamv1TNvZ-hSY167JYxvIDjKm4srYfm3nyPYFhg"
   config.gem(
     'thinking-sphinx',
     :lib     => 'thinking_sphinx',
