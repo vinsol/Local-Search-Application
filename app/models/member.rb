@@ -60,17 +60,30 @@ class Member < ActiveRecord::Base
     self.hashed_password = Member.encrypted_password(self.password, self.salt)
   end
 
-  def self.authenticate(email,password)
+  def self.authenticate(email,password,remember_me)
     member = Member.find_by_email(email)
     if member
       expected_password = encrypted_password(password, member.salt)
       if expected_password != member.hashed_password
         member = nil
       end
+      if remember_me == "1"
+        member.remember_me_token = Digest::SHA1.hexdigest(generate_random_string(10))
+        member.remember_me_time = Time.now
+        member.save
+      end
     end
     member
   end
-
+  
+  def generate_random_string(len)
+       #generate a salt consisting of strings and digits
+       chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+       random_string = ""
+       1.upto(len) { |i| random_string << chars[rand(chars.size-1)] }
+       return random_string
+  end
+  
   def signup_notification
     Notifications.deliver_send_notification_mail(self.first_name, self.last_name, self.email)
   end

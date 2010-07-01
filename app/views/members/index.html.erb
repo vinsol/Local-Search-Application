@@ -5,15 +5,33 @@
 </div>
 <div class="search">
 	<div class="search_field">
-		<% form_tag(members_path, :method => "get") do %>  
-			<%= label_tag(:q, "Search Box") %>  <%= text_field_tag(:q) %>  
-			<%= submit_tag("Search") %> 
+		<% form_tag(search_path, :method => "get") do %>  
+			<fieldset>
+			<p><%= label_tag(:city, "City") %> <%= select_tag(:city, options_from_collection_for_select(@cities, :city, :city)) %></p>
+			<%= observe_field "city",
+		           		:url => {:controller => "members", :action =>"get_locations"},
+		             	:with => "city",
+		             	:update => "location" %>
+			<p><%= label_tag(:location, "Location")%> <%= select_tag(:location, options_from_collection_for_select(@locations, :location, :location)) %></p></p>
+			<p><%= label_tag(:name, "Name")%> <%= text_field_tag(:name, nil)%> </p> 
+			<%= submit_tag("Search") %> </fieldset>
 		<% end %> 
 	</div>
 </div>
 
-<% if @search_results != nil %>
-
-	<%= render :partial => "business_search_results",
-			  :locals => { :search_results => @search_results} %>
-<% end %>
+<h3>Filter By:</h3>
+<h4>Cities</h4>
+<p><% for city in @cities %>
+<%= link_to city.city, search_path(:city=>city.city)%>&nbsp;&nbsp;
+<%end%>
+</p>
+<h4>Categories</h4>
+<p><% for category in @categories %>
+<%= link_to category.category, search_path(:location=>category.category)%>&nbsp;&nbsp;
+<%end%>
+</p>
+<h4>Sub-Categories</h4>
+<p><% for sub_category in @sub_categories %>
+<%= link_to sub_category.sub_category, search_path(:sub_category=>sub_category.sub_category)%>&nbsp;&nbsp;
+<%end%>
+</p>

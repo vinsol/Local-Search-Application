@@ -49,7 +49,37 @@ body {
 	font-weight:bold;
 	}
 
-	
+/******Search Results********/
+.search{
+	margin-top:10px;
+	margin-bottom:20px;
+}
+.search_result{
+
+	margin-left:20px;
+	margin-right:auto;
+	width:auto;
+}
+.result_name{
+	width:200px;
+	float:left;
+}
+.result_location{
+	width:200px;
+	float:left;
+}
+.result_city{
+	width:100px;
+	float:left;
+}
+.result_category{
+	width:200px;
+	float:left;
+}
+.result_sub_category{
+	width:200px;
+	float:left;
+}	
 /****BUSINESS DETAILS*****/
 
 #business_list, #favorite_list, #owned_list {

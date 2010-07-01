@@ -63,7 +63,16 @@ class Business < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 5
   
- 
+  define_index do
+      indexes :name, :sortable => true
+      indexes location, :as => :location
+      indexes city, :as => :city
+      indexes category, :as => :category
+      indexes sub_category, :as => :sub_category
+      set_property :enable_star => 1
+      set_property :min_infix_len => 3
+      
+    end
   
   protected
   def validate_timings

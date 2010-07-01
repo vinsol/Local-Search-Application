@@ -3,43 +3,46 @@
   	<%= f.error_messages %>
   	<fieldset>
 	<i>Fields marked with * are compulsory</i>
-	<div>
+	<p>
 		<%= f.label(:first_name, "First Name*") %>
 		<%= f.text_field :first_name %>
-	</div>
-	<div>
+	</p>
+	<p>
 		<%= f.label(:last_name, "Last Name*") %>
 		<%= f.text_field :last_name %>
-	</div>
-	<div>
+	</p>
+	<p>
 		<%= f.label(:email, "Email*") %>
 		<%= f.text_field :email %>
-	</div>
+	</p>
 	<% if new_form %>
-		<div>
+		<p>
 			<%= f.label(:password, "Password*") %>
 			<%= f.password_field :password %>
-		</div>
-		<div>
+		</p>
+		<p>
 			<%= f.label(:password_confirmation, "Confirm Password*") %>
 			<%= f.password_field :password_confirmation %>
-		</div>
+		</p>
 	<% end%>
-	<div>
+	<p>
 		<%= f.label(:phone_number, "Phone Number*") %>
 		<%= f.text_field :phone_number %>
-	</div>
-	<div>
+	</p>
+	<p>
 		<%= f.label(:address, "Address*") %>
 		<%= f.text_area :address, :cols => 29, :rows => 3 %>
-	</div>
-	<div>
+	</p>
+	<p>
 		<%= f.label :photo, "Photo" %>
+		<% if new_form == false and @member.photo != nil %>
+		<%= image_tag @member.photo.url(:thumb) %>
+		<% end %>
 		<%= f.file_field :photo %>
-	</div>
-	<div>
+	</p>
+	<p>
 		<%= f.submit submit_label %>
-	</div>
+	</p>
 </fieldset>
   
 <% end %>

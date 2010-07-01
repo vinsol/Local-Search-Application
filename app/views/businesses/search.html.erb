@@ -1,0 +1,15 @@
+<div class="search">
+	<div class="search_field">
+		<% form_tag(search_path, :method => "get") do %>  
+			<%= label_tag(:query, "Search Box") %>  <%= text_field_tag(:query) %>  
+			<%= submit_tag("Search") %> 
+		<% end %> 
+	</div>
+</div>
+
+
+<% if @search_results != nil %>
+
+	<%= render :partial => "business_search_results",
+			  :locals => { :search_results => @search_results} %>
+<% end %>

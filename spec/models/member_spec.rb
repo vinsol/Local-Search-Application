@@ -106,13 +106,24 @@ describe Member do
     describe "authentication" do
       
       it "should be true if the credentials match" do
-        Member.authenticate('mohit123@gmail.com', 'google').should == @member
+        Member.authenticate('mohit123@gmail.com', 'google',nil).should == @member
       end
       
       it "should not be true if the credentials do not match" do
-        Member.authenticate('mohit123@gmail.com', 'test').should == nil
+        Member.authenticate('mohit123@gmail.com', 'test',nil).should == nil
       end
       
+      it "should set remember me token if remember me is checked" do
+        Member.stub!(:generate_random_string).and_return("random_token")
+        @member = Member.authenticate('mohit123@gmail.com', 'google',"1")
+        @member.remember_me_token.should_not == nil
+      end
+      
+      it "should set remember me time if remember me is checked" do
+        Member.stub!(:generate_random_string).and_return("random_token")
+        @member = Member.authenticate('mohit123@gmail.com', 'google',"1")
+        @member.remember_me_time.should_not == nil
+      end
     end
     
   end
@@ -137,7 +148,7 @@ describe Member do
     describe "password retrieval" do
       it "should generate a new password, update the hashed password and send an email" do
         @member.send_new_password
-        Member.authenticate('mohit123@gmail.com', "google").should == nil
+        Member.authenticate('mohit123@gmail.com', "google",nil).should == nil
         ActionMailer::Base.deliveries.size.should == 1
       end
     end
@@ -190,6 +201,8 @@ describe Member do
     end
     
   end
+  
+  #It should delete associated businesses during member deletion
   
   
 end

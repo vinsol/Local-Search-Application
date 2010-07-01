@@ -9,6 +9,27 @@ class BusinessesController < ApplicationController
     end
   end
 
+  def search
+    @conditions = Hash.new
+    p params[:name]
+    if params[:name] != "" and params[:name] != nil 
+      p "======>>>>>>>>"
+      @conditions[:name] = params[:name] 
+    end
+    if params[:city] != "" and params[:city] != nil
+       @conditions[:city] = params[:city]
+    end
+    if params[:location] != "" and params[:location] != nil
+      @conditions[:location] = params[:location] 
+    end
+    @search_results = Business.search :conditions => @conditions
+    if @search_results.empty?
+      @text = "No results found."
+    else
+      @text = "#{@search_results.size} results found."
+    end
+  end
+  
   def show
     @business = Business.find(params[:id])
     @title = "Business Details - #{@business.name}"

@@ -4,9 +4,11 @@ class MembersController < ApplicationController
   
   def index
     @title = "Home"
-    if params[:q] != nil
-      @search_results = Business.search "#{params[:q]}"
-    end
+    @cities = City.all
+    @locations = Location.all
+    @categories = Category.all
+    @sub_categories = SubCategory.all
+    
   end
 
  
@@ -24,6 +26,14 @@ class MembersController < ApplicationController
   def show_my_businesses
     @owned_businesses = @member.owned_businesses.paginate :page => params[:page], :per_page => 5
     @title = @member.first_name + " " + @member.last_name
+  end
+  def get_locations
+    unless request.xhr?
+    flash_redirect("error", "Invalid Page", root_path)
+    else
+    @locations = City.find_by_city(params[:city]).locations
+    render :partial=> "location"
+    end
   end
   
   def new
