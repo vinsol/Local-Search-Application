@@ -15,24 +15,24 @@ class MembersController < ApplicationController
   def show
     @owned_businesses = @member.owned_businesses
     @favorite_businesses = @member.favorite_businesses
-    @title = @member.first_name + " " + @member.last_name
+    @title = @member.full_name
   end
 
   def show_list
      @favorite_businesses = @member.favorite_businesses.paginate :page => params[:page], :per_page => 5
-     @title = @member.first_name + " " + @member.last_name
+     @title = @member.full_name
    end
   
   def show_my_businesses
     @owned_businesses = @member.owned_businesses.paginate :page => params[:page], :per_page => 5
-    @title = @member.first_name + " " + @member.last_name
+    @title = @member.full_name
   end
   def get_locations
     unless request.xhr?
-    flash_redirect("error", "Invalid Page", root_path)
+      flash_redirect("error", "Invalid Page", root_path)
     else
-    @locations = City.find_by_city(params[:city]).locations
-    render :partial=> "location"
+      @locations = City.find_by_city(params[:city]).locations
+      render :partial=> "location"
     end
   end
   
@@ -56,10 +56,23 @@ class MembersController < ApplicationController
 
 
   def update
-    if @member.update_attributes(params[:member])
-      flash_redirect("message","Profile was successfully edited", member_path(@member.id) )
+    unless request.get?
+      @member.password_change = true
+      if @member.update_attributes(params[:member])
+        flash.now[:message] = "Password Changed"
+         respond_to do |format|
+           format.js
+         end
+      else
+        flash.now[:notice] = "Password not changed. Try again"
+        render :action => :change_password
+      end
     else
-      flash_redirect("notice","Profile not saved. Please check it again",edit_member_path(@member.id) )
+      if @member.update_attributes(params[:member])
+        flash_redirect("message","Profile was successfully edited", member_path(@member.id) )
+      else
+        flash_redirect("notice","Profile not saved. Please check it again",edit_member_path(@member.id) )
+      end
     end
   end
 
@@ -69,24 +82,7 @@ class MembersController < ApplicationController
     redirect_to logout_path 
   end
   
-  def change_password
-      respond_to do |format|
-        format.js
-      end
-  end
   
-  def update_password
-    @member.password_change = true
-    if @member.update_attributes(params[:member])
-      flash.now[:message] = "Password Changed"
-       respond_to do |format|
-         format.js
-       end
-    else
-      flash.now[:notice] = "Password not changed. Try again"
-      render :action => :change_password
-    end
-  end
   
   def forgot_password
     @title = "Forgot Password"

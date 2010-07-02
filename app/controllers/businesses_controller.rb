@@ -59,20 +59,30 @@ class BusinessesController < ApplicationController
 
   def get_locations
     unless request.xhr?
-    flash_redirect("error", "Invalid Page", root_path)
+      flash_redirect("error", "Invalid Page", root_path)
     else
-    @locations = City.find_by_city(params[:business_city]).locations
-    render :partial=> "business_location"
+      @city = City.find_by_city(params[:business_city])
+      unless @city.nil?
+        @locations = @city.locations 
+        render :partial=> "business_location"
+     else
+       flash.now[:message] = "Not a valid city"
+     end
     end
   end
   
   def get_sub_categories
     unless request.xhr?
-    flash[:error] = "Invalid page"
-    redirect_to root_path
+      flash[:error] = "Invalid page"
+      redirect_to root_path
     else
-    @sub_categories = Category.find_by_category(params[:business_category]).sub_categories
-    render :partial=> "business_sub_category"
+      @category = Category.find_by_category(params[:business_category])
+      unless @category.nil?
+        @sub_categories = @category.sub_categories
+        render :partial=> "business_sub_category"
+      else
+        flash.now[:message] = "Not a valid category"
+      end
     end
   end
     
@@ -84,7 +94,7 @@ class BusinessesController < ApplicationController
  
   def create
     @business = Business.new(params[:business])
-    @business.owner = @member.first_name + " " + @member.last_name
+    @business.owner = @member.full_name
     if @business.save and BusinessRelation.create(:member_id => @member.id,:business_id => @business.id, :status => RELATION[:OWNED])
       flash_redirect("message","Business was successfully added",businesses_path)
     else
@@ -94,19 +104,17 @@ class BusinessesController < ApplicationController
   end
 
   def update
-    if request.put?
-      @business = Business.find(params[:id])
-      #### Allow only if the user owns the business
-      if is_owner(@business) 
-        if @business.update_attributes(params[:business])
-          flash_redirect("message","Business was successfully added",business_path(params[:id]))
-        else
-          render :action => :edit
-        end
+    @business = Business.find(params[:id])
+    #### Allow only if the user owns the business
+    if is_owner(@business) 
+      if @business.update_attributes(params[:business])
+        flash_redirect("message","Business was successfully added",business_path(params[:id]))
       else
-        flash_redirect("notice", "Nice try", member_path(@member.id))
-      end 
-    end
+        render :action => :edit
+      end
+    else
+      flash_redirect("notice", "Nice try", member_path(@member.id))
+    end 
   end
 
  

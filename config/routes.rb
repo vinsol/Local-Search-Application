@@ -49,7 +49,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :members, :member => {:change_password => [:get], :update_password => [:post], :show_list => [:get], :show_my_businesses => [:get]}, :collection => {:forgot_password => [:get,:post], :get_locations => [:get]} do |members|
     members.resources :businesses, :except => [:index, :show]
   end
-  map.resources :businesses,:only => [:index, :show], :member => {:add_favorite => [:get], :remove_favorite => [:delete], :show_on_map => [:get]}, :collection => {:get_locations => [:get]}
+  map.resources :businesses,:only => [:index, :show], :member => {:add_favorite => [:get], :remove_favorite => [:delete], :show_on_map => [:get]}
   map.admin '/admin', :controller => "admin/admin", :action => :index
   map.admin_members "/admin/members", :controller => "admin/members", :action => :index
   map.admin_businesses "/admin/businesses", :controller => "admin/businesses", :action => :index

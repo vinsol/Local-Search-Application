@@ -45,6 +45,7 @@ class Member < ActiveRecord::Base
                                             :if => Proc.new { |imports| !imports.photo_file_name.blank? }
   #ATTRIBUTES
   attr_accessor :password_confirmation, :password_change, :remember_me
+ 
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :remember_me
   attr_accessible :phone_number, :address, :remember_me_token, :photo
   
@@ -63,6 +64,10 @@ class Member < ActiveRecord::Base
     self.hashed_password = Member.encrypted_password(self.password, self.salt)
   end
 
+  def full_name
+    @full_name = self.first_name + " " + self.last_name
+  end
+  
   def self.authenticate(email,password,remember_me)
     member = Member.find_by_email(email)
     if member
