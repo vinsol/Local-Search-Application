@@ -1,5 +1,5 @@
 class BusinessesController < ApplicationController
- 
+ skip_before_filter :authorize, :only => [:index, :search]
   def index
     @businesses = Business.paginate :page => params[:page], :order => 'name ASC'
     @title = "Listing Businesses"
@@ -11,17 +11,11 @@ class BusinessesController < ApplicationController
 
   def search
     @conditions = Hash.new
-    p params[:name]
-    if params[:name] != "" and params[:name] != nil 
-      p "======>>>>>>>>"
-      @conditions[:name] = params[:name] 
-    end
-    if params[:city] != "" and params[:city] != nil
-       @conditions[:city] = params[:city]
-    end
-    if params[:location] != "" and params[:location] != nil
-      @conditions[:location] = params[:location] 
-    end
+    @conditions[:name] = params[:name] if params[:name] != "" and params[:name] != nil
+    @conditions[:city] = params[:city] if params[:city] != "" and params[:city] != nil
+    @conditions[:location] = params[:location] if params[:location] != "" and params[:location] != nil
+    @conditions[:category] = params[:category] if params[:category] != "" and params[:category] != nil
+    @conditions[:sub_category] = params[:sub_category] if params[:sub_category] != "" and params[:sub_category] != nil
     @search_results = Business.search :conditions => @conditions
     if @search_results.empty?
       @text = "No results found."

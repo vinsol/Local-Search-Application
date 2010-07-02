@@ -63,7 +63,7 @@ describe SessionsController do
     describe "with valid params" do
       before(:each) do
         @member = mock_model(Member, :update_attributes => true)
-        Member.stub!(:authenticate).with("valid_emai", "valid_password",nil).and_return(true)
+        Member.stub!(:authenticate).with("valid_email", "valid_password",nil).and_return(true)
       end
     
       it "should authenticate the member the member" do

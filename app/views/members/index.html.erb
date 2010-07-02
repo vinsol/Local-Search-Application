@@ -27,7 +27,7 @@
 </p>
 <h4>Categories</h4>
 <p><% for category in @categories %>
-<%= link_to category.category, search_path(:location=>category.category)%>&nbsp;&nbsp;
+<%= link_to category.category, search_path(:category=>category.category)%>&nbsp;&nbsp;
 <%end%>
 </p>
 <h4>Sub-Categories</h4>

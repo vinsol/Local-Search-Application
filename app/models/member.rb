@@ -23,17 +23,14 @@
 #
 
 class Member < ActiveRecord::Base
-  has_attached_file :photo, :styles => {:thumb => "160x190>" }
-  validates_attachment_size :photo, :less_than => 1.megabytes, 
-                                    :if => Proc.new { |imports| !imports.photo_file_name.blank? }
-  validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
-                                            :if => Proc.new { |imports| !imports.photo_file_name.blank? }
-
+  
+  #RELATIONS
+  has_attached_file :photo, :styles => {:thumb => THUMB }
   has_many :business_relations
   has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
   has_many :favorite_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:FAVORITE]]
   
-  
+  #VALIDATIONS
   validates_presence_of :email, :first_name, :last_name, :phone_number, :address
   validates_uniqueness_of :email
   validates_format_of :phone_number, 
@@ -42,11 +39,17 @@ class Member < ActiveRecord::Base
   validates_format_of :email, :with => EMAIL , :unless => lambda{|a| a.email.blank?}
   validates_presence_of :password, :if => :password_present
   validates_confirmation_of :password
-  
+  validates_attachment_size :photo, :less_than => 1.megabytes, 
+                                    :if => Proc.new { |imports| !imports.photo_file_name.blank? }
+  validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
+                                            :if => Proc.new { |imports| !imports.photo_file_name.blank? }
+  #ATTRIBUTES
   attr_accessor :password_confirmation, :password_change, :remember_me
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :remember_me
   attr_accessible :phone_number, :address, :remember_me_token, :photo
   
+  #CALLBACKS
+  after_save :signup_notification
   before_destroy :delete_associated_businesses
   
   def password

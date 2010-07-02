@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
   end
 
   def authenticate
-    if request.post? and @member = Member.authenticate(params[:member][:email],   params[:member][:password], params[:remember_me])
+    if request.post? and @member = Member.authenticate(params[:member][:email],params[:member][:password], params[:remember_me])
       session[:member_id] = @member.id
       if params[:member][:remember_me] == "1"
         cookies[:remember_me_id] = { :value => @member.id.to_s, :expires => 14.days.from_now }

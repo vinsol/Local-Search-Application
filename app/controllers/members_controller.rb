@@ -47,7 +47,7 @@ class MembersController < ApplicationController
 
   def create
     @member = Member.new(params[:member])
-    if @member.save and @member.signup_notification
+    if @member.save
       flash_redirect("message", "Signup successful. Please login using your credentials.", login_path )
     else
       render :action => :new
