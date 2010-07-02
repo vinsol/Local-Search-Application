@@ -29,15 +29,19 @@
 #
 
 class Business < ActiveRecord::Base  
+  
+  #RELATIONS
   has_many :business_relations
   has_many :members, :through => :business_relations, :source => :member
   has_attached_file :photo, :styles => {:thumb => THUMB, :medium => MEDIUM }
   acts_as_mappable
+  
+  #CALLBACKS
   before_validation_on_create :geocode_address, :unless => lambda{|a| a.contact_address.blank?}
   before_save :geocode_address, :unless => lambda{|a| a.contact_address.blank?}
     
   
-  
+  #VALIDATIONS
   validates_attachment_size :photo, :less_than => 1.megabytes, 
                                     :if => Proc.new { |imports| !imports.photo_file_name.blank? }
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
@@ -57,6 +61,8 @@ class Business < ActiveRecord::Base
   validates_format_of :contact_email, 
       :with => EMAIL , 
       :unless => lambda{|a| a.contact_email.blank?}
+      
+  #ATTRIBUTES
   attr_accessible :name, :location, :city, :category, :owner, :contact_name, :contact_email, :photo, :sub_category
   attr_accessible :contact_phone, :contact_website, :contact_address, :description, :opening_time, :closing_time
   
