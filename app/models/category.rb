@@ -12,4 +12,5 @@
 class Category < ActiveRecord::Base
   validates_presence_of :category
   has_and_belongs_to_many :sub_categories
+  has_and_belongs_to_many :businesses
 end

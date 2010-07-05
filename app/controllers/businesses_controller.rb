@@ -53,7 +53,6 @@ class BusinessesController < ApplicationController
   
   def new
     @title = "Add Business"
-    @cities = City.find(:all)
     @business = Business.new
   end
 
@@ -63,6 +62,7 @@ class BusinessesController < ApplicationController
     else
       @city = City.find_by_city(params[:business_city])
       unless @city.nil?
+        p "======*******>>>>>>>>"
         @locations = @city.locations 
         render :partial=> "business_location"
      else
@@ -86,6 +86,16 @@ class BusinessesController < ApplicationController
     end
   end
     
+  def locations
+    @city = City.find(:first, :conditions => ['city LIKE ?', "%#{params[:city]}"])
+    p @city
+    search_reg_exp = /(?:([a-zA-Z0-9]*[\s,]+)*)([a-zA-Z0-9]+)$/
+    @search_query = params[:search][search_reg_exp,2]
+    @locations = @city.locations.find(:all, 
+                      :conditions => ['location LIKE ?',"%#{@search_query}%"]) 
+  end
+  
+  
   def edit
     @title = "Edit Business"
     @business = Business.find(params[:id])
@@ -95,7 +105,10 @@ class BusinessesController < ApplicationController
   def create
     @business = Business.new(params[:business])
     @business.owner = @member.full_name
+    
+    #@business.categories = params[:business][:category_name].collect {|category|}
     if @business.save and BusinessRelation.create(:member_id => @member.id,:business_id => @business.id, :status => RELATION[:OWNED])
+     
       flash_redirect("message","Business was successfully added",businesses_path)
     else
       @business.destroy

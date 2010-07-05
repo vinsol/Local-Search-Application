@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100628093232) do
+ActiveRecord::Schema.define(:version => 20100702084758) do
 
   create_table "business_relations", :force => true do |t|
     t.integer  "member_id"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(:version => 20100628093232) do
     t.string   "name"
     t.string   "location"
     t.string   "city"
-    t.string   "category"
     t.string   "status",                                            :default => "unverified"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -41,10 +40,25 @@ ActiveRecord::Schema.define(:version => 20100628093232) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
-    t.string   "sub_category"
     t.decimal  "lng",                :precision => 10, :scale => 7
     t.decimal  "lat",                :precision => 10, :scale => 7
   end
+
+  create_table "businesses_categories", :id => false, :force => true do |t|
+    t.integer "business_id"
+    t.integer "category_id"
+  end
+
+  add_index "businesses_categories", ["business_id"], :name => "index_businesses_categories_on_business_id"
+  add_index "businesses_categories", ["category_id"], :name => "index_businesses_categories_on_category_id"
+
+  create_table "businesses_sub_categories", :id => false, :force => true do |t|
+    t.integer "business_id"
+    t.integer "sub_category_id"
+  end
+
+  add_index "businesses_sub_categories", ["business_id"], :name => "index_businesses_sub_categories_on_business_id"
+  add_index "businesses_sub_categories", ["sub_category_id"], :name => "index_businesses_sub_categories_on_sub_category_id"
 
   create_table "categories", :force => true do |t|
     t.datetime "created_at"

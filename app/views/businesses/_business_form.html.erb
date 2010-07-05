@@ -1,3 +1,4 @@
+
 <div class="form">
 	
 	<% form_for [member,business],:html => { :multipart => true } do |f| %>
@@ -8,31 +9,19 @@
 			<%= f.label(:name, "Business Name*") %>
 			<%= f.text_field :name %>
 		</p>
-		<p>
-			<%= f.label(:city, "City*") %>
-			<%= f.collection_select :city, cities, :city, :city, :include_blank => 'None' %>
-		</p>
-		    <%= observe_field "business_city",
-		           				:url => {:controller => "businesses", :action =>"get_locations"},
-		             			:with => "business_city",
-		             			:update => "business_location" %>
+		
 
+	
 		<p>
-			<%= f.label(:location, "Location*") %>
-			<%= f.collection_select :location, locations, :location, :location, :include_blank => 'None' %>
+			<%= f.label(:sub_category_name, "Category*") %>
+			<%= text_field_with_auto_complete :business, :sub_category_name, {}, { 
+										:url => sub_categories_path(:js),
+										:method => :get, 
+										:with => "'search=' + element.value", 
+										:tokens => [",","\s"]
+									 }%>
 		</p>
-		<p>
-			<%= f.label(:category, "Category*") %>
-			<%= f.collection_select :category, categories, :category, :category, :include_blank => 'None' %>
-		</p>
-		<%= observe_field "business_category",
-	           				:url => {:controller => "businesses", :action =>"get_sub_categories"},
-	             			:with => "business_category",
-	             			:update => "business_sub_category" %>
-		<p>
-			<%= f.label(:sub_category, "Sub-Category*") %>
-			<%= f.collection_select :sub_category, sub_categories, :sub_category, :sub_category, :include_blank => 'None' %>
-		</p>
+	
 		<p>
 			<%= f.label(:contact_name, "Contact Name*") %>
 			<%= f.text_field :contact_name %>
@@ -50,9 +39,28 @@
 			<%= f.text_field :contact_website %>
 		</p>
 		<p>
-			<%= f.label(:contact_address, "Contact Address*") %>
+			<%= f.label(:contact_address, "Street Address*") %>
 			<%= f.text_area :contact_address, :size => "26x3" %>
 		</p>
+			<p>
+				<%= f.label(:location, "Location*") %>
+				<%= text_field_with_auto_complete :business, :location, {}, { 
+											:url => locations_business_path(:js),
+											:method => :get, 
+											:with => "'city=' + document.getElementById('business_city').value + '&' + 'search=' + element.value", 
+											:tokens => [",","\s"]
+										 }%>
+			</p>
+			<p>
+				<%= f.label(:city, "City*") %>
+				<%= text_field_with_auto_complete :business, :city, {}, { 
+											:url => cities_path(:js),
+											:method => :get, 
+											:with => "'search=' + element.value", 
+											:tokens => [",","\s"]
+										 }%>
+			</p>
+			
 		<p>
 			<%= f.label(:opening_tim, "Opening Time") %>
 			<%= f.time_select :opening_time %>

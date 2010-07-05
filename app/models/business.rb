@@ -35,6 +35,8 @@ class Business < ActiveRecord::Base
   has_many :members, :through => :business_relations, :source => :member
   has_attached_file :photo, :styles => {:thumb => THUMB, :medium => MEDIUM }
   acts_as_mappable
+  #has_and_belongs_to_many :categories
+  has_and_belongs_to_many :sub_categories
   
   #CALLBACKS
   before_validation_on_create :geocode_address, :unless => lambda{|a| a.contact_address.blank?}
@@ -47,8 +49,8 @@ class Business < ActiveRecord::Base
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
                                     :if => Proc.new { |imports| !imports.photo_file_name.blank? }
 
-  validates_presence_of :name, :location, :city, :category, :contact_name
-  validates_presence_of :contact_phone, :contact_address, :sub_category
+  validates_presence_of :name, :location, :city,:contact_name
+  validates_presence_of :contact_phone, :contact_address
   
   validates_format_of :contact_website,
       :message => "must be a valid url",
@@ -63,22 +65,36 @@ class Business < ActiveRecord::Base
       :unless => lambda{|a| a.contact_email.blank?}
       
   #ATTRIBUTES
-  attr_accessible :name, :location, :city, :category, :owner, :contact_name, :contact_email, :photo, :sub_category
+  attr_accessible :name, :location, :city, :owner, :contact_name, :contact_email, :photo, :sub_category_name
   attr_accessible :contact_phone, :contact_website, :contact_address, :description, :opening_time, :closing_time
   
   cattr_reader :per_page
   @@per_page = 5
   
-  define_index do
-      indexes :name, :sortable => true
-      indexes location, :as => :location
-      indexes city, :as => :city
-      indexes category, :as => :category
-      indexes sub_category, :as => :sub_category
-      set_property :enable_star => 1
-      set_property :min_infix_len => 3
+  #define_index do
+  #    indexes :name, :sortable => true
+  #   indexes location, :as => :location
+  #    indexes city, :as => :city
+  #    #indexes category, :as => :category
+      #indexes sub_category, :as => :sub_category
+  #    set_property :enable_star => 1
+   #   set_property :min_infix_len => 3
       
-    end
+  #  end
+  
+  def sub_category_name
+    self.sub_categories.collect { |sub_category| sub_category.sub_category + ","}
+  end
+  
+  def sub_category_name=(string)
+    string.split(",").collect { |sub_category| 
+      @relation = SubCategory.find_by_sub_category(sub_category.strip)
+         if self.sub_categories.find(:all, :conditions => ["sub_category_id = ?",@relation.id]).empty?
+           self.sub_categories << @relation
+         end
+      }
+  end
+ 
   
   protected
   def validate_timings
@@ -87,7 +103,7 @@ class Business < ActiveRecord::Base
   
   private
   def geocode_address
-    geo=Geokit::Geocoders::MultiGeocoder.geocode(contact_address)
+    geo=Geokit::Geocoders::MultiGeocoder.geocode(contact_address + self.location + self.city)
     errors.add(:contact_address, "Could not Geocode address") if !geo.success
     self.lat, self.lng = geo.lat,geo.lng if geo.success
   end
