@@ -50,7 +50,7 @@ class Member < ActiveRecord::Base
   attr_accessible :phone_number, :address, :remember_me_token, :photo
   
   #CALLBACKS
-  after_save :signup_notification
+  after_create :signup_notification 
   before_destroy :delete_associated_businesses
   
   def password
@@ -85,11 +85,11 @@ class Member < ActiveRecord::Base
   end
   
   def generate_random_string(len)
-       #generate a salt consisting of strings and digits
-       chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-       random_string = ""
-       1.upto(len) { |i| random_string << chars[rand(chars.size-1)] }
-       return random_string
+      #generate a salt consisting of strings and digits
+     chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+     random_string = ""
+     1.upto(len) { |i| random_string << chars[rand(chars.size-1)] }
+     return random_string
   end
   
   def signup_notification

@@ -77,7 +77,15 @@ describe Member do
     end
     
   end
-
+  
+  describe "Full Name" do
+    it "should return a full name" do
+      @member = Member.create(@valid_attributes)
+      @member.full_name.should == "Mohit Jain"
+    end
+  end
+  
+  
   #Password Encryption
  
   describe "password encryption" do
@@ -135,11 +143,11 @@ describe Member do
       ActionMailer::Base.delivery_method = :test  
       ActionMailer::Base.perform_deliveries = true  
       ActionMailer::Base.deliveries = []  
-      @member = Member.create!(@valid_attributes)
+      
     end
     
     it "should send a signup notification mail" do
-      @member.signup_notification
+      @member = Member.create!(@valid_attributes)
       ActionMailer::Base.deliveries.size.should == 1  
     end
     
@@ -147,9 +155,10 @@ describe Member do
     
     describe "password retrieval" do
       it "should generate a new password, update the hashed password and send an email" do
+        @member = Member.create!(@valid_attributes)
         @member.send_new_password
         Member.authenticate('mohit123@gmail.com', "google",nil).should == nil
-        ActionMailer::Base.deliveries.size.should == 1
+        ActionMailer::Base.deliveries.size.should == 2
       end
     end
     

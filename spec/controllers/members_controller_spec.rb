@@ -26,6 +26,7 @@ describe MembersController do
       @owned_businesses = mock_model(Business)
       @favorite_businesses = mock_model(Business)
       Member.stub!(:find_by_id).with("1").and_return(@member)
+      @member.stub!(:full_name).and_return("Jigar Patel")
       @member.stub!(:owned_businesses).and_return(@owned_businesses)
       @member.stub!(:favorite_businesses).and_return(@favorite_businesses)
       @favorite_businesses.stub!(:paginate).and_return(@favotite_businesses)
@@ -184,7 +185,7 @@ describe MembersController do
     describe "with valid attributes" do
       
       before(:each) do
-        @member = mock_model(Member, :save => true, :signup_notification => true)
+        @member = mock_model(Member, :save => true)
         Member.stub!(:new).with('valid_attributes').and_return(@member)
       end
       
@@ -198,10 +199,7 @@ describe MembersController do
         post :create, :member => "valid_attributes"
       end
       
-      it "should send a signup notification" do
-        @member.should_receive(:signup_notification).and_return(true)
-        post :create, :member => "valid_attributes"
-      end
+      
       
       it "should set a flash message" do
         post :create, :member => "valid_attributes"

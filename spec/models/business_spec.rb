@@ -36,13 +36,7 @@ describe Business do
       Business.new(@valid_attributes.merge(:city => " ")).should_not be_valid
     end
       
-    it "should require a valid category" do
-      Business.new(@valid_attributes.merge(:category => " ")).should_not be_valid
-    end
-        
-    it "should require a valid sub_category" do
-      Business.new(@valid_attributes.merge(:sub_category => " ")).should_not be_valid
-    end
+   
     
     it "should require a valid contact_name" do
       Business.new(@valid_attributes.merge(:contact_name => " ")).should_not be_valid

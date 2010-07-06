@@ -48,23 +48,23 @@ class MembersController < ApplicationController
 
 
   def update
-    if request.put?
-      @member.password_change = true
-      if @member.update_attributes(params[:member])
-        flash.now[:message] = "Password Changed"
-         respond_to do |format|
-           format.js
-         end
-      else
-        flash.now[:notice] = "Password not changed. Try again"
-        render :action => :change_password
-      end
+    if @member.update_attributes(params[:member])
+      flash_redirect("message","Profile was successfully edited", member_path(@member.id) )
     else
-      if @member.update_attributes(params[:member])
-        flash_redirect("message","Profile was successfully edited", member_path(@member.id) )
-      else
-        flash_redirect("notice","Profile not saved. Please check it again",edit_member_path(@member.id) )
-      end
+      flash_redirect("notice","Profile not saved. Please check it again",edit_member_path(@member.id) )
+    end
+  end
+  
+  def update_password
+    @member.password_change = true
+    if @member.update_attributes(params[:member])
+      flash.now[:message] = "Password Changed"
+       respond_to do |format|
+         format.js
+       end
+    else
+      flash.now[:notice] = "Password not changed. Try again"
+      render :action => :change_password
     end
   end
  

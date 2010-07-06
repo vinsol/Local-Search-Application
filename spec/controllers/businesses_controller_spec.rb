@@ -12,7 +12,7 @@ describe BusinessesController do
     it "should not allow non logged in users" do
       session[:member_id] = nil
       get :index
-      response.should redirect_to(login_path)
+      response.should_not redirect_to(login_path)
     end
     
     it "should find all businesses" do
@@ -47,7 +47,7 @@ describe BusinessesController do
     it "should not allow non logged in users" do
       session[:member_id] = nil
       get :show
-      response.should redirect_to(login_path)
+      response.should_not redirect_to(login_path)
     end
     
     it "should find member from session" do
@@ -98,11 +98,7 @@ describe BusinessesController do
       assigns[:title].should == "Add Business"
     end
     
-    it "should return all cities" do
-      City.should_receive(:find).with(:all).and_return(@cities)
-      get :new
-    end
-    
+   
     it "should create a new instance of business class" do
       Business.should_receive(:new).and_return(@business)
       get :new
@@ -117,57 +113,7 @@ describe BusinessesController do
   
   
     
-  describe "get locations" do
-    before(:each) do
-      session[:member_id] = 1
-      @city = mock_model(City)
-      City.stub!(:find_by_city).with('valid_city').and_return(@city)
-      @locations = mock_model(Location)
-      @city.stub!(:locations).and_return(@locations)
-    end
-    
-    it "should allow only xhr requests" do
-      get :get_locations
-      flash[:error].should == "Invalid Page"
-      response.should redirect_to(root_path)
-    end
-    
-    it "should find the city from params" do
-      City.should_receive(:find_by_city).with('valid_city').and_return(@city)
-      xhr :get, :get_locations, :business_city => "valid_city"
-    end
-    
-    it "should return list of locations for a particular city" do
-      @city.should_receive(:locations).and_return(@locations)
-      xhr :get, :get_locations, :business_city => "valid_city"
-    end
-  end
-
-  describe "get sub_categories" do
-    before(:each) do
-      session[:member_id] = 1
-      @category = mock_model(Category)
-      Category.stub!(:find_by_category).with('valid_category').and_return(@category)
-      @sub_categories = mock_model(SubCategory)
-      @category.stub!(:sub_categories).and_return(@sub_categories)
-    end
-    
-    it "should allow only xhr requests" do
-      get :get_sub_categories
-      flash[:error].should == "Invalid page"
-      response.should redirect_to(root_path)
-    end
-    
-    it "should find the category from params" do
-      Category.should_receive(:find_by_category).with('valid_category').and_return(@category)
-      xhr :get, :get_sub_categories, :business_category => "valid_category"
-    end
-    
-    it "should return list of sub categories for a valid category" do
-      @category.should_receive(:sub_categories).and_return(@sub_categories)
-      xhr :get, :get_sub_categories, :business_category => "valid_category"
-    end
-  end
+  
   
   describe "edit" do
     before(:each) do
@@ -216,6 +162,7 @@ describe BusinessesController do
         @member = mock_model(Member, {:first_name => "Jigar", :last_name => "Patel"})
         Member.stub!(:find_by_id).with(1).and_return(@member)
         @business = mock_model(Business, :save => true)
+        @member.stub!(:full_name).and_return("Jigar Patel")
         Business.stub!(:new).with("valid_attr").and_return(@business)
         Business.stub!(:new).and_return(@business)
         @business.stub!(:owner=).and_return("Jigar Patel")
@@ -270,6 +217,7 @@ describe BusinessesController do
         session[:member_id] = 1
         @member = mock_model(Member, {:first_name => "Jigar", :last_name => "Patel"})
         Member.stub!(:find_by_id).with(1).and_return(@member)
+        @member.stub!(:full_name).and_return("Jigar Patel")
         @business = mock_model(Business, :save => false)
         Business.stub!(:new).with("invalid_attr").and_return(@business)
         Business.stub!(:new).and_return(@business)
