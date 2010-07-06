@@ -68,29 +68,29 @@ body {
 }
 .search_result{
 
-	margin-left:20px;
-	margin-right:auto;
+	margin-left:220px;
+	padding-bottom:5px;
+	margin-right:220px;
+	width:auto;
+	border-bottom:1px dotted #9f3b25;
+}
+.result_title{
+	font-size:20px;
 	width:auto;
 }
-.result_name{
-	width:200px;
-	float:left;
+.result_title a{
+	text-decoration:underline;
+	color:#233FBF;
 }
-.result_location{
-	width:200px;
-	float:left;
+.result_description{
+	margin-left:10px;
+	width:auto;
+	font-size:13px;
 }
-.result_city{
-	width:100px;
-	float:left;
-}
-.result_category{
-	width:200px;
-	float:left;
-}
-.result_sub_category{
-	width:200px;
-	float:left;
+
+.result_sub_cat{
+	margin-left:10px;
+	font-size:12px;
 }	
 /****BUSINESS DETAILS*****/
 
@@ -135,8 +135,9 @@ a {
   position:absolute;
 }
 .business_photo {
-	width:200px;
-	height:150px;
+	width:160px;
+	height:190px;
+	background-color:blue;
 	float:left;
 }
 .resultInfo {

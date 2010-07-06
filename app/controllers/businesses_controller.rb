@@ -1,5 +1,5 @@
 class BusinessesController < ApplicationController
- skip_before_filter :authorize, :only => [:index, :search]
+ skip_before_filter :authorize, :only => [:index, :search, :show]
   def index
     @businesses = Business.paginate :page => params[:page], :order => 'name ASC'
     @title = "Listing Businesses"
@@ -34,8 +34,13 @@ class BusinessesController < ApplicationController
     @business = Business.find(params[:id])
     @title = "Business Details - #{@business.name}"
     #Edit and Delete for owners and Add to Favorites for those who haven't added it yet.
-    @favorite = true unless is_favorite(@business)
-    @owner = true if is_owner(@business)
+    if @member
+      @favorite = true unless is_favorite(@business)
+      @owner = true if is_owner(@business)
+    else
+      @favorite = false
+      @owner = false
+    end
     if @business.lat != nil and @business.lng != nil
       @map = GoogleMap::Map.new
       @map.center = GoogleMap::Point.new(@business.lat, @business.lng)

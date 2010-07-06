@@ -1,57 +1,44 @@
 <%= "<div class=business_box id=#{business.id} >"%>
 	
 	<h2><%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %>    
-		<span class="sideDetail">Listed in INFOMEDIA YELLOW PAGES</span> 
+    	<span class="sideDetail">Listed in INFOMEDIA YELLOW PAGES</span> 
 	</h2> 
-	
-	<div class="business_photo">
-		<%= image_tag business.photo.url(:thumb) %>
-	</div>
-	
 	<div class="resultInfo"> 
-		<p class="phone"><%= business.contact_phone %></p> 
-		<p><%= business.contact_address %>, <%= business.location%>, <%= business.city %></p> 
-		<p><b>Timings:</b>	<%= business.opening_time.to_formatted_s(:time) %> to 
-							<%= business.closing_time.to_formatted_s(:time) %>
-		</p> 
-		
-	</div> 
-	
-	<div class="show_business_links"> 
+  		<p class="phone"><%= business.contact_phone %></p> 
+  		<p><%= business.contact_address %>, <%= business.location%>, <%= business.city %></p> 
+  		<p class="tags"></p> 
+	</div>
+	<div class="links"> 
 		<% if owner == true %>
-		<p>	<%= link_to "Edit" , edit_member_business_path(session[:member_id],business.id) %> |
+		<p>	<%= link_to "Edit" , 	edit_member_business_path(session[:member_id],business.id) %> |
 			<%= link_to "Delete", 	member_business_path(session[:member_id], business.id), 
-									:method => :delete, 
-									:confirm => "Are you sure?"%>
+										:method => :delete, 
+										:confirm => "Are you sure?"%>
 		</p>
 		<% end %>
-		
-		<div class="links"> 
-    		<% if logged_in == false %>
-				<div id=Business_box_links_add_to_favorite_#{business.id}>
-					<a href="#">Send to Phone</a> 
-				</div>
-			<% elsif !is_favorite(business) %>
-				<%= "<div id=Business_box_links_add_to_favorite_#{business.id}>"%>
-              		<a href="#">Send to Phone</a> 
-					<%= link_to_remote "Add to My List", 
-										{:url => add_favorite_business_path(business.id),
-									 	 :method => :get} %>
-				</div>
-				
-				<%= "<div id=Business_box_links_remove_favorite_#{business.id} style='display:none'>"%>
-              		<a href="#">Send to Phone</a> 							
-              		<%= link_to_remote "Remove from My List", 
-										{:url => remove_favorite_business_path(business.id), 
-										 :method => :delete, :confirm => "Are you sure?"}%>
-            	</div>
-					
-          <% else %>
-		  	<%= "<div id=Business_box_links_add_to_favorite_#{business.id} style='display:none'>"%>
-            	<a href="#">Send to Phone</a> 
+    	<% if logged_in == false %>
+			<div id=Business_box_links_add_to_favorite_#{business.id}>
+				<a href="#">Send to Phone</a> 
+			</div>
+		<% elsif !is_favorite(business) %>
+			<%= "<div id=Business_box_links_add_to_favorite_#{business.id}>"%>
+              	<a href="#">Send to Phone</a> 
 				<%= link_to_remote "Add to My List", 
 									{:url => add_favorite_business_path(business.id),
-									 :method => :get} %>
+								 	 :method => :get} %>
+			</div>
+			<%= "<div id=Business_box_links_remove_favorite_#{business.id} style='display:none'>"%>
+              	<a href="#">Send to Phone</a> 							
+              	<%= link_to_remote "Remove from My List", 
+									{:url => remove_favorite_business_path(business.id), 
+									 :method => :delete, :confirm => "Are you sure?"}%>
+            </div>
+		<% else %>
+		  	<%= "<div id=Business_box_links_add_to_favorite_#{business.id} style='display:none'>"%>
+           		<a href="#">Send to Phone</a> 
+				<%= link_to_remote "Add to My List", 
+									{:url => add_favorite_business_path(business.id),
+								 	:method => :get} %>
 			</div>
 			<%= "<div id=Business_box_links_remove_favorite_#{business.id}>"%>
             	<a href="#">Send to Phone</a> 
@@ -59,8 +46,8 @@
 									{:url => remove_favorite_business_path(business.id), 
 									 :method => :delete, :confirm => "Are you sure?"}%>
            	</div>
-			<% end %>
-    	</div>				
+		<% end %>
+    					
 		<% if show_business_page and @business.lat and @business.lng %>
 			<%= link_to_remote "Show on Map",
 								{ :url => show_on_map_business_path(business.id),
