@@ -59,7 +59,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :businesses,:only => [:index, :show], :member => {
                         :add_favorite => [:get], :remove_favorite => [:delete], :show_on_map => [:get], 
-                        :locations => [:get],:business_names => [:get] }
+                        :locations => [:get],:business_names => [:get],:send_to_phone => [:post] }
                         
   map.admin '/admin', :controller => "admin/admin", :action => :index
   map.admin_members "/admin/members", :controller => "admin/members", :action => :index
