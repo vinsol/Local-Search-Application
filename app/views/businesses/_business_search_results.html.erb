@@ -1,12 +1,14 @@
 <p><%= @text %></p>
 <% for result in search_results do %>
+
 	<div class="search_result">
 		<div class="result_name"><%= link_to result.name, business_path(result.id)%></div> 
  		<div class="result_location"><%= link_to result.location, search_path(:location => result.location)%></div>
   		<div class="result_city"><%= link_to result.city, search_path(:city => result.city)%></div>
-		<div class="result_category"><%= link_to result.category, search_path(:category => result.category)%></div>
-		<div class="result_sub_cat"><%= link_to result.sub_category, 
-												search_path(:sub_category => result.sub_category)%></div>
+		<% for sub_category in result.sub_categories do %>
+		<div class="result_sub_cat"><%= link_to sub_category.sub_category, 
+												search_path(:sub_category => sub_category.sub_category)%></div>
+		<% end %>
 	</div>
 	<br style="clear:both" />
 <% end %>

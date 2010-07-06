@@ -10,7 +10,7 @@
 	
 	<div class="resultInfo"> 
 		<p class="phone"><%= business.contact_phone %></p> 
-		<p><%= business.contact_address %></p> 
+		<p><%= business.contact_address %>, <%= business.location%>, <%= business.city %></p> 
 		<p><b>Timings:</b>	<%= business.opening_time.to_formatted_s(:time) %> to 
 							<%= business.closing_time.to_formatted_s(:time) %>
 		</p> 

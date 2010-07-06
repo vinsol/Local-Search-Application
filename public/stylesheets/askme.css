@@ -16,6 +16,18 @@ body {
 	height:100%;
 	border-top:3px solid #33CCFF;
 		}
+.search_tags{
+}
+.category_list{
+	display:block;
+	width:300px;
+	margin-left:20px;
+	margin-right:20px;
+	float:left;
+}
+.category_list h4{
+	text-align:center;
+}
 
 #footer {
 	margin:10px 100px 10px 100px;

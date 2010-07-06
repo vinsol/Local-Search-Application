@@ -71,16 +71,15 @@ class Business < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 5
   
-  #define_index do
-  #    indexes :name, :sortable => true
-  #   indexes location, :as => :location
-  #    indexes city, :as => :city
-  #    #indexes category, :as => :category
-      #indexes sub_category, :as => :sub_category
-  #    set_property :enable_star => 1
-   #   set_property :min_infix_len => 3
+  define_index do
+      indexes :name, :sortable => true
+      indexes location, :as => :location
+      indexes city, :as => :city
+      indexes sub_categories.sub_category, :as => :sub_category
+      set_property :enable_star => 1
+      set_property :min_infix_len => 3
       
-  #  end
+  end
   
   def sub_category_name
     self.sub_categories.collect { |sub_category| sub_category.sub_category + ","}
@@ -103,7 +102,7 @@ class Business < ActiveRecord::Base
   
   private
   def geocode_address
-    geo=Geokit::Geocoders::MultiGeocoder.geocode(contact_address + self.location + self.city)
+    geo=Geokit::Geocoders::MultiGeocoder.geocode(contact_address + "," + self.location + "," + self.city)
     errors.add(:contact_address, "Could not Geocode address") if !geo.success
     self.lat, self.lng = geo.lat,geo.lng if geo.success
   end

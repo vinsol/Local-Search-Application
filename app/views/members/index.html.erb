@@ -7,31 +7,48 @@
 	<div class="search_field">
 		<% form_tag(search_path, :method => "get") do %>  
 			<fieldset>
-			<p><%= label_tag(:city, "City") %> <%= select_tag(:city, options_from_collection_for_select(@cities, :city, :city)) %></p>
-			<%= observe_field "city",
-		           		:url => {:controller => "members", :action =>"get_locations"},
-		             	:with => "city",
-		             	:update => "location" %>
-			<p><%= label_tag(:location, "Location")%> <%= select_tag(:location, options_from_collection_for_select(@locations, :location, :location)) %></p></p>
-			<p><%= label_tag(:name, "Name")%> <%= text_field_tag(:name, nil)%> </p> 
+				<%= text_field_with_auto_complete "",:city, {:value=>"City Name"}, { 
+											:url => cities_path(:js),
+											:method => :get, 
+											:with => "'search=' + element.value", 
+											#:tokens => [",","\s"]
+										 }%>
+				<%= text_field_with_auto_complete "", :location, {:value=>"Location"}, { 
+											:url => locations_business_path(:js),
+											:method => :get, 
+											:with => "'city=' + document.getElementById('_city').value + '&' + 'search=' + element.value", 
+											#:tokens => [",","\s"]
+										}%>		
+				<%= text_field_with_auto_complete "", :sub_category_name, {:value => "Product/Service Category"},
+				 						{ 	:url => sub_categories_path(:js),
+											:method => :get, 
+											:with => "'search=' + element.value", 
+											#:tokens => [",","\s"]
+										}%>	
+				<%= text_field_with_auto_complete "", :name, {:value => "Name"},
+										{ 	:url => business_names_business_path(:js),
+											:method => :get, 
+											:with => "'search=' + element.value", 
+											#:tokens => [",","\s"]
+										}%>		
+	 
 			<%= submit_tag("Search") %> </fieldset>
 		<% end %> 
 	</div>
 </div>
-
+<div class="search_tags">
 <h3>Filter By:</h3>
-<h4>Cities</h4>
-<p><% for city in @cities %>
-<%= link_to city.city, search_path(:city=>city.city)%>&nbsp;&nbsp;
-<%end%>
-</p>
-<h4>Categories</h4>
-<p><% for category in @categories %>
-<%= link_to category.category, search_path(:category=>category.category)%>&nbsp;&nbsp;
-<%end%>
-</p>
-<h4>Sub-Categories</h4>
-<p><% for sub_category in @sub_categories %>
-<%= link_to sub_category.sub_category, search_path(:sub_category=>sub_category.sub_category)%>&nbsp;&nbsp;
-<%end%>
-</p>
+	<h4>Cities</h4>
+		<p>	<% for city in @cities %>
+				<%= link_to city.city, search_path(:city=>city.city)%>&nbsp;&nbsp;
+			<%end%>
+		</p>
+	<h4>Popular Categories</h4>
+		<% for category in @categories %>
+			<div class="category_list"><h4><%= category.category %></h4>
+				<% for sub_category in category.sub_categories do %>
+						<%= link_to sub_category.sub_category,	
+				 					search_path(:sub_category_name=>sub_category.sub_category) %> |
+				<%end%></div>
+		<%end%>
+</div>

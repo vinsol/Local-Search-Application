@@ -11,16 +11,22 @@ class BusinessesController < ApplicationController
 
   def search
     @conditions = Hash.new
-    @conditions[:name] = params[:name] if params[:name] != "" and params[:name] != nil
-    @conditions[:city] = params[:city] if params[:city] != "" and params[:city] != nil
-    @conditions[:location] = params[:location] if params[:location] != "" and params[:location] != nil
+    @conditions[:name] = params[:name] if params[:name] != "" and params[:name] != nil and params[:name] != "Name"
+    @conditions[:city] = params[:city] if params[:city] != "" and params[:city] != nil and params[:city] != "City Name"
+    @conditions[:location] = params[:location] if params[:location] != "" and params[:location] != nil and params[:location] != "Location"
     @conditions[:category] = params[:category] if params[:category] != "" and params[:category] != nil
-    @conditions[:sub_category] = params[:sub_category] if params[:sub_category] != "" and params[:sub_category] != nil
-    @search_results = Business.search :conditions => @conditions
-    if @search_results.empty?
-      @text = "No results found."
+    @conditions[:sub_category] = params[:sub_category_name] if params[:sub_category_name] != "" and params[:sub_category_name] != nil and params[:sub_category_name] != "Product/Service Category"
+    p "====>>>>>>"
+    p @conditions
+    if @conditions != {}
+      @search_results = Business.search :conditions => @conditions
+      if @search_results.empty?
+        @text = "No results found."
+      else
+        @text = "" 
+      end
     else
-      @text = "#{@search_results.size} results found."
+      @text = "Enter valid parameters"
     end
   end
   
@@ -88,14 +94,25 @@ class BusinessesController < ApplicationController
     
   def locations
     @city = City.find(:first, :conditions => ['city LIKE ?', "%#{params[:city]}"])
-    p @city
     search_reg_exp = /(?:([a-zA-Z0-9]*[\s,]+)*)([a-zA-Z0-9]+)$/
     @search_query = params[:search][search_reg_exp,2]
-    @locations = @city.locations.find(:all, 
+    if @city != nil
+      @locations = @city.locations.find(:all, 
                       :conditions => ['location LIKE ?',"%#{@search_query}%"]) 
+    else
+      @locations = Location.find(:all, 
+                        :conditions => ['location LIKE ?',"%#{@search_query}%"])
+    end
+      
   end
   
-  
+  def business_names
+    search_reg_exp = /(?:([a-zA-Z0-9]*[\s,]+)*)([a-zA-Z0-9]+)$/
+    @search_query = params[:search][search_reg_exp,2]
+    @businesses = Business.find(:all,
+                        :conditions => ['name LIKE ?',"%#{@search_query}%"])
+  end
+    
   def edit
     @title = "Edit Business"
     @business = Business.find(params[:id])

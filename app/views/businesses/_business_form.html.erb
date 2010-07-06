@@ -48,7 +48,7 @@
 											:url => locations_business_path(:js),
 											:method => :get, 
 											:with => "'city=' + document.getElementById('business_city').value + '&' + 'search=' + element.value", 
-											:tokens => [",","\s"]
+											#:tokens => [",","\s"]
 										 }%>
 			</p>
 			<p>
@@ -57,17 +57,17 @@
 											:url => cities_path(:js),
 											:method => :get, 
 											:with => "'search=' + element.value", 
-											:tokens => [",","\s"]
+											#:tokens => [",","\s"]
 										 }%>
 			</p>
 			
 		<p>
 			<%= f.label(:opening_tim, "Opening Time") %>
-			<%= f.time_select :opening_time %>
+			<%= f.time_select :opening_time,{:minute_step => 15,:prompt => {:hour => 'Hour', :minute => 'Minute'}}%>
 		</p>
 		<p>
 			<%= f.label(:closing_tim, "Closing Time") %>
-			<%= f.time_select :closing_time %>
+			<%= f.time_select :closing_time,{:minute_step => 15,:prompt => {:hour => 'Hour', :minute => 'Minute'}}%>
 		</p>
 		<p>
 			<%= f.label(:description, "Description") %>
