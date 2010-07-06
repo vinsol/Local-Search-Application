@@ -5,14 +5,13 @@
 	<%= render 	:partial => "business_box", 
 				:locals => {:business => @business, :member => @member,
 					 		:owner => @owner, :logged_in => @logged_in,
-							:show_business_page => false
-							}%> 
+							:show_business_page => false }%> 
 							
 	<% if @map != nil %>
-	<%= @map.to_html %>						
-	<div class="map" id="business_map" >
-		<%= @map.div %>
-	</div>
+		<%= @map.to_html %>						
+		<div class="map" id="business_map" >
+			<%= @map.div %>
+		</div>
 	<% end %>
 	
 </div>

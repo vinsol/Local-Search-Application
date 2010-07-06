@@ -1,7 +1,5 @@
 <%= "<div class=business_box id=#{business.id} >"%>
-	<h2><%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %>    
-    	<span class="sideDetail">Listed in INFOMEDIA YELLOW PAGES</span> 
-	</h2> 
+	<h2><%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %></h2> 
 	<div class="resultInfo"> 
   		<p class="phone"><%= business.contact_phone %></p> 
   		<p><%= business.contact_address %>, <%= business.location%>, <%= business.city %></p> 

@@ -1,27 +1,21 @@
-
 <div class="form">
-	
 	<% form_for [member,business],:html => { :multipart => true } do |f| %>
 	  	<%= f.error_messages %>
 	  	<fieldset>
+		
 		<i>Fields marked with * are compulsory</i>
 		<p>
 			<%= f.label(:name, "Business Name*") %>
 			<%= f.text_field :name %>
 		</p>
-		
-
-	
 		<p>
 			<%= f.label(:sub_category_name, "Category*") %>
-			<%= text_field_with_auto_complete :business, :sub_category_name, {}, { 
-										:url => sub_categories_path(:js),
-										:method => :get, 
-										:with => "'search=' + element.value", 
-										:tokens => [",","\s"]
-									 }%>
+			<%= text_field_with_auto_complete 	:business, :sub_category_name, {}, { 
+												:url => sub_categories_path(:js),
+												:method => :get, 
+												:with => "'search=' + element.value", 
+												:tokens => [",","\s"] }%>
 		</p>
-	
 		<p>
 			<%= f.label(:contact_name, "Contact Name*") %>
 			<%= f.text_field :contact_name %>
@@ -42,32 +36,27 @@
 			<%= f.label(:contact_address, "Street Address*") %>
 			<%= f.text_area :contact_address, :size => "26x3" %>
 		</p>
-			<p>
-				<%= f.label(:location, "Location*") %>
-				<%= text_field_with_auto_complete :business, :location, {}, { 
-											:url => locations_business_path(:js),
-											:method => :get, 
-											:with => "'city=' + document.getElementById('business_city').value + '&' + 'search=' + element.value", 
-											#:tokens => [",","\s"]
-										 }%>
-			</p>
-			<p>
-				<%= f.label(:city, "City*") %>
-				<%= text_field_with_auto_complete :business, :city, {}, { 
-											:url => cities_path(:js),
-											:method => :get, 
-											:with => "'search=' + element.value", 
-											#:tokens => [",","\s"]
-										 }%>
-			</p>
-			
+		<p>
+			<%= f.label(:location, "Location*") %>
+			<%= text_field_with_auto_complete 	:business, :location, {}, { 
+												:url => locations_business_path(:js),
+												:method => :get, 
+												:with => "'city=' + document.getElementById('business_city').value + '&' + 'search=' + element.value" }%>
+		</p>
+		<p>
+			<%= f.label(:city, "City*") %>
+			<%= text_field_with_auto_complete 	:business, :city, {}, { 
+												:url => cities_path(:js),
+												:method => :get, 
+												:with => "'search=' + element.value" }%>
+		</p>
 		<p>
 			<%= f.label(:opening_tim, "Opening Time") %>
-			<%= f.time_select :opening_time,{:minute_step => 15,:prompt => {:hour => 'Hour', :minute => 'Minute'}}%>
+			<%= f.time_select :opening_time,{:minute_step => 15}%>
 		</p>
 		<p>
 			<%= f.label(:closing_tim, "Closing Time") %>
-			<%= f.time_select :closing_time,{:minute_step => 15,:prompt => {:hour => 'Hour', :minute => 'Minute'}}%>
+			<%= f.time_select :closing_time,{:minute_step => 15}%>
 		</p>
 		<p>
 			<%= f.label(:description, "Description") %>
@@ -77,11 +66,10 @@
 			<%= f.label(:photo, "Photo") %>
 			<%= f.file_field :photo %>
 		</p>
-		
-
-	 	<p>
+		<p>
 	    	<%= f.submit submit_label %>
 	  	</p>
+	
 		</fieldset>
 	<% end %>
 <div>

@@ -2,6 +2,7 @@
 <% form_for member, :html => { :multipart => true } do |f| %>
   	<%= f.error_messages %>
   	<fieldset>
+	
 	<i>Fields marked with * are compulsory</i>
 	<p>
 		<%= f.label(:first_name, "First Name*") %>
@@ -43,6 +44,7 @@
 	<p>
 		<%= f.submit submit_label %>
 	</p>
+	
 </fieldset>
   
 <% end %>

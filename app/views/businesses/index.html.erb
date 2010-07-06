@@ -1,16 +1,17 @@
-<h2>Registered Businesses</h2> <%= link_to "Add your own business" , new_member_business_path(session[:member_id]) %>
-	
-	<div id="business_list">
-		<%= render :partial => "ajax_response" %>
-		<% @businesses.each do |business| %>
-			<%= render 	:partial => "business_box", 
-						:locals => {:business => business, :member => @member,
-							 		:owner => @owner, :logged_in => @logged_in,
-									:show_business_page => false
-									}%>
-		<% end %>
-	</div>
-	<%= will_paginate @businesses %>
+<h2>Registered Businesses</h2> 
+<%= link_to "Add your own business" , new_member_business_path(session[:member_id]) %>
+<div id="business_list">
+	<%= render :partial => "ajax_response" %>
+	<% @businesses.each do |business| %>
+		<%= render 	:partial => "business_box", 
+					:locals => {:business => business, :member => @member,
+						 		:owner => @owner, :logged_in => @logged_in,
+								:show_business_page => false
+								}%>
+	<% end %>
+</div>
+
+<%= will_paginate @businesses %>
 	
 	
 	

@@ -7,10 +7,12 @@
 			<%= result.contact_phone %><br/>
 			<%= result.description %>
 		</div>
-		<div class="result_sub_cat"><% for sub_category in result.sub_categories do %>
-		<%= link_to sub_category.sub_category, 
-												search_path(:sub_category => sub_category.sub_category)%>&nbsp;&nbsp;
-		<% end %></div>
+		<div class="result_sub_cat">
+			<% for sub_category in result.sub_categories do %>
+				<%= link_to sub_category.sub_category, 
+							search_path(:sub_category => sub_category.sub_category)%>&nbsp;&nbsp;
+			<% end %>
+		</div>
 	</div>
 	<br style="clear:both" />
 <% end %>

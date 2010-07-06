@@ -27,15 +27,7 @@ class MembersController < ApplicationController
     @owned_businesses = @member.owned_businesses.paginate :page => params[:page], :per_page => 5
     @title = @member.full_name
   end
-  def get_locations
-    unless request.xhr?
-      flash_redirect("error", "Invalid Page", root_path)
-    else
-      @locations = City.find_by_city(params[:city]).locations
-      render :partial=> "location"
-    end
-  end
-  
+
   def new
     @title = "Signup"
     @member = Member.new
@@ -56,7 +48,7 @@ class MembersController < ApplicationController
 
 
   def update
-    unless request.get?
+    if request.put?
       @member.password_change = true
       if @member.update_attributes(params[:member])
         flash.now[:message] = "Password Changed"
@@ -75,26 +67,21 @@ class MembersController < ApplicationController
       end
     end
   end
-
  
   def destroy
     @member.destroy
     redirect_to logout_path 
   end
   
-  
-  
   def forgot_password
     @title = "Forgot Password"
-    if request.post?
-      if params[:member][:email]
-        @member = Member.find_by_email(params[:member][:email])
-        if @member and @member.send_new_password
-          flash_redirect("message","A new password has been sent by email.",login_path )
-        else
-          flash[:notice] = "Unable to send the password. Try again"
-          render :action => :forgot_password
-        end
+    if request.post? and params[:member][:email]
+      @member = Member.find_by_email(params[:member][:email])
+      if @member and @member.send_new_password
+        flash_redirect("message","A new password has been sent by email.",login_path )
+      else
+        flash[:notice] = "Unable to send the password. Try again"
+        render :action => :forgot_password
       end
     end
   end
