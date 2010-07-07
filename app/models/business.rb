@@ -96,6 +96,7 @@ class Business < ActiveRecord::Base
  
   
   protected
+  
   def validate_timings
      errors.add_to_base "Opening Time must be less than Closing Time" if self.opening_time > self.closing_time
   end
