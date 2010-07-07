@@ -2,30 +2,41 @@
 	<div class="search_field">
 		<% form_tag(search_path, :method => "get") do %>  
 			<fieldset>
-				<%= text_field_with_auto_complete "",:city, {:value=>"City Name",:onclick=>"{ if (this.value == 'City Name'){this.value=''}}",:onblur => "{if (this.value == ''){this.value='City Name'}}"}, 
-							{ 	:url => cities_path(:js),
+				<%= text_field_with_auto_complete "",:city, 
+							  { :value=>"City Name",
+								:onclick=>"{ if (this.value == 'City Name'){this.value=''}}",
+								:onblur => "{if (this.value == ''){this.value='City Name'}}"}, 
+							  { :url => cities_path(:js),
 								:method => :get, 
 								:with => "'search=' + element.value", 
 								#:tokens => [",","\s"]
 							}%>
-				<%= text_field_with_auto_complete "", :location, {:value=>"Location",:onfocus=>"{ if (this.value == 'Location'){this.value=''}}",:onblur => "{if (this.value == ''){this.value='Location'}}"}, 
-							{	:url => locations_business_path(:js),
+							
+				<%= text_field_with_auto_complete "", :location, 
+							  { :value=>"Location",
+								:onfocus=>"{ if (this.value == 'Location'){this.value=''}}",
+								:onblur => "{if (this.value == ''){this.value='Location'}}"}, 
+							  {	:url => locations_business_path(:js),
 								:method => :get, 
 								:with => "'city=' + document.getElementById('_city').value + '&' + 'search=' + element.value", 
 								#:tokens => [",","\s"]
 							}%>		
-						
-
-
-							
-				<%= text_field_with_auto_complete "", :sub_category_name, {:value => "Product/Service Category",:onfocus=>"{ if (this.value == 'Product/Service Category'){this.value=''}}",:onblur => "{if (this.value == ''){this.value='Product/Service Category'}}"},
-				 			{ 	:url => sub_categories_path(:js),
+									
+				<%= text_field_with_auto_complete "", :sub_category_name, 
+							  { :value => "Product/Service Category",
+								:onfocus=>"{ if (this.value == 'Product/Service Category'){this.value=''}}",
+								:onblur => "{if (this.value == ''){this.value='Product/Service Category'}}"},
+				 			  { :url => sub_categories_path(:js),
 								:method => :get, 
 								:with => "'search=' + element.value", 
 								#:tokens => [",","\s"]
 							}%>	
-				<%= text_field_with_auto_complete "", :name, {:value => "Name",:onfocus=>"{ if (this.value == 'Name'){this.value=''}}",:onblur => "{if (this.value == ''){this.value='Name'}}"},
-							{ 	:url => business_names_business_path(:js),
+							
+				<%= text_field_with_auto_complete "", :name, 
+							  { :value => "Name",
+								:onfocus=>"{ if (this.value == 'Name'){this.value=''}}",
+								:onblur => "{if (this.value == ''){this.value='Name'}}"},
+							  { :url => business_names_business_path(:js),
 								:method => :get, 
 								:with => "'search=' + element.value", 
 								#:tokens => [",","\s"]

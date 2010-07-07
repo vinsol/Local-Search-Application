@@ -2,7 +2,10 @@
 <% for result in search_results do %>
 
 	<div class="search_result">
-		<div class="result_title"><%= link_to (result.name + ", " + result.location + ", " + result.city), business_path(result.id)%></div> 
+		<div class="result_title">
+			<%= link_to (result.name + ", " + result.location + ", " + result.city),
+			 			business_path(result.id)%>
+		</div> 
 		<div class="result_description">
 			<%= result.contact_phone %><br/>
 			<%= result.description %>

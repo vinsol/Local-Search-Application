@@ -1,10 +1,14 @@
 <%= "<div class=business_box id=#{business.id} >"%>
-	<h2><%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %></h2> 
+	<h2>
+		<%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %>
+	</h2> 
+	
 	<div class="resultInfo"> 
   		<p class="phone"><%= business.contact_phone %></p> 
   		<p><%= business.contact_address %>, <%= business.location%>, <%= business.city %></p> 
   		<p class="tags"></p> 
 	</div> 
+	
 	<div class="links"> 
 		<% if owned_business %>
     		<%= link_to "Edit Business", edit_member_business_path(member.id, business.id)%>

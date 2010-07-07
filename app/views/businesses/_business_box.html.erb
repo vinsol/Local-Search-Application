@@ -9,8 +9,8 @@
 	</div>
 	<div class="links"> 
 		<% if owner == true %>
-			<p>	<%= link_to "Edit" , edit_member_business_path(session[:member_id],business.id) %> |
-				<%= link_to "Delete", member_business_path(session[:member_id], business.id), 
+			<p>	<%= link_to "Edit" , edit_member_business_path(@member.id,business.id) %> |
+				<%= link_to "Delete", member_business_path(@member.id, business.id), 
 											:method => :delete, 
 											:confirm => "Are you sure?"%>
 			</p>
