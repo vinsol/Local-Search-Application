@@ -37,18 +37,18 @@
 			<%= f.text_area :contact_address, :size => "26x3" %>
 		</p>
 		<p>
-			<%= f.label(:location, "Location*") %>
-			<%= text_field_with_auto_complete 	:business, :location, {}, { 
-												:url => locations_business_path(:js),
-												:method => :get, 
-												:with => "'city=' + document.getElementById('business_city').value + '&' + 'search=' + element.value" }%>
-		</p>
-		<p>
 			<%= f.label(:city, "City*") %>
 			<%= text_field_with_auto_complete 	:business, :city, {}, { 
 												:url => cities_path(:js),
 												:method => :get, 
 												:with => "'search=' + element.value" }%>
+		</p>
+		<p>
+			<%= f.label(:location, "Location*") %>
+			<%= text_field_with_auto_complete 	:business, :location, {}, { 
+												:url => locations_business_path(:js),
+												:method => :get, 
+												:with => "'city=' + document.getElementById('business_city').value + '&' + 'search=' + element.value" }%>
 		</p>
 		<p>
 			<%= f.label(:opening_tim, "Opening Time") %>

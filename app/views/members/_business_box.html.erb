@@ -11,7 +11,8 @@
 			<%= link_to "Delete business", member_business_path(member.id, business.id), 
 										   :method => :delete, :confirm => "Are you sure?" %>
 		<% else %>
-			<a href="#">Send to Phone</a> 
+			<%= render 	:partial => "businesses/send_to_phone", 
+						:locals => {:business => business} %> 
 			<%= link_to_remote "Remove from My List", {:url => remove_favorite_business_path(business.id), 
 													   :method => :delete, :confirm => "Are you sure?"}%>
 		<% end %>

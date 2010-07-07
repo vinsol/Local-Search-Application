@@ -77,14 +77,11 @@ class BusinessesController < ApplicationController
   end
 
   def send_to_phone
-    p "=====>>>>>>>><<<<<<<<<<========"
-    p params[:number]
     @business = Business.find_by_id(params[:id])
-    @business_details = "#{@business.name} - #{@business.contact_phone} - #{@business.contact_address}, #{business.location}, #{business.city}"
+    @business_details = "#{@business.name} - #{@business.contact_phone} - #{@business.contact_address}, #{@business.location}, #{@business.city}"
     
     @url_details = URI.escape(@business_details, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
     url = "http://s1.freesmsapi.com/messages/send?skey=11ae2fd4c2f0b7346d3cf11d97969778&message=#{@url_details}&recipient=#{params[:number]}"
-    p url
     Net::HTTP.get_print URI.parse(url)
     respond_to  do |format|
       format.js

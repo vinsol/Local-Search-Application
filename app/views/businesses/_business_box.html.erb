@@ -16,39 +16,36 @@
 			</p>
 		<% end %>
     	<% if logged_in == false %>
-			<%= "<div id=Business_box_links_add_to_favorite_#{business.id}>"%>
-				<p><%= link_to_function "Send To Phone", 
-									"$('send_to_phone_#{business.id}').toggle();"%></p>
-				<%= "<div id=send_to_phone_#{business.id} style=display:none>" %>
-					<% form_remote_tag :url => send_to_phone_business_path(business.id) do %>
-						Number: <%= text_field_tag :number%>
-					    <p><%= submit_tag 'Send' %></p>
-					  <% end %>
-				</div>
+			<%= render 	:partial => "send_to_phone", 
+						:locals => {:business => business} %>
 					
-			</div>
+			
 		<% elsif !is_favorite(business) %>
 			<%= "<div id=Business_box_links_add_to_favorite_#{business.id}>"%>
-              	<a href="#">Send to Phone</a> 
+              	<%= render 	:partial => "send_to_phone", 
+							:locals => {:business => business} %>
 				<%= link_to_remote "Add to My List", 
 									{:url => add_favorite_business_path(business.id),
 								 	 :method => :get} %>
 			</div>
 			<%= "<div id=Business_box_links_remove_favorite_#{business.id} style='display:none'>"%>
-              	<a href="#">Send to Phone</a> 							
+              	<%= render 	:partial => "send_to_phone", 
+							:locals => {:business => business} %>			
               	<%= link_to_remote "Remove from My List", 
 									{:url => remove_favorite_business_path(business.id), 
 									 :method => :delete, :confirm => "Are you sure?"}%>
             </div>
 		<% else %>
 		  	<%= "<div id=Business_box_links_add_to_favorite_#{business.id} style='display:none'>"%>
-           		<a href="#">Send to Phone</a> 
+           		<%= render 	:partial => "send_to_phone", 
+							:locals => {:business => business} %>
 				<%= link_to_remote "Add to My List", 
 									{:url => add_favorite_business_path(business.id),
 								 	:method => :get} %>
 			</div>
 			<%= "<div id=Business_box_links_remove_favorite_#{business.id}>"%>
-            	<a href="#">Send to Phone</a> 
+            	<%= render 	:partial => "send_to_phone", 
+							:locals => {:business => business} %>
 				<%= link_to_remote "Remove from My List", 
 									{:url => remove_favorite_business_path(business.id), 
 									 :method => :delete, :confirm => "Are you sure?"}%>

@@ -1,0 +1,9 @@
+
+	<%= link_to_function "Send To Phone", 
+						"$('send_to_phone_#{business.id}').toggle();"%>
+	<%= "<div id=send_to_phone_#{business.id} style=display:none>" %>
+		<% form_remote_tag :url => send_to_phone_business_path(business.id) do %>
+			Number: <%= text_field_tag :number%>
+		    <%= submit_tag 'Send' %>
+		  <% end %>
+	</div>
