@@ -47,12 +47,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'delete'
   map.search '/search', :controller => "businesses", :action => :search
   
-  map.resources :members, :member => {
-                              :change_password => [:get], :update_password => [:post], 
-                              :show_list => [:get], :show_my_businesses => [:get] }, 
-                              :collection => {
-                                :forgot_password => [:get,:post], 
-                                :get_locations => [:get] }      do |members|
+  map.resources :members, :member => {:change_password => [:get], :update_password => [:post], :show_list => [:get], :show_my_businesses => [:get] }, :collection => {:forgot_password => [:get,:post], :get_locations => [:get] } do |members|
                                   
     members.resources :businesses, :except => [:index, :show]
   end

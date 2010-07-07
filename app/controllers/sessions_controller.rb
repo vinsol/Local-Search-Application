@@ -9,8 +9,8 @@ class SessionsController < ApplicationController
 
   def delete
       session[:member_id] = nil
-      if cookies[:remember_me_id] then cookies.delete :remember_me_id end
-      if cookies[:remember_me_code] then cookies.delete :remember_me_code end
+      cookies.delete :remember_me_id if cookies[:remember_me_id]
+      cookies.delete :remember_me_code if cookies[:remember_me_code]
       flash_redirect("message","Logged out", login_path)  
   end
 

@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   before_filter :authorize
   before_filter :store_return_path, :except => :flash_redirect
   
-  
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
@@ -21,7 +20,7 @@ class ApplicationController < ActionController::Base
       unless is_logged_in
         if cookies[:remember_me_id] 
           @member = Member.find_by_id(cookies[:remember_me_id])
-          if @member.remember_me_time > 14.days.ago and @member and cookies[:remember_me_code] == @member.remember_me_token
+          if @member and @member.remember_me_time > 14.days.ago and cookies[:remember_me_code] == @member.remember_me_token
             session[:member_id] = @member.id
             redirect_to root_path
           end
@@ -40,9 +39,9 @@ class ApplicationController < ActionController::Base
     end
     
     def restrict_if_logged_in
-      if @member = Member.find_by_id(session[:member_id])
+      if @member
         @logged_in = true
-        flash_redirect("message","You are already logged in", member_path(@member.id))
+        flash_redirect("message","You are already logged in", session[:return_to])
       end
     end
     
@@ -53,7 +52,7 @@ class ApplicationController < ActionController::Base
     
       
     def check_admin
-      if Member.find_by_id(session[:member_id]).is_admin == true
+      if @member.is_admin == true
         return true
       else
         redirect_to root_path
@@ -63,7 +62,7 @@ class ApplicationController < ActionController::Base
     def store_return_path
       session[:return_to] = request.referrer
     end
-      
+    
     
 end
 
