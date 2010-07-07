@@ -5,9 +5,7 @@ class MembersController < ApplicationController
   def index
     @title = "Home"
     @cities = City.all
-    @locations = Location.all
-    @categories = Category.all
-    @sub_categories = SubCategory.all
+    @categories = Category.find(:all, :include => :sub_categories)
     
   end
 
