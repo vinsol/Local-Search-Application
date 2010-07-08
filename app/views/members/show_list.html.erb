@@ -7,10 +7,9 @@
 		<div id="ajax_response" style="display:none">
 			<div id="message">Business Removed from your list</div>		
 		</div>
-		<% for business in @favorite_businesses do %>
+		<% for @business in @favorite_businesses do %>
 			<%= render 	:partial => "business_box", 
-						:locals => { :member => @member, :business => business,
-									 :owned_business => false }%>
+						:locals => {:owned_business => false }%>
 		<% end %>
 		
 		<p><%= will_paginate @favorite_businesses %></p>

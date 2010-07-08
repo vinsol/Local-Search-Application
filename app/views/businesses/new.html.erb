@@ -2,12 +2,7 @@
 
 <h3>Add a New Business</h3>
 
-
-
 <%= render 	:partial => "business_form",
-	 		:locals => {:member => @member, :business => @business,
-						:cities => City.all, :locations => Location.all,
-						:categories => Category.all, :sub_categories => SubCategory.all,
-						:submit_label => "Add Business" }%>
+	 		:locals => {:submit_label => "Add Business" }%>
 
 

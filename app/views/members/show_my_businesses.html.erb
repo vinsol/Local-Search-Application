@@ -6,10 +6,9 @@
 <% else %>
 	<div id="owned_list">
 		<p><%= link_to "Add a new business", new_member_business_path(@member.id) %></p>
-		<% for business in @owned_businesses do %>
+		<% for @business in @owned_businesses do %>
 			<%= render 	:partial => "business_box", 
-						:locals => { :member => @member, :business => business,
-									 :owned_business => true }%>
+						:locals => {:owned_business => true }%>
 		<% end %>
 	</div>
 	<p><%= will_paginate @owned_businesses %></p>

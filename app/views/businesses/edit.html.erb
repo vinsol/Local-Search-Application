@@ -2,10 +2,7 @@
 
 <h3>Edit Business Details</h3>
 <%= render 	:partial => "business_form",
- 			:locals => {:member => @member, :business => @business,
-						:cities => City.all, :locations => Location.all,
-						:categories => Category.all, :sub_categories => SubCategory.all,
-						:submit_label => "Update Business" }%>
+ 			:locals => {:submit_label => "Update Business" }%>
 
 
 
