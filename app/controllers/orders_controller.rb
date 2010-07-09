@@ -17,14 +17,21 @@ class OrdersController < ApplicationController
     @order = Order.new(params[:order])
     @order.business_id = params[:business_id]
     @order.ip_address = request.remote_ip
-    if @order.save and @order.purchase
-      @business = Business.find_by_id(params[:business_id])
-      @business.update_attribute(:is_premium, PREMIUM)
-      flash[:message] = "Transaction Successful. Your business will now appear in premium listings."
-      redirect_to business_path(params[:business_id])
+    if @order.save 
+      @response = @order.purchase
+      p @response
+      if @response.success?
+        @business = Business.find_by_id(params[:business_id])
+        @business.update_attribute(:is_premium, PREMIUM)
+        flash[:message] = "Transaction Successful. Your business will now appear in premium listings."
+        redirect_to business_path(params[:business_id])
+      else
+        flash[:notice] = @response.message
+        render :action => "new"
+      end
     else
       flash[:notice] = "Transaction failed. Please try again."
-      redirect_to new_business_order_path(params[:business_id])
+      render :action => "new"
     end
   end
 

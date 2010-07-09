@@ -2,12 +2,15 @@ class Order < ActiveRecord::Base
   has_many :order_transactions
   attr_accessor :card_number, :card_verification
   
-  validate_on_create :valid_card
+  before_validation_on_create :valid_card
+  validates_presence_of :address1, :city, :state, :country, :zip, :card_number, :card_type, :card_verification
+  validates_format_of :zip, :with => /^\d{5}$/,
+                            :message => " code must be a 5 digit number."
   
   def purchase
     response = GATEWAY.purchase(5000, credit_card, purchase_details)
     order_transactions.create(:action => "purchase", :amount => 5000, :response => response)
-    response.success?
+    response
   end
   
   private
@@ -25,6 +28,7 @@ class Order < ActiveRecord::Base
       }
     }
   end
+  
   def valid_card
     unless credit_card.valid?
       credit_card.errors.full_messages.each do |message|
