@@ -20,3 +20,12 @@ config.gem 'rspec-rails', :lib => false
 config.gem "geokit"
 
 
+config.after_initialize do
+  ActiveMerchant::Billing::Base.mode = :test
+  ::GATEWAY = ActiveMerchant::Billing::PaypalGateway.new(
+    :login => "jagira_1278570851_biz_api1.gmail.com",
+    :password => "1278570855",
+    :signature => "AiPC9BjkCyDFQXbSkoZcgqH3hpacAXXgswzb6oCGveUYz5DNaKQyISHP "
+  )
+end
+

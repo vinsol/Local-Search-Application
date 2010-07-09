@@ -1,12 +1,16 @@
 <p><%= @text %></p>
 <% for result in @search_results do %>
-
+	<% if result.is_premium == 1 %>
+	<div class="search_result_premium">
+	<% else %>
 	<div class="search_result">
+	<% end %>
 		<div class="result_title">
 			<%= link_to (result.name + ", " + result.location + ", " + result.city),
 			 			business_path(result.id)%>
 		</div> 
 		<div class="result_description">
+			
 			<%= result.contact_phone %><br/>
 			<%= result.description %>
 		</div>

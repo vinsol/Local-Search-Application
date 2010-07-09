@@ -4,3 +4,4 @@ KEYS = {"127.0.0.1" => "ABQIAAAAEL-2mkV03ILb3hRgeHattxTJQa0g3IQ9GZqIMmInSLzwtGDK
 THUMB = "160x190>"
 MEDIUM = "640x640>"
 SEARCH_REGEX = /(?:([a-zA-Z0-9]*[\s,]+)*)([a-zA-Z0-9]+)$/
+PREMIUM = "1"

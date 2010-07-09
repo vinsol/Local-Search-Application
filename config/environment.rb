@@ -28,6 +28,7 @@ Rails::Initializer.run do |config|
     :version => '1.3.18'
   )
 
+  config.gem "activemerchant", :lib => "active_merchant"
   
   
 

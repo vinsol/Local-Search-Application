@@ -74,6 +74,16 @@ body {
 	width:auto;
 	border-bottom:1px dotted #9f3b25;
 }
+.search_result_premium{
+	background-color:#FFF6DD;
+	margin-left:220px;
+	padding-left:5px;
+	padding-top:3px;
+	padding-bottom:5px;
+	margin-right:220px;
+	width:auto;
+	border-bottom:1px dotted #9f3b25;
+}
 .result_title{
 	font-size:20px;
 	width:auto;

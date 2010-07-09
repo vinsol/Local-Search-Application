@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100702084758) do
+ActiveRecord::Schema.define(:version => 20100709075800) do
 
   create_table "business_relations", :force => true do |t|
     t.integer  "member_id"
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(:version => 20100702084758) do
     t.datetime "photo_updated_at"
     t.decimal  "lng",                :precision => 10, :scale => 7
     t.decimal  "lat",                :precision => 10, :scale => 7
+    t.integer  "is_premium",                                        :default => 0
+    t.boolean  "delta",                                             :default => true,         :null => false
   end
 
   create_table "businesses_categories", :id => false, :force => true do |t|
@@ -109,6 +111,35 @@ ActiveRecord::Schema.define(:version => 20100702084758) do
   create_table "notifications", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "order_transactions", :force => true do |t|
+    t.integer  "order_id"
+    t.string   "action"
+    t.integer  "amount"
+    t.boolean  "success"
+    t.string   "authorization"
+    t.string   "message"
+    t.text     "params"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "orders", :force => true do |t|
+    t.integer  "business_id"
+    t.string   "ip_address"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "card_type"
+    t.date     "card_expires_on"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.string   "address1"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.integer  "zip"
   end
 
   create_table "sessions", :force => true do |t|

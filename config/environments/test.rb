@@ -35,4 +35,8 @@ config.gem 'cucumber'
 config.gem 'webrat' 
 config.gem 'factory_girl' 
 config.gem 'email_spec', :lib => 'email_spec'
+config.after_initialize do
+  ActiveMerchant::Billing::Base.mode = :test
+  ::GATEWAY = ActiveMerchant::Billing::BogusGateway.new
+end
 

@@ -65,7 +65,7 @@ class Business < ActiveRecord::Base
       :unless => lambda{|a| a.contact_email.blank?}
       
   #ATTRIBUTES
-  attr_accessible :name, :location, :city, :owner, :contact_name, :contact_email, :photo, :sub_category_name
+  attr_accessible :name, :location, :city, :owner, :contact_name, :contact_email, :photo, :sub_category_name, :is_premium
   attr_accessible :contact_phone, :contact_website, :contact_address, :description, :opening_time, :closing_time
   
   cattr_reader :per_page
@@ -76,8 +76,10 @@ class Business < ActiveRecord::Base
       indexes location, :as => :location
       indexes city, :as => :city
       indexes sub_categories.sub_category, :as => :sub_category
+      indexes is_premium, :sortable => true
       set_property :enable_star => 1
       set_property :min_infix_len => 3
+      set_property :delta => true
       
   end
   

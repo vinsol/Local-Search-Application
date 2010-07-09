@@ -15,7 +15,7 @@ class BusinessesController < ApplicationController
     @conditions[:category] = params[:category] if params[:category] != "" and params[:category] != nil
     @conditions[:sub_category] = params[:sub_category_name] if params[:sub_category_name] != "" and params[:sub_category_name] != nil and params[:sub_category_name] != "Product/Service Category"
     if @conditions != {}
-      @search_results = Business.search :conditions => @conditions
+      @search_results = Business.search :conditions => @conditions, :include => :sub_categories, :order => "is_premium DESC"
       if @search_results.empty?
         @text = "No results found."
       end
