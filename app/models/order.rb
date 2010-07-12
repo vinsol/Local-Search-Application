@@ -10,7 +10,11 @@ class Order < ActiveRecord::Base
   def purchase
     response = GATEWAY.purchase(5000, credit_card, purchase_details)
     order_transactions.create(:action => "purchase", :amount => 5000, :response => response)
-    response
+    if response.success?
+      @business = Business.find_by_id(business_id)
+      @business.update_attribute(:is_premium, PREMIUM)
+    end
+    return response
   end
   
   private

@@ -17,20 +17,29 @@ class OrdersController < ApplicationController
     @order = Order.new(params[:order])
     @order.business_id = params[:business_id]
     @order.ip_address = request.remote_ip
-    if @order.save 
-      @response = @order.purchase
-      p @response
-      if @response.success?
-        @business = Business.find_by_id(params[:business_id])
-        @business.update_attribute(:is_premium, PREMIUM)
-        flash[:message] = "Transaction Successful. Your business will now appear in premium listings."
-        redirect_to business_path(params[:business_id])
+    if @order.valid?
+      if @order.save!
+        begin
+          if @order.purchase.success?
+            flash[:message] = "Transaction Successful. Your business will now appear in premium listings."
+            redirect_to business_path(params[:business_id])
+          else
+            flash[:notice] = @response.message
+            render :action => "new"
+          end
+        rescue SocketError => err
+          flash.now[:notice] = "Unable to connect to payment gateway. Please try again."
+          render :action => "new"
+        rescue ActiveMerchant::ConnectionError => err
+          flash.now[:notice] = "Connection timeout. Please try again"
+          render :action => "new"
+        end
       else
-        flash[:notice] = @response.message
+        flash[:notice] = "Unable to save the order. Please try again."
         render :action => "new"
       end
     else
-      flash[:notice] = "Transaction failed. Please try again."
+      flash[:notice] = "Check field values."
       render :action => "new"
     end
   end

@@ -76,7 +76,7 @@ class Business < ActiveRecord::Base
       indexes location, :as => :location
       indexes city, :as => :city
       indexes sub_categories.sub_category, :as => :sub_category
-      indexes is_premium, :sortable => true
+      has is_premium
       set_property :enable_star => 1
       set_property :min_infix_len => 3
       set_property :delta => true
