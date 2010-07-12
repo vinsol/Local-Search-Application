@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
             flash[:message] = "Transaction Successful. Your business will now appear in premium listings."
             redirect_to business_path(params[:business_id])
           else
-            flash[:notice] = @response.message
+            flash.now[:notice] = @response.message
             render :action => "new"
           end
         rescue SocketError => err
@@ -35,11 +35,10 @@ class OrdersController < ApplicationController
           render :action => "new"
         end
       else
-        flash[:notice] = "Unable to save the order. Please try again."
+        flash.now[:notice] = "Unable to save the order. Please try again."
         render :action => "new"
       end
     else
-      flash[:notice] = "Check field values."
       render :action => "new"
     end
   end
