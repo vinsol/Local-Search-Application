@@ -44,11 +44,23 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
+  
+  #NAMED ROUTES
   map.root :controller => "members"
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'delete'
-  map.search '/search', :controller => "businesses", :action => :search
-  
+  map.admin '/admin', :controller => "admin/admin", :action => :index
+  map.admin_members "/admin/members", :controller => "admin/members", :action => :index
+  map.admin_businesses "/admin/businesses", :controller => "admin/businesses", :action => :index
+  map.admin_locations "/admin/locations", :controller => "admin/locations", :action => :index
+  map.admin_cities "/admin/cities", :controller => "admin/cities", :action => :index
+  map.admin_categories "/admin/categories", :controller => "admin/categories", :action => :index
+  map.admin_subcategories "/admin/subcategories", :controller => "admin/sub_categories", :action => :index
+  map.get_cities "/get_cities", :controller => "autocomplete", :action => "city"
+  map.get_locations "/get_locations", :controller => "autocomplete", :action => "location"
+  map.get_sub_categories "/get_sub_categories", :controller => "autocomplete", :action => "sub_category"
+  map.get_names_and_categories "/get/names_and_categories", :controller => "autocomplete", :action => "names_and_categories"
+  #RESOURCES
   map.resources :members, :member => {:change_password => [:get], :update_password => [:post], :show_list => [:get], :show_my_businesses => [:get] }, :collection => {:forgot_password => [:get,:post], :get_locations => [:get] } do |members|
                                   
     members.resources :businesses, :except => [:index, :show]
@@ -60,17 +72,8 @@ ActionController::Routing::Routes.draw do |map|
       members.resources :orders, :only => [:new,:create]
   end
                         
-  map.admin '/admin', :controller => "admin/admin", :action => :index
-  map.admin_members "/admin/members", :controller => "admin/members", :action => :index
-  map.admin_businesses "/admin/businesses", :controller => "admin/businesses", :action => :index
-  map.admin_locations "/admin/locations", :controller => "admin/locations", :action => :index
-  map.admin_cities "/admin/cities", :controller => "admin/cities", :action => :index
-  map.admin_categories "/admin/categories", :controller => "admin/categories", :action => :index
-  map.admin_subcategories "/admin/subcategories", :controller => "admin/sub_categories", :action => :index
   
-  map.resources :sub_categories, :only => [:index]
-  map.resources :cities, :only => [:index]
-  
+  map.resources :search, :only => [:index]
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end

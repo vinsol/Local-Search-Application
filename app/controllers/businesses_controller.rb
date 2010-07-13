@@ -7,22 +7,7 @@ class BusinessesController < ApplicationController
     @title = "Listing Businesses"
   end
 
-  def search
-    @conditions = Hash.new
-    @conditions[:name] = params[:name] if params[:name] != "" and params[:name] != nil and params[:name] != "Name"
-    @conditions[:city] = params[:city] if params[:city] != "" and params[:city] != nil and params[:city] != "City Name"
-    @conditions[:location] = params[:location] if params[:location] != "" and params[:location] != nil and params[:location] != "Location"
-    @conditions[:category] = params[:category] if params[:category] != "" and params[:category] != nil
-    @conditions[:sub_category] = params[:sub_category_name] if params[:sub_category_name] != "" and params[:sub_category_name] != nil and params[:sub_category_name] != "Product/Service Category"
-    if @conditions != {}
-      @search_results = Business.search :conditions => @conditions, :include => :sub_categories, :order => "is_premium DESC"
-      if @search_results.empty?
-        @text = "No results found."
-      end
-    else
-      @text = "Enter valid parameters"
-    end
-  end
+  
   
   def show
     @business = Business.find(params[:id])
@@ -51,25 +36,6 @@ class BusinessesController < ApplicationController
     @title = "Add Business"
     @business = Business.new
   end
-
-    
-  def locations
-    @city = City.find(:first, :conditions => ['city LIKE ?', "%#{params[:city]}"])
-    @search_query = params[:search][SEARCH_REGEX,2]
-    if @city != nil
-      @locations = @city.locations.find(:all, 
-                                        :conditions => ['location LIKE ?',"%#{@search_query}%"]) 
-    else
-      @locations = Location.find( :all, 
-                                  :conditions => ['location LIKE ?',"%#{@search_query}%"])
-    end
-  end
-  
-  def business_names
-    @search_query = params[:search][SEARCH_REGEX,2]
-    @businesses = Business.find(:all,
-                                :conditions => ['name LIKE ?',"%#{@search_query}%"])
-  end
     
   def edit
     @title = "Edit Business"
@@ -78,11 +44,16 @@ class BusinessesController < ApplicationController
 
   def send_to_phone
     @business = Business.find_by_id(params[:id])
-    @business_details = "#{@business.name} - #{@business.contact_phone} - #{@business.contact_address}, #{@business.location}, #{@business.city}"
-    #DEPENDS ON SMS GATEWAY'S API
+    @business_details = "#{@business.name} - #{@business.contact_phone}" +
+                        " - #{@business.contact_address}, #{@business.location}, #{@business.city}"
+    ##########################################################################################
+    
+    #SMS GATEWAY API
     @url_details = URI.escape(@business_details, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-    url = "http://s1.freesmsapi.com/messages/send?skey=11ae2fd4c2f0b7346d3cf11d97969778&message=#{@url_details}&recipient=#{params[:number]}"
+    url = SMS_API + "#{@url_details}&recipient=#{params[:number]}"
     Net::HTTP.get_print URI.parse(url)
+    ############################################################################################
+    
     respond_to  do |format|
       format.js
     end
@@ -91,7 +62,9 @@ class BusinessesController < ApplicationController
   def create
     @business = Business.new(params[:business])
     @business.owner = @member.full_name
-    if @business.save and BusinessRelation.create(:member_id => @member.id,:business_id => @business.id, :status => RELATION[:OWNED])
+    if @business.save and BusinessRelation.create(:member_id => @member.id,
+                                                  :business_id => @business.id, 
+                                                  :status => RELATION[:OWNED])
       flash_redirect("message","Business was successfully added",businesses_path)
     else
       @business.destroy
@@ -133,7 +106,9 @@ class BusinessesController < ApplicationController
     if is_favorite(@business) 
       flash_redirect("notice", "Business already in your list", session[:return_to])
     else
-      if BusinessRelation.create(:member_id => @member.id, :business_id => @business.id, :status => RELATION[:FAVORITE])
+      if BusinessRelation.create( :member_id => @member.id, 
+                                  :business_id => @business.id, 
+                                  :status => RELATION[:FAVORITE])
         respond_to do |format|
           format.js 
         end
@@ -163,7 +138,8 @@ class BusinessesController < ApplicationController
     
     #Checks whether the person is owner or not.
     def is_owner(business)
-      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",@member.id,RELATION[:OWNED]])
+      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",  
+                                                                  @member.id,RELATION[:OWNED]])
         return true
       else
         return false
@@ -172,7 +148,8 @@ class BusinessesController < ApplicationController
     
     #checks whether the person has added the business as favorite.
      def is_favorite(business)
-      if @business_relation = business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",@member.id,RELATION[:FAVORITE]])
+      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",
+                                                                  @member.id,RELATION[:FAVORITE]])
         return true
       else
         return false

@@ -18,6 +18,12 @@ body {
 		}
 .search_tags{
 }
+.autocomplete_title {
+	font-size:14px;
+	font-weight:bold;
+	background-color:#00CCFF;
+	
+}
 .category_list{
 	display:block;
 	width:300px;

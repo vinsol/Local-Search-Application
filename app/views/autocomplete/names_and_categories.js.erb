@@ -1,0 +1,18 @@
+<ul><% unless @sub_categories.empty? -%>
+		<span><li class="autocomplete_title" id="autocomplete_title" ><%= "Products/Services" -%></li></span>
+		
+		<% @sub_categories.each do |sub_category| -%>
+			<li id="category"><%= sub_category.sub_category -%></li>
+		<% end -%>
+	
+	<% end -%>
+	
+	<% unless @businesses.empty? -%>
+		<span><li class="autocomplete_title" id="autocomplete_title" ><%= "Businesses" -%></li></span>
+		
+		<% @businesses.each do |business| -%>
+			<li id="name"><%= business.name -%></li>
+		<% end -%>
+	
+	<% end -%>
+</ul>

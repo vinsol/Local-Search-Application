@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100712053846) do
+ActiveRecord::Schema.define(:version => 20100713120713) do
 
   create_table "business_relations", :force => true do |t|
     t.integer  "member_id"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20100712053846) do
     t.decimal  "lng",                :precision => 10, :scale => 7
     t.decimal  "lat",                :precision => 10, :scale => 7
     t.integer  "is_premium",                                        :default => 0
-    t.boolean  "delta",                                             :default => true,         :null => false
+    t.boolean  "delta",                                             :default => false,        :null => false
   end
 
   create_table "businesses_categories", :id => false, :force => true do |t|
@@ -87,6 +87,8 @@ ActiveRecord::Schema.define(:version => 20100712053846) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "city_id"
+    t.decimal  "lng",        :precision => 10, :scale => 7
+    t.decimal  "lat",        :precision => 10, :scale => 7
   end
 
   create_table "members", :force => true do |t|

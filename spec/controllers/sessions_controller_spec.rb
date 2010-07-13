@@ -31,7 +31,7 @@ describe SessionsController do
       session[:member_id] = "1"
       get :new
       flash[:message].should == "You are already logged in"
-      response.should redirect_to(member_path(@member.id))
+      response.should redirect_to("http://test.host/")
     end
     
   end

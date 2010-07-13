@@ -13,4 +13,12 @@
 class Location < ActiveRecord::Base
   validates_presence_of :location, :city_id
   belongs_to :city
+  before_save :geocode_location
+  
+  private
+    def geocode_location
+      address = location + ", " + self.city.city
+      geo=Geokit::Geocoders::MultiGeocoder.geocode(address)
+      self.lat, self.lng = geo.lat, geo.lng if geo.success
+    end
 end

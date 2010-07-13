@@ -8,6 +8,7 @@
 		<div class="result_title">
 			<%= link_to (result.name + ", " + result.location + ", " + result.city),
 			 			business_path(result.id)%>
+			<%= result.distance %>
 		</div> 
 		<div class="result_description">
 			
@@ -17,7 +18,7 @@
 		<div class="result_sub_cat">
 			<% for sub_category in result.sub_categories do %>
 				<%= link_to sub_category.sub_category,	
-		 					search_path(:sub_category_name=>sub_category.sub_category) %>&nbsp;&nbsp;
+		 					search_path(:names_and_categories=>sub_category.sub_category,:search_type => 'category') %>&nbsp;&nbsp;
 			<% end %>
 		</div>
 	</div>

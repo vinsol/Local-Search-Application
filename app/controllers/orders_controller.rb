@@ -27,10 +27,10 @@ class OrdersController < ApplicationController
             flash.now[:notice] = @response.message
             render :action => "new"
           end
-        rescue SocketError => err
+        rescue SocketError 
           flash.now[:notice] = "Unable to connect to payment gateway. Please try again."
           render :action => "new"
-        rescue ActiveMerchant::ConnectionError => err
+        rescue ActiveMerchant::ConnectionError
           flash.now[:notice] = "Connection timeout. Please try again"
           render :action => "new"
         end
@@ -39,14 +39,17 @@ class OrdersController < ApplicationController
         render :action => "new"
       end
     else
+      flash.now[:notice] = "Incorrect form values."
       render :action => "new"
     end
   end
 
  private
+ 
     def is_owner
       @business = Business.find_by_id(params[:business_id])
-      if @business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",@member.id,RELATION[:OWNED]])
+      if @business.business_relations.find(:first, 
+                                  :conditions => ["member_id = ? AND status = ?",@member.id,RELATION[:OWNED]])
         return true
       else
         flash[:notice] = "Don't try to mess with me :-/"

@@ -13,12 +13,14 @@ describe Business do
                           :opening_time => Time.now,
                           :closing_time => Time.now + 5,
                           :lat => 77.777777,
-                          :lng => 77.777777
+                          :lng => 77.777777,
+                        
       
     }
   end
   
   it "should create a new instance given valid attributes" do
+    
     Business.create!(@valid_attributes)
   end
   

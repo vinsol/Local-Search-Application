@@ -11,7 +11,7 @@
 		<p>
 			<%= f.label(:sub_category_name, "Category*") %>
 			<%= text_field_with_auto_complete 	:business, :sub_category_name, {}, { 
-												:url => sub_categories_path(:js),
+												:url => get_sub_categories_path,
 												:method => :get, 
 												:with => "'search=' + element.value", 
 												:tokens => [",","\s"] }%>
@@ -39,14 +39,14 @@
 		<p>
 			<%= f.label(:city, "City*") %>
 			<%= text_field_with_auto_complete 	:business, :city, {}, { 
-												:url => cities_path(:js),
+												:url => get_cities_path,
 												:method => :get, 
 												:with => "'search=' + element.value" }%>
 		</p>
 		<p>
 			<%= f.label(:location, "Location*") %>
 			<%= text_field_with_auto_complete 	:business, :location, {}, { 
-												:url => locations_business_path(:js),
+												:url => get_locations_path,
 												:method => :get, 
 												:with => "'city=' + document.getElementById('business_city').value + '&' + 'search=' + element.value" }%>
 		</p>
