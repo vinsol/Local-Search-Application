@@ -1,0 +1,2 @@
+page.replace_html "search_map_#{@result_id}", :partial => 'map', :object => @map
+

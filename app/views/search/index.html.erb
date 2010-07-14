@@ -1,2 +1,7 @@
-<h1>Search#index</h1>
-<p>Find me in app/views/search/index.html.erb</p>
+<%= render :partial => "businesses/search_field"%>
+
+<% if @search_results != nil %>
+	<%= render 	:partial => "businesses/business_search_results" 	%>
+<% else %>
+	<p><%= @text %></p>
+<% end %>

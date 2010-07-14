@@ -10,15 +10,16 @@
 
 	<h4>Cities</h4>
 		<p>	<% for city in @cities %>
-				<%= link_to city.city, search_path(:city=>city.city)%>&nbsp;&nbsp;
+				<%= link_to city.city, search_index_path(:city=>city.city)%>&nbsp;&nbsp;
 			<%end%>
 		</p>
 	<h4>Popular Categories</h4>
 		<% for category in @categories %>
 			<div class="category_list"><h4><%= category.category %></h4>
 				<% for sub_category in category.sub_categories do %>
-						<%= link_to sub_category.sub_category,	
-				 					search_path(:names_and_categories=>sub_category.sub_category,:search_type=>'category') %> |
+						<%= link_to sub_category.sub_category,search_index_path(
+												:names_and_categories=>sub_category.sub_category,
+												:search_type=>'category') %> |
 				<%end%></div>
 		<%end%>
 </div>

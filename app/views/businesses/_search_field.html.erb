@@ -1,5 +1,6 @@
 <div class="search">
 	<div class="search_field">
+		<% %>
 		<% form_tag(url_for_options = {:controller => "search", :action => "index"}, :method => :get) do %>  
 			<fieldset>
 				<%= text_field_with_auto_complete "",:city, 
@@ -36,8 +37,10 @@
 							}%>	
 							
 			
- 
+ 			
 			<%= submit_tag("Search") %> </fieldset>
+			<p>What is your current Location?
+			<%= text_field_tag :current_loc%></p>
 		<% end %> 
 	</div>
 </div>

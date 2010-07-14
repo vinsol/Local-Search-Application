@@ -1,5 +1,5 @@
 class AutocompleteController < ApplicationController
-  skip_before_filter :authorize, :only => [:city, :location, :sub_category, :name]
+  skip_before_filter :authorize, :only => [:city, :location, :sub_category, :names_and_categories]
 
   
   def city
@@ -37,6 +37,9 @@ class AutocompleteController < ApplicationController
       @businesses = Business.find(:all, :conditions => 
                               ['name LIKE ? and location LIKE ?',"%#{@search_query}%","%#{params[:location]}"])
     else
+      @businesses = Business.find(:all, :conditions => ['name LIKE ?',"%#{@search_query}%"])
+    end
+    if @businesses.empty?
       @businesses = Business.find(:all, :conditions => ['name LIKE ?',"%#{@search_query}%"])
     end
   end

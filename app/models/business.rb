@@ -67,7 +67,7 @@ class Business < ActiveRecord::Base
   #ATTRIBUTES
   attr_accessible :name, :location, :city, :owner, :contact_name, :contact_email, :photo, :sub_category_name, :is_premium
   attr_accessible :contact_phone, :contact_website, :contact_address, :description, :opening_time, :closing_time
-  
+  attr_accessor :distance
   cattr_reader :per_page
   @@per_page = 5
   

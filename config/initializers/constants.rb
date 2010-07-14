@@ -13,3 +13,5 @@ PREMIUM = "1"
 
 #SMS Gateway API
 SMS_API = "http://s1.freesmsapi.com/messages/send?skey=11ae2fd4c2f0b7346d3cf11d97969778&message="
+
+R = 6378

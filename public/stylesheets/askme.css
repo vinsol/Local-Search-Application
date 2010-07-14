@@ -24,6 +24,7 @@ body {
 	background-color:#00CCFF;
 	
 }
+
 .category_list{
 	display:block;
 	width:300px;
@@ -79,6 +80,12 @@ body {
 	margin-right:220px;
 	width:auto;
 	border-bottom:1px dotted #9f3b25;
+}
+.distance {
+	width:150px;
+	float:right;
+	font-size:12px;
+	font-weight:bold;
 }
 .search_result_premium{
 	background-color:#FFF6DD;

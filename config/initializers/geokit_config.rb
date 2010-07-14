@@ -1,7 +1,7 @@
 if defined? Geokit
 
 	# These defaults are used in Geokit::Mappable.distance_to and in acts_as_mappable
-	Geokit::default_units = :miles
+	Geokit::default_units = :kms
 	Geokit::default_formula = :sphere
 
 	# This is the timeout value in seconds to be used for calls to the geocoder web
@@ -56,6 +56,6 @@ if defined? Geokit
 
 	# The IP provider order. Valid symbols are :ip,:geo_plugin.
 	# As before, make sure you read up on relevant Terms of Use for each
-	# Geokit::Geocoders::ip_provider_order = [:geo_plugin,:ip]
+	Geokit::Geocoders::ip_provider_order = [:geo_plugin,:ip]
 
 end
