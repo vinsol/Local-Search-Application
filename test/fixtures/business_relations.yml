@@ -1,24 +1,57 @@
-# == Schema Information
-# Schema version: 20100618113518
-#
-# Table name: business_relations
-#
-#  id          :integer(4)      not null, primary key
-#  member_id   :integer(4)
-#  business_id :integer(4)
-#  status      :integer(4)
-#  created_at  :datetime
-#  updated_at  :datetime
-#
-
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  member_id: 1
-  business_id: 1
-  status: 1
-
-two:
-  member_id: 1
-  business_id: 1
-  status: 1
+--- 
+business_relations_002: 
+  status: "1"
+  updated_at: 2010-07-06 04:57:44
+  business_id: "59"
+  member_id: "2"
+  id: "294"
+  created_at: 2010-07-06 04:57:44
+business_relations_003: 
+  status: "1"
+  updated_at: 2010-07-06 05:38:56
+  business_id: "60"
+  member_id: "2"
+  id: "295"
+  created_at: 2010-07-06 05:38:56
+business_relations_004: 
+  status: "1"
+  updated_at: 2010-07-06 09:41:21
+  business_id: "61"
+  member_id: "3"
+  id: "297"
+  created_at: 2010-07-06 09:41:21
+business_relations_005: 
+  status: "1"
+  updated_at: 2010-07-06 11:29:54
+  business_id: "62"
+  member_id: "3"
+  id: "298"
+  created_at: 2010-07-06 11:29:54
+business_relations_006: 
+  status: "1"
+  updated_at: 2010-07-07 04:56:53
+  business_id: "63"
+  member_id: "3"
+  id: "299"
+  created_at: 2010-07-07 04:56:53
+business_relations_007: 
+  status: "0"
+  updated_at: 2010-07-08 06:35:53
+  business_id: "63"
+  member_id: "2"
+  id: "306"
+  created_at: 2010-07-08 06:35:53
+business_relations_008: 
+  status: "1"
+  updated_at: 2010-07-14 11:17:08
+  business_id: "64"
+  member_id: "2"
+  id: "307"
+  created_at: 2010-07-14 11:17:08
+business_relations_001: 
+  status: "1"
+  updated_at: 2010-07-05 13:44:50
+  business_id: "58"
+  member_id: "2"
+  id: "293"
+  created_at: 2010-07-05 13:44:50

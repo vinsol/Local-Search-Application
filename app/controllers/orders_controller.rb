@@ -4,7 +4,6 @@ class OrdersController < ApplicationController
   
   def new
     @order = Order.new
-    @business = Business.find_by_id(params[:business_id])
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @order }

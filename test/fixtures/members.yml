@@ -1,31 +1,40 @@
-# == Schema Information
-# Schema version: 20100618113518
-#
-# Table name: members
-#
-#  id                 :integer(4)      not null, primary key
-#  email              :string(255)
-#  first_name         :string(255)
-#  last_name          :string(255)
-#  salt               :string(255)
-#  hashed_password    :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
-#  phone_number       :string(255)
-#  address            :string(255)
-#  remember_me_token  :string(255)
-#  photo_file_name    :string(255)
-#  photo_content_type :string(255)
-#  photo_file_size    :integer(4)
-#  photo_updated_at   :datetime
-#  remember_me_time   :datetime
-#  is_admin           :boolean(1)
-#
-
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
+--- 
+members_001: 
+  salt: kyEXZTDUuJhMeNv
+  photo_file_size: "146103"
+  photo_file_name: lionel-messi-1024x768-25.jpg
+  updated_at: 2010-07-06 09:18:09
+  remember_me_time: 2010-06-30 07:51:15
+  hashed_password: 5dde0322262a31f9dd73e67f5ee8fad49c36d10b
+  is_admin: "1"
+  photo_updated_at: 2010-07-02 05:28:25
+  phone_number: "9898989898"
+  id: "2"
+  photo_content_type: image/jpeg
+  remember_me_token: 6953fd2f120752c33fa2aaf718c9bb32310bc4f7
+  first_name: Jigar
+  address: |-
+    E-306, Narwana Apt., 
+    I P Extension, 
+    Delhi -110092
+  last_name: Patel
+  created_at: 2010-06-07 05:15:10
+  email: jagira@gmail.com
+members_002: 
+  salt: SU6joX3qQv4zKwm
+  photo_file_size: "1748"
+  photo_file_name: Pear.gif
+  updated_at: 2010-07-07 06:30:41
+  remember_me_time: 
+  hashed_password: 847956255b634c400aab1eae4323ce364c476525
+  is_admin: "0"
+  photo_updated_at: 2010-07-07 06:30:41
+  phone_number: "9898989899"
+  id: "3"
+  photo_content_type: image/gif
+  remember_me_token: 
+  first_name: Alok
+  address: Tilak Nagar, Delhi
+  last_name: Vaish
+  created_at: 2010-07-06 06:25:46
+  email: alok@vinsol.com

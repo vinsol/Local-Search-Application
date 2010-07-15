@@ -185,28 +185,28 @@ describe Member do
     fixtures :members, :businesses, :business_relations
     
     it "should have businesses" do
-      @member = Member.find(members(:jigar).id)
+      @member = Member.find(members(:members_001).id)
       @member.business_relations.should_not be_empty
     end
     
-    it "should have 3 related business" do
-      @member = Member.find(members(:jigar).id)
-      @member.business_relations.should have(3).records
+    it "should have 5 related business" do
+      @member = Member.find(members(:members_001).id)
+      @member.business_relations.should have(5).records
     end
     
-    it "should have 2 owned businesses" do
-      @member = Member.find(members(:jigar).id)
-      @member.owned_businesses.should_not include(businesses(:business_3))
+    it "should have not include other's owned businesses" do
+      @member = Member.find(members(:members_001).id)
+      @member.owned_businesses.should_not include(businesses(:businesses_004))
     end
     
-    it "should have one favorite business" do
-      @member = Member.find(members(:jigar).id)
-      @member.favorite_businesses.should include(businesses(:business_3))
+    it "should have 2 favorite business" do
+      @member = Member.find(members(:members_001).id)
+      @member.favorite_businesses.should include(businesses(:businesses_006))
     end
     
     it "should not have businesses of other person" do
-      @member = Member.find(members(:mohit).id)
-      @member.owned_businesses.should_not include(businesses(:business_1))
+      @member = Member.find(members(:members_001).id)
+      @member.owned_businesses.should_not include(businesses(:businesses_006))
     end
     
   end

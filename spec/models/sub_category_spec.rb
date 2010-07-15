@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe SubCategory do
-  fixtures :categories, :sub_categories, :categories_sub_categories
+  fixtures :businesses, :sub_categories, :businesses_sub_categories, :categories_sub_categories, :categories
   before(:each) do
     @valid_attributes = { :sub_category => "chemist"}
+    
   end
 
   it "should create a new instance given valid attributes" do
@@ -15,7 +16,7 @@ describe SubCategory do
   end
   
   it "should have a associated category" do
-    @sub_category = SubCategory.find(sub_categories(:chemist))
+    @sub_category = SubCategory.find(sub_categories(:sub_categories_012))
     @sub_category.categories.should_not be_empty
   end
 end

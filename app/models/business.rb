@@ -79,7 +79,7 @@ class Business < ActiveRecord::Base
       has is_premium
       set_property :enable_star => 1
       set_property :min_infix_len => 3
-      set_property :delta => true
+     
       
   end
   
@@ -103,6 +103,17 @@ class Business < ActiveRecord::Base
      errors.add_to_base "Opening Time must be less than Closing Time" if self.opening_time > self.closing_time
   end
   
+  def self.get_map(lat,lng,name)
+    map = GoogleMap::Map.new
+    map.center = GoogleMap::Point.new(lat,lng)
+    map.zoom = 15
+    map.markers << GoogleMap::Marker.new(:map => map,
+                                         :lat => lat,
+                                         :lng => lng,
+                                         :html => name)
+    return map
+  end
+    
   private
   def geocode_address
     geo=Geokit::Geocoders::MultiGeocoder.geocode(contact_address + "," + self.location + "," + self.city)

@@ -29,12 +29,14 @@ class ApplicationController < ActionController::Base
     end
   
     def is_logged_in
-      if @member = Member.find_by_id(session[:member_id])
-        @logged_in = true
-        return true
-      else
-        @logged_in = false
-        return false
+      unless session[:member_id] == nil
+        if @member = Member.find_by_id(session[:member_id])
+          @logged_in = true
+          return true
+        else
+          @logged_in = false
+          return false
+        end
       end
     end
     

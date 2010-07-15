@@ -39,9 +39,7 @@ class AutocompleteController < ApplicationController
     else
       @businesses = Business.find(:all, :conditions => ['name LIKE ?',"%#{@search_query}%"])
     end
-    if @businesses.empty?
-      @businesses = Business.find(:all, :conditions => ['name LIKE ?',"%#{@search_query}%"])
-    end
+    
   end
 
   private

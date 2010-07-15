@@ -1,15 +1,121 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
-chemist:
-    id: 1
-    sub_category: chemist
-    
-food_joint:
-    id: 2
-    sub_category: food_joint
-    
+--- 
+sub_categories_021: 
+  sub_category: Super Store
+  updated_at: 2010-07-07 04:53:13
+  id: "25"
+  created_at: 2010-07-07 04:53:13
+sub_categories_010: 
+  sub_category: IAS Preparation
+  updated_at: 2010-07-05 13:39:32
+  id: "14"
+  created_at: 2010-07-05 13:39:32
+sub_categories_022: 
+  sub_category: Vegetable Shop
+  updated_at: 2010-07-07 05:17:57
+  id: "26"
+  created_at: 2010-07-07 05:17:57
+sub_categories_011: 
+  sub_category: MBA Preparation
+  updated_at: 2010-07-05 13:39:32
+  id: "15"
+  created_at: 2010-07-05 13:39:32
+sub_categories_023: 
+  sub_category: Fruit Market
+  updated_at: 2010-07-07 05:17:57
+  id: "27"
+  created_at: 2010-07-07 05:17:57
+sub_categories_012: 
+  sub_category: Computer Class
+  updated_at: 2010-07-05 13:39:32
+  id: "16"
+  created_at: 2010-07-05 13:39:32
+sub_categories_001: 
+  sub_category: Dental Clinic
+  updated_at: 2010-07-05 13:38:48
+  id: "5"
+  created_at: 2010-07-05 13:38:48
+sub_categories_024: 
+  sub_category: Farmer's market
+  updated_at: 2010-07-07 05:17:57
+  id: "28"
+  created_at: 2010-07-07 05:17:57
+sub_categories_013: 
+  sub_category: Multiplex
+  updated_at: 2010-07-05 13:40:21
+  id: "17"
+  created_at: 2010-07-05 13:40:21
+sub_categories_002: 
+  sub_category: Clinic
+  updated_at: 2010-07-05 13:38:48
+  id: "6"
+  created_at: 2010-07-05 13:38:48
+sub_categories_014: 
+  sub_category: Fast Food Joint
+  updated_at: 2010-07-05 13:40:21
+  id: "18"
+  created_at: 2010-07-05 13:40:21
+sub_categories_003: 
+  sub_category: Druggist
+  updated_at: 2010-07-05 13:38:48
+  id: "7"
+  created_at: 2010-07-05 13:38:48
+sub_categories_015: 
+  sub_category: Club
+  updated_at: 2010-07-05 13:40:21
+  id: "19"
+  created_at: 2010-07-05 13:40:21
+sub_categories_004: 
+  sub_category: Chemist
+  updated_at: 2010-07-05 13:38:48
+  id: "8"
+  created_at: 2010-07-05 13:38:48
+sub_categories_016: 
+  sub_category: Hotel
+  updated_at: 2010-07-05 13:40:21
+  id: "20"
+  created_at: 2010-07-05 13:40:21
+sub_categories_005: 
+  sub_category: Physiotherapy Clinic
+  updated_at: 2010-07-05 13:38:48
+  id: "9"
+  created_at: 2010-07-05 13:38:48
+sub_categories_017: 
+  sub_category: Bar
+  updated_at: 2010-07-05 13:40:21
+  id: "21"
+  created_at: 2010-07-05 13:40:21
+sub_categories_006: 
+  sub_category: Hospital
+  updated_at: 2010-07-05 13:38:48
+  id: "10"
+  created_at: 2010-07-05 13:38:48
+sub_categories_018: 
+  sub_category: Restaurant
+  updated_at: 2010-07-05 13:40:21
+  id: "22"
+  created_at: 2010-07-05 13:40:21
+sub_categories_007: 
+  sub_category: College
+  updated_at: 2010-07-05 13:39:32
+  id: "11"
+  created_at: 2010-07-05 13:39:32
+sub_categories_019: 
+  sub_category: Movie Theatre
+  updated_at: 2010-07-05 13:40:21
+  id: "23"
+  created_at: 2010-07-05 13:40:21
+sub_categories_008: 
+  sub_category: School Tution
+  updated_at: 2010-07-05 13:39:32
+  id: "12"
+  created_at: 2010-07-05 13:39:32
+sub_categories_020: 
+  sub_category: Grocery Store
+  updated_at: 2010-07-07 04:53:13
+  id: "24"
+  created_at: 2010-07-07 04:53:13
+sub_categories_009: 
+  sub_category: School
+  updated_at: 2010-07-05 13:39:32
+  id: "13"
+  created_at: 2010-07-05 13:39:32

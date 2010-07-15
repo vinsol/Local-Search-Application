@@ -15,7 +15,7 @@ describe Category do
   end
   
   it "should have a sub-category" do
-    @category = Category.find(categories(:healthcare))
+    @category = Category.find(categories(:categories_002))
     @category.sub_categories.should_not be_empty
   end
 end

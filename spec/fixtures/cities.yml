@@ -1,13 +1,26 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
-delhi:
-    id: 1
-    city: delhi
-ahmedabad:
-    id: 2
-    city: ahmedabad
+--- 
+cities_003: 
+  city: Vadodara
+  updated_at: 2010-07-05 13:35:33
+  id: "6"
+  created_at: 2010-07-05 13:35:33
+cities_004: 
+  city: Mumbai
+  updated_at: 2010-07-05 13:36:48
+  id: "7"
+  created_at: 2010-07-05 13:36:48
+cities_005: 
+  city: Budaun
+  updated_at: 2010-07-14 09:12:25
+  id: "8"
+  created_at: 2010-07-14 09:12:25
+cities_001: 
+  city: Delhi
+  updated_at: 2010-07-05 13:33:44
+  id: "4"
+  created_at: 2010-07-05 13:33:44
+cities_002: 
+  city: Ahmedabad
+  updated_at: 2010-07-05 13:34:41
+  id: "5"
+  created_at: 2010-07-05 13:34:41

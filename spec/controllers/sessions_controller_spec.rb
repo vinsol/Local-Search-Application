@@ -36,9 +36,25 @@ describe SessionsController do
     
   end
   
+  describe "check remember me" do
+    it "find member from cookies" do
+      session[:member_id] = nil
+      @member = mock_model(Member, {:id => "2", :remember_me_time => Time.now,
+                                    :remember_me_token => "token"})
+      cookies[:remember_me_id] = "2"
+      cookies[:remember_me_code] = "token"
+      Member.should_receive(:find_by_id).with("2").and_return(@member)
+      get :login
+      session[:member_id].should == "2"
+      response.should redirect_to("http://test.host/")
+    end
+    
+  end
+    
   describe "delete" do
     before(:each) do
-      session[:member_id] = "1"
+      session[:member_id] = "2"
+      
     end
     
     it "should empty the session" do
@@ -47,6 +63,7 @@ describe SessionsController do
     end
     
     it "should set the correct flash message" do
+      
       get :delete
       flash[:message].should == "Logged out"
     end

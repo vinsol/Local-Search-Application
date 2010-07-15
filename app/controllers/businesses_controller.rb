@@ -20,15 +20,7 @@ class BusinessesController < ApplicationController
       @favorite = false
       @owner = false
     end
-    if @business.lat != nil and @business.lng != nil
-      @map = GoogleMap::Map.new
-      @map.center = GoogleMap::Point.new(@business.lat, @business.lng)
-      @map.zoom = 15
-      @map.markers << GoogleMap::Marker.new(  :map => @map,
-                                              :lat => @business.lat,
-                                              :lng => @business.lng,
-                                              :html => @business.name)
-    end
+    @map = Business.get_map(@business.lat, @business.lng, @business.name) unless @business.lat == nil && @business.lng ==nil
   end
 
   
@@ -140,6 +132,7 @@ class BusinessesController < ApplicationController
     def is_owner(business)
       if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",  
                                                                   @member.id,RELATION[:OWNED]])
+                                                                 
         return true
       else
         return false
@@ -148,8 +141,10 @@ class BusinessesController < ApplicationController
     
     #checks whether the person has added the business as favorite.
      def is_favorite(business)
-      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",
+      @business_relation = business.business_relations.find(:first, 
+                                                            :conditions => ["member_id = ? AND status = ?",
                                                                   @member.id,RELATION[:FAVORITE]])
+      if @business_relation
         return true
       else
         return false

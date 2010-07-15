@@ -441,62 +441,56 @@ describe BusinessesController do
     end
   end
   
-  describe "remove favorite" do
-    before(:each) do
-      session[:member_id] = 1
-      session[:return_to] = root_path
-      @member = mock_model(Member, {:first_name => "Jigar", :last_name => "Patel"})
-      Member.stub!(:find_by_id).with(1).and_return(@member)
-      @business = mock_model(Business)
-      Business.stub!(:find_by_id).with("valid_business_id").and_return(@business)
-    end
+ describe "Remove Favorite" do
+   before(:each) do
+     session[:member_id] = "2"
+     session[:return_to] = root_path
+     Business.stub!(:find_by_id).with("1").and_return(@business)
+     @business_relation = mock(BusinessRelation)
+     @business.stub!(:business_relations).and_return(@business_relation)
+     @business_relation.stub!(:find).and_return(true)
+     BusinessRelation.stub!(:destroy).and_return(true)
+   end
+   
+   it "should find business from params id" do
+     Business.should_receive(:find_by_id).with("1").and_return(@business)
+     delete :remove_favorite, :id => 1
+   end
+   
+   it "should redirect the user back if the business is not in favorite" do
+     @business_relation.should_receive(:find).and_return(false)
+     delete :remove_favorite, :id => 1
+     flash[:notice].should == "Business not in your list"
+     response.should redirect_to(root_path)
+   end
+   
+   it "should render remove favorite template in case of successful destruction" do
+     delete :remove_favorite, :id =>1 
+     response.should render_template('businesses/remove_favorite.js.rjs')
+   end
+   
+   it "should set correct notice and redirect the user back in case of unsuccessful deletion" do
+     BusinessRelation.stub!(:destroy).and_return(false)
+     delete :remove_favorite, :id => 1
+     flash[:notice].should == "Unable to remove from list. Please try again."
+     response.should redirect_to(root_path)
+   end
+ end
+ 
+ describe "send to phone" do
+   before(:each) do
+     @business = mock_model(Business, {:id => "1", :name => "Name", :contact_phone => "Phone",
+                                        :contact_address => "Address", :location => "Location",
+                                        :city => "City"})
+     Business.stub!(:find_by_id).with("1").and_return(@business)
+   end
     
-    describe "when business is not in your list" do
-      before(:each) do
-        session[:return_to] = root_path
-        @business_relations = mock_model(BusinessRelation)
-        @business.stub!(:business_relations).and_return(@business_relations)
-        @business_relations.stub!(:find).and_return(false)
-      end    
-        
-      it "should find business from params" do
-        Business.should_receive(:find_by_id).with("valid_business_id").and_return(@business)
-        post :remove_favorite, {:method => :delete, :id => "valid_business_id"}
-      end
-      
-      it "should set correct flash notice" do
-        post :remove_favorite, {:method => :delete, :id => "valid_business_id"}
-        flash[:notice].should == "Business not in your list"
-      end
-      
-      it "should redirect to back" do
-        post :remove_favorite, {:method => :delete, :id => "valid_business_id"}
-        response.should redirect_to(session[:return_to])
-      end
-    end
-    
-    describe "when business is in your list" do
-      before(:each) do
-        session[:return_to] = root_path
-        @business_relations = mock_model(BusinessRelation)
-        
-        @business.stub!(:business_relations).and_return(@business_relations)
-        @business_relations.stub!(:find).and_return(true)
-        
-      end
-      
-      it "should render remove favorite rjs template on successful deletion from list" do
-        BusinessRelation.stub!(:destroy).and_return(true)
-        post :remove_favorite, {:method => :delete, :id => "valid_business_id"}
-        response.should render_template("businesses/remove_favorite.js.rjs")
-      end
-      
-      it "should set a flash notice and redirect to back when business is not deleted" do
-        BusinessRelation.stub!(:destroy).and_return(false)
-        post :remove_favorite, {:method => :delete, :id => "valid_business_id"}
-        flash[:notice].should == "Unable to remove from list. Please try again."
-        response.should redirect_to(session[:return_to])
-      end
-    end
-  end
+   it "should find business from params, make a valid string and render proper template" do
+     Business.should_receive(:find_by_id).with("1").and_return(@business)
+     get :send_to_phone, :id => "1"
+     assigns[:business_details].should == "Name - Phone - Address, Location, City"
+     response.should render_template("businesses/send_to_phone.js.rjs")
+   end
+   
+ end
 end

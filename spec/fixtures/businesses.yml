@@ -1,46 +1,183 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
-
-business_1:
-    id: 1
-    name: Test_1
-    location: Rajiv Chowk
-    city: Delhi
-    category: Healthcare
-    sub_category: chemist
-    contact_name: Jigar 
-    contact_phone: 9898989898
-    contact_address: "C-2, West Patel Nagar, Delhi" 
-    lat: 77.777777
-    lng: 77.777777   
-
-business_2:
-    id: 2
-    name: Test_2
-    location: Patel Nagar
-    city: Delhi
-    category: Healthcare
-    sub_category: chemist
-    contact_name: Jigar 
-    contact_phone: 9898989898
-    contact_address: "C-2, West Patel Nagar, Delhi" 
-    lat: 77.777777
-    lng: 77.777777   
-    
-business_3:
-    id: 3
-    name: Test_3
-    location: Rajiv Chowk
-    city: Delhi
-    category: Entertainment
-    sub_category: restaurant
-    contact_name: Mohit
-    contact_phone: 9898989898
-    contact_address: "C-2, West Patel Nagar, Delhi" 
-    lat: 77.777777
-    lng: 77.777777   
+--- 
+businesses_001: 
+  status: unverified
+  city: Delhi
+  name: Jigar 1
+  photo_file_size: "67666"
+  photo_file_name: geek-sign.jpg
+  closing_time: 2010-07-05 17:00:00
+  updated_at: 2010-07-07 13:11:10
+  delta: "0"
+  is_premium: "1"
+  opening_time: 2010-07-05 13:00:00
+  contact_address: Metro Station
+  photo_updated_at: 2010-07-06 06:52:48
+  contact_phone: "9898989898"
+  lng: "77.2952439"
+  id: "58"
+  photo_content_type: image/jpeg
+  description: DOEAAC 'O' Level course.
+  map: 
+  contact_email: jagira@gmail.com
+  owner: Jigar Patel
+  lat: "28.6413401"
+  contact_website: http://jigarpatel.in
+  contact_name: Jigar Patel
+  created_at: 2010-07-05 13:44:50
+  location: Preet Vihar
+businesses_002: 
+  status: unverified
+  city: Delhi
+  name: Jigar 2 Bar
+  photo_file_size: 
+  photo_file_name: 
+  closing_time: 2010-07-06 10:00:00
+  updated_at: 2010-07-13 06:54:03
+  delta: "0"
+  is_premium: "0"
+  opening_time: 2010-07-06 04:00:00
+  contact_address: Metro station
+  photo_updated_at: 
+  contact_phone: "9898989898"
+  lng: "77.1782309"
+  id: "59"
+  photo_content_type: 
+  description: Italian/Mexican Food.
+  map: 
+  contact_email: jagira@gmail.com
+  owner: Jigar Patel
+  lat: "28.6424833"
+  contact_website: http://jigarpatel.in
+  contact_name: Jigar Patel
+  created_at: 2010-07-06 04:57:44
+  location: Rajendra Place
+businesses_003: 
+  status: unverified
+  city: Vadodara
+  name: Jigar 3
+  photo_file_size: 
+  photo_file_name: 
+  closing_time: 2010-07-06 18:00:00
+  updated_at: 2010-07-06 07:10:56
+  delta: "0"
+  is_premium: "0"
+  opening_time: 2010-07-06 05:00:00
+  contact_address: Tulsidham
+  photo_updated_at: 
+  contact_phone: "9898989898"
+  lng: "73.1924864"
+  id: "60"
+  photo_content_type: 
+  description: "24 hour medical store. "
+  map: 
+  contact_email: jagira@gmail.com
+  owner: Jigar Patel
+  lat: "22.2811984"
+  contact_website: http://jigarpatel.in
+  contact_name: jigar Patel
+  created_at: 2010-07-06 05:38:56
+  location: Manjalpur
+businesses_004: 
+  status: unverified
+  city: Mumbai
+  name: Alok Bar
+  photo_file_size: 
+  photo_file_name: 
+  closing_time: 2010-07-06 09:30:00
+  updated_at: 2010-07-12 06:40:34
+  delta: "0"
+  is_premium: "1"
+  opening_time: 2010-07-06 01:15:00
+  contact_address: Near Station
+  photo_updated_at: 
+  contact_phone: "9898989898"
+  lng: "72.8387537"
+  id: "61"
+  photo_content_type: 
+  description: "Beer Bar. "
+  map: 
+  contact_email: alok@vinsol.com
+  owner: Alok Vaish
+  lat: "19.0663194"
+  contact_website: ""
+  contact_name: Alok Vaish
+  created_at: 2010-07-06 09:41:21
+  location: Andheri West
+businesses_005: 
+  status: unverified
+  city: Delhi
+  name: Alok da Dhaba
+  photo_file_size: 
+  photo_file_name: 
+  closing_time: 2010-07-06 12:00:00
+  updated_at: 2010-07-09 08:11:11
+  delta: "0"
+  is_premium: "1"
+  opening_time: 2010-07-06 11:00:00
+  contact_address: Patel Nagar Metro Station
+  photo_updated_at: 
+  contact_phone: "9898989898"
+  lng: "77.1692961"
+  id: "62"
+  photo_content_type: 
+  description: Punjabi Dhaba
+  map: 
+  contact_email: alok@vinsol.com
+  owner: Alok Vaish
+  lat: "28.6450989"
+  contact_website: ""
+  contact_name: Alok Vaish
+  created_at: 2010-07-06 11:29:53
+  location: Patel Nagar
+businesses_006: 
+  status: unverified
+  city: Delhi
+  name: Alok kirana store
+  photo_file_size: "146103"
+  photo_file_name: lionel-messi-1024x768-25.jpg
+  closing_time: 2010-07-07 17:00:00
+  updated_at: 2010-07-14 12:48:34
+  delta: "0"
+  is_premium: "1"
+  opening_time: 2010-07-07 04:00:00
+  contact_address: Sector - 9
+  photo_updated_at: 2010-07-07 04:56:42
+  contact_phone: "9898989898"
+  lng: "77.0665200"
+  id: "63"
+  photo_content_type: image/jpeg
+  description: Pack your bags, Big Bazaar!!!
+  map: 
+  contact_email: alok@vinsol.com
+  owner: Alok Vaish
+  lat: "28.5787888"
+  contact_website: http://jigarpatel.in
+  contact_name: Alok Vaish
+  created_at: 2010-07-07 04:56:53
+  location: Dwarka
+businesses_007: 
+  status: unverified
+  city: Delhi
+  name: Jigar Dhaba
+  photo_file_size: 
+  photo_file_name: 
+  closing_time: 2010-07-14 11:15:00
+  updated_at: 2010-07-14 11:17:08
+  delta: "0"
+  is_premium: "0"
+  opening_time: 2010-07-14 11:00:00
+  contact_address: Metro Station
+  photo_updated_at: 
+  contact_phone: "9898989898"
+  lng: "77.1692961"
+  id: "64"
+  photo_content_type: 
+  description: ""
+  map: 
+  contact_email: jagira@gmail.com
+  owner: Jigar Patel
+  lat: "28.6450989"
+  contact_website: ""
+  contact_name: Jigar Patel
+  created_at: 2010-07-14 11:17:08
+  location: Patel Nagar

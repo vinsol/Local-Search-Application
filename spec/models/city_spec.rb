@@ -15,7 +15,7 @@ describe City do
   end
   
   it "should have valid locations" do
-    @city = City.find(cities(:delhi))
+    @city = City.find(cities(:cities_003))
     @city.locations.should_not be_empty
   end
 end

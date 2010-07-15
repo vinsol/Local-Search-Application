@@ -9,13 +9,13 @@
 			<%= link_to (result.name + ", " + result.location + ", " + result.city),
 			 			business_path(result.id)%>
 			
-			<% unless @current_location.lat == nil || @current_location.lng == nil %>
+			<% unless @current_location.lat == 0 && @current_location.lng == 0 %>
 				<div class="distance">
 					<% if result.distance.truncate == 0 %>
 						<%= (result.distance * 100).truncate %> m
 					<% else %>
 						<%= pluralize result.distance.truncate, "km" %>
-					<% end %> from <%= @current_loc_name %>
+					<% end %> from <%= @current_location_name %>
 				
 				
 				</div>

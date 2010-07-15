@@ -1,19 +1,329 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
-rajiv_chowk:
-    id: 1
-    location: rajiv chowk
-    city_id: 1
-patel_nagar:
-    id: 2
-    location: patel nagar
-    city_id: 1
-satellite:
-    id: 3
-    location: satellite
-    city_id: 2
+--- 
+locations_036: 
+  updated_at: 2010-07-13 12:13:32
+  lng: "72.8193580"
+  id: "47"
+  city_id: "7"
+  lat: "18.9705860"
+  created_at: 2010-07-05 13:37:55
+  location: Mumbai Central
+locations_025: 
+  updated_at: 2010-07-13 12:13:11
+  lng: "73.2042847"
+  id: "36"
+  city_id: "6"
+  lat: "22.3026655"
+  created_at: 2010-07-05 13:36:40
+  location: Mandvi
+locations_014: 
+  updated_at: 2010-07-13 12:12:37
+  lng: "72.5190038"
+  id: "25"
+  city_id: "5"
+  lat: "23.0320877"
+  created_at: 2010-07-05 13:35:21
+  location: Satellite
+locations_003: 
+  updated_at: 2010-07-13 12:12:03
+  lng: "77.1794302"
+  id: "14"
+  city_id: "4"
+  lat: "28.6462576"
+  created_at: 2010-07-05 13:34:35
+  location: Rajendra Place
+locations_037: 
+  updated_at: 2010-07-13 12:13:34
+  lng: "72.8426858"
+  id: "48"
+  city_id: "7"
+  lat: "18.9984209"
+  created_at: 2010-07-05 13:37:55
+  location: Parel
+locations_026: 
+  updated_at: 2010-07-13 12:13:12
+  lng: "73.1695000"
+  id: "37"
+  city_id: "6"
+  lat: "22.3105500"
+  created_at: 2010-07-05 13:36:40
+  location: Alkapuri
+locations_015: 
+  updated_at: 2010-07-13 12:12:38
+  lng: "72.5577427"
+  id: "26"
+  city_id: "5"
+  lat: "23.0280518"
+  created_at: 2010-07-05 13:35:21
+  location: C G Road
+locations_004: 
+  updated_at: 2010-07-13 12:12:05
+  lng: "77.2000000"
+  id: "15"
+  city_id: "4"
+  lat: "28.6500000"
+  created_at: 2010-07-05 13:34:35
+  location: Karol Bag
+locations_038: 
+  updated_at: 2010-07-13 12:13:35
+  lng: "72.8308290"
+  id: "49"
+  city_id: "7"
+  lat: "19.0552290"
+  created_at: 2010-07-05 13:37:55
+  location: Bandra East
+locations_027: 
+  updated_at: 2010-07-13 12:13:15
+  lng: "73.1958425"
+  id: "38"
+  city_id: "6"
+  lat: "22.2841079"
+  created_at: 2010-07-05 13:36:40
+  location: Lal Baug
+locations_016: 
+  updated_at: 2010-07-13 12:12:40
+  lng: "72.5323659"
+  id: "27"
+  city_id: "5"
+  lat: "23.1008768"
+  created_at: 2010-07-05 13:35:21
+  location: S G Road
+locations_005: 
+  updated_at: 2010-07-13 12:12:06
+  lng: "77.1628959"
+  id: "16"
+  city_id: "4"
+  lat: "28.6496897"
+  created_at: 2010-07-05 13:34:35
+  location: Patel Nagar
+locations_039: 
+  updated_at: 2010-07-13 12:13:36
+  lng: "72.8692711"
+  id: "50"
+  city_id: "7"
+  lat: "19.1130192"
+  created_at: 2010-07-05 13:37:55
+  location: Andheri East
+locations_028: 
+  updated_at: 2010-07-13 12:13:16
+  lng: "73.1452867"
+  id: "39"
+  city_id: "6"
+  lat: "22.3166147"
+  created_at: 2010-07-05 13:36:40
+  location: Gotri
+locations_017: 
+  updated_at: 2010-07-13 12:12:41
+  lng: "72.5766759"
+  id: "28"
+  city_id: "5"
+  lat: "23.1120487"
+  created_at: 2010-07-05 13:35:21
+  location: Chandkheda
+locations_006: 
+  updated_at: 2010-07-13 12:12:07
+  lng: "77.0895421"
+  id: "17"
+  city_id: "4"
+  lat: "28.6383374"
+  created_at: 2010-07-05 13:34:35
+  location: Tilak Nagar
+locations_040: 
+  updated_at: 2010-07-13 12:13:37
+  lng: "72.8308290"
+  id: "51"
+  city_id: "7"
+  lat: "19.0552290"
+  created_at: 2010-07-05 13:37:55
+  location: Bandra West
+locations_029: 
+  updated_at: 2010-07-13 12:13:24
+  lng: "72.8561780"
+  id: "40"
+  city_id: "7"
+  lat: "19.0176560"
+  created_at: 2010-07-05 13:37:55
+  location: Thane
+locations_018: 
+  updated_at: 2010-07-13 12:13:02
+  lng: "73.1910115"
+  id: "29"
+  city_id: "6"
+  lat: "22.3431343"
+  created_at: 2010-07-05 13:36:40
+  location: Sama
+locations_007: 
+  updated_at: 2010-07-13 12:12:08
+  lng: "77.2292439"
+  id: "18"
+  city_id: "4"
+  lat: "28.6663815"
+  created_at: 2010-07-05 13:34:35
+  location: Kashmiri Gate
+locations_041: 
+  updated_at: 2010-07-14 09:12:46
+  lng: "79.1363883"
+  id: "52"
+  city_id: "8"
+  lat: "28.0278424"
+  created_at: 2010-07-14 09:12:46
+  location: Railway Station
+locations_030: 
+  updated_at: 2010-07-13 12:13:25
+  lng: "72.8242221"
+  id: "41"
+  city_id: "7"
+  lat: "18.9255728"
+  created_at: 2010-07-05 13:37:55
+  location: Nariman Point
+locations_019: 
+  updated_at: 2010-07-13 12:13:04
+  lng: "73.2066000"
+  id: "30"
+  city_id: "6"
+  lat: "22.3201000"
+  created_at: 2010-07-05 13:36:40
+  location: Karelibaug
+locations_008: 
+  updated_at: 2010-07-13 12:12:09
+  lng: "77.0506896"
+  id: "19"
+  city_id: "4"
+  lat: "28.5901605"
+  created_at: 2010-07-05 13:34:35
+  location: Dwarka
+locations_031: 
+  updated_at: 2010-07-13 12:13:27
+  lng: "72.9047136"
+  id: "42"
+  city_id: "7"
+  lat: "19.1163956"
+  created_at: 2010-07-05 13:37:55
+  location: Powai
+locations_020: 
+  updated_at: 2010-07-13 12:13:05
+  lng: "73.1851121"
+  id: "31"
+  city_id: "6"
+  lat: "22.2500929"
+  created_at: 2010-07-05 13:36:40
+  location: Makarpura
+locations_009: 
+  updated_at: 2010-07-13 12:12:11
+  lng: "77.2190287"
+  id: "20"
+  city_id: "4"
+  lat: "28.6318158"
+  created_at: 2010-07-05 13:34:35
+  location: Rajiv Chowk
+locations_032: 
+  updated_at: 2010-07-13 12:13:28
+  lng: "72.8382547"
+  id: "43"
+  city_id: "7"
+  lat: "19.0195470"
+  created_at: 2010-07-05 13:37:55
+  location: Dadar
+locations_021: 
+  updated_at: 2010-07-13 12:13:06
+  lng: "73.1686000"
+  id: "32"
+  city_id: "6"
+  lat: "22.2951000"
+  created_at: 2010-07-05 13:36:40
+  location: Akota
+locations_010: 
+  updated_at: 2010-07-13 12:12:32
+  lng: "72.5693629"
+  id: "21"
+  city_id: "5"
+  lat: "23.0400870"
+  created_at: 2010-07-05 13:35:21
+  location: Ashram Road
+locations_033: 
+  updated_at: 2010-07-13 12:13:29
+  lng: "72.8692711"
+  id: "44"
+  city_id: "7"
+  lat: "19.1130192"
+  created_at: 2010-07-05 13:37:55
+  location: Andheri West
+locations_022: 
+  updated_at: 2010-07-13 12:13:07
+  lng: "73.1924864"
+  id: "33"
+  city_id: "6"
+  lat: "22.2811984"
+  created_at: 2010-07-05 13:36:40
+  location: Manjalpur
+locations_011: 
+  updated_at: 2010-07-13 12:12:33
+  lng: "72.5966363"
+  id: "22"
+  city_id: "5"
+  lat: "23.0286312"
+  created_at: 2010-07-05 13:35:21
+  location: Kalupur
+locations_034: 
+  updated_at: 2010-07-13 12:13:30
+  lng: "72.8256993"
+  id: "45"
+  city_id: "7"
+  lat: "18.9328933"
+  created_at: 2010-07-05 13:37:55
+  location: Churchgate
+locations_023: 
+  updated_at: 2010-07-13 12:13:09
+  lng: "73.1875760"
+  id: "34"
+  city_id: "6"
+  lat: "22.3065490"
+  created_at: 2010-07-05 13:36:40
+  location: Chaani
+locations_012: 
+  updated_at: 2010-07-13 12:12:35
+  lng: "72.5293880"
+  id: "23"
+  city_id: "5"
+  lat: "23.0359590"
+  created_at: 2010-07-05 13:35:21
+  location: Vastrapur
+locations_001: 
+  updated_at: 2010-07-13 12:11:06
+  lng: "77.2785876"
+  id: "12"
+  city_id: "4"
+  lat: "28.6327754"
+  created_at: 2010-07-05 13:33:57
+  location: Lakshmi Nagar
+locations_035: 
+  updated_at: 2010-07-13 12:13:31
+  lng: "72.8338234"
+  id: "46"
+  city_id: "7"
+  lat: "19.2360979"
+  created_at: 2010-07-05 13:37:55
+  location: Borivili
+locations_024: 
+  updated_at: 2010-07-13 12:13:10
+  lng: "73.1895367"
+  id: "35"
+  city_id: "6"
+  lat: "22.3270938"
+  created_at: 2010-07-05 13:36:40
+  location: Fatehgunj
+locations_013: 
+  updated_at: 2010-07-13 12:12:36
+  lng: "72.6003326"
+  id: "24"
+  city_id: "5"
+  lat: "22.9995269"
+  created_at: 2010-07-05 13:35:21
+  location: Maninagar
+locations_002: 
+  updated_at: 2010-07-13 12:11:48
+  lng: "77.2958239"
+  id: "13"
+  city_id: "4"
+  lat: "28.6387123"
+  created_at: 2010-07-05 13:33:57
+  location: Preet Vihar

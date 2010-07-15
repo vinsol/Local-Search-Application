@@ -91,7 +91,7 @@ describe Business do
     fixtures :members, :businesses, :business_relations
     
     it "should have members" do
-      @business = Business.find(businesses(:business_1))
+      @business = Business.find(businesses(:businesses_001))
       @business.members.should_not be_empty
     end
     
