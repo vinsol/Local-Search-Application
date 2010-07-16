@@ -11,9 +11,13 @@
 #
 
 class Location < ActiveRecord::Base
-  validates_presence_of :location, :city_id
+  
   belongs_to :city
   before_save :geocode_location
+  
+  validates_presence_of :location, :city_id
+  
+
   
   private
     def geocode_location

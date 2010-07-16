@@ -45,6 +45,13 @@ class Search < ActiveRecord::Base
     @current_location = Location.find(:first, 
                                       :conditions => ['location = ?',location]) if @current_location == nil
     @current_location = Location.new if @current_location == nil
+    
     return @current_location
+  end
+  
+  def self.get_location_name(location, current_loc)
+    name = location unless location == "Location"
+    name = current_loc.slice!(/^[0-9a-zA-Z\s]+/).capitalize unless current_loc == "" or current_loc == nil
+    return name
   end
 end

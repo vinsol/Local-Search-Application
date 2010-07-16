@@ -12,17 +12,17 @@
   		<p class="tags"></p> 
 	</div>
 	<div class="links"> 
-		<% if @owner == true %>
+		<% if is_owner(@business) %>
 			<p>	<%= link_to "Edit" , edit_member_business_path(@member.id,@business.id) %> |
 				<%= link_to "Delete", member_business_path(@member.id, @business.id), 
 											:method => :delete, 
 											:confirm => "Are you sure?"%>
 				<% unless @business.is_premium == 1 %>
-				<%= link_to "Make Premium", new_business_order_path(@business.id)%>
+					<%= link_to "Make Premium", new_business_order_path(@business.id)%>
 				<% end %>
 			</p>
 		<% end %>
-    	<% if @logged_in == false %>
+    	<% if !@member %>
 			<%= render 	:partial => "send_to_phone", 
 						:locals => {:business => @business} %>
 					
@@ -57,12 +57,6 @@
 									{:url => remove_favorite_business_path(@business.id), 
 									 :method => :delete, :confirm => "Are you sure?"}%>
            	</div>
-		<% end %>
-    					
-		<% if show_business_page and @business.lat and @business.lng %>
-			<%= link_to_remote "Show on Map",
-								{ :url => show_on_map_business_path(@business.id),
-								  :method => :get} %>
 		<% end %>
 		
 		

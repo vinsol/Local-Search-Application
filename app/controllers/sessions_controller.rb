@@ -25,8 +25,7 @@ class SessionsController < ApplicationController
         #flash[:message] = "Welcome #{member.first_name}"
         redirect_to members_path
     else
-      flash.now[:notice] = "Invalid login credentials"
-      render :action => :new
+      flash_render("notice", "Invalid login credentials", "new")
     end
   end
 

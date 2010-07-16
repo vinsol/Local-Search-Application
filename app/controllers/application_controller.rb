@@ -52,7 +52,36 @@ class ApplicationController < ActionController::Base
       redirect_to destination
     end
     
-      
+    def flash_render(type,content,action)
+      flash.now["#{type}".to_sym] = content
+      render :action => action
+    end
+    
+    #Checks whether the person is owner or not.
+    def is_owner(business)
+      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",  
+                                                                  @member.id,RELATION[:OWNED]])
+                                                                 
+        return true
+      else
+        return false
+      end
+    end
+    
+    #checks whether the person has added the business as favorite.
+     def is_favorite(business)
+      @business_relation = business.business_relations.find(:first, 
+                                                            :conditions => ["member_id = ? AND status = ?",
+                                                                  @member.id,RELATION[:FAVORITE]])
+      if @business_relation
+        return true
+      else
+        return false
+      end
+    end
+    
+   
+    
     def check_admin
       if @member.is_admin == true
         return true

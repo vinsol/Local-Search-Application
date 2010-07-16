@@ -13,13 +13,7 @@ class BusinessesController < ApplicationController
     @business = Business.find(params[:id])
     @title = "Business Details - #{@business.name}"
     #Edit and Delete for owners and Add to Favorites for those who haven't added it yet.
-    if @member
-      @favorite = true unless is_favorite(@business)
-      @owner = true if is_owner(@business)
-    else
-      @favorite = false
-      @owner = false
-    end
+ 
     @map = Business.get_map(@business.lat, @business.lng, @business.name) unless @business.lat == nil && @business.lng ==nil
   end
 
@@ -36,13 +30,13 @@ class BusinessesController < ApplicationController
 
   def send_to_phone
     @business = Business.find_by_id(params[:id])
-    @business_details = "#{@business.name} - #{@business.contact_phone}" +
-                        " - #{@business.contact_address}, #{@business.location}, #{@business.city}"
+    business_details = "#{@business.name} - #{@business.contact_phone}" +
+                        " - #{@business.contact_address}, #{@business.location}, #{@business.city}" 
     ##########################################################################################
     
     #SMS GATEWAY API
-    @url_details = URI.escape(@business_details, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-    url = SMS_API + "#{@url_details}&recipient=#{params[:number]}"
+    url_details = URI.escape(business_details, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+    url = SMS_API + "#{url_details}&recipient=#{params[:number]}"
     Net::HTTP.get_print URI.parse(url)
     ############################################################################################
     
@@ -125,31 +119,7 @@ class BusinessesController < ApplicationController
       end
     end
   end
-  
-  protected
-    
-    #Checks whether the person is owner or not.
-    def is_owner(business)
-      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",  
-                                                                  @member.id,RELATION[:OWNED]])
-                                                                 
-        return true
-      else
-        return false
-      end
-    end
-    
-    #checks whether the person has added the business as favorite.
-     def is_favorite(business)
-      @business_relation = business.business_relations.find(:first, 
-                                                            :conditions => ["member_id = ? AND status = ?",
-                                                                  @member.id,RELATION[:FAVORITE]])
-      if @business_relation
-        return true
-      else
-        return false
-      end
-    end
+
     
     
 end

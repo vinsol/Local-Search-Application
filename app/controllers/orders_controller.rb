@@ -20,39 +20,21 @@ class OrdersController < ApplicationController
       if @order.save!
         begin
           if @order.purchase.success?
-            flash[:message] = "Transaction Successful. Your business will now appear in premium listings."
-            redirect_to business_path(params[:business_id])
+            flash_redirect("message","Transaction Successful.","business_path(params[:business_id])")
           else
-            flash.now[:notice] = @response.message
-            render :action => "new"
+            flash_render("notice",@response.message,"new")
           end
         rescue SocketError 
-          flash.now[:notice] = "Unable to connect to payment gateway. Please try again."
-          render :action => "new"
+          flash_render("notice","Unable to connect to payment gateway. Please try again.","new")
         rescue ActiveMerchant::ConnectionError
-          flash.now[:notice] = "Connection timeout. Please try again"
-          render :action => "new"
+          flash_render("notice","Connection timeout. Please try again","new")
         end
       else
-        flash.now[:notice] = "Unable to save the order. Please try again."
-        render :action => "new"
+        flash_render("notice","Unable to save the order. Please try again.","new")
       end
     else
-      flash.now[:notice] = "Incorrect form values."
-      render :action => "new"
+      flash_render("notice","Incorrect form values.","new")
     end
   end
-
- private
- 
-    def is_owner
-      @business = Business.find_by_id(params[:business_id])
-      if @business.business_relations.find(:first, 
-                                  :conditions => ["member_id = ? AND status = ?",@member.id,RELATION[:OWNED]])
-        return true
-      else
-        flash[:notice] = "Don't try to mess with me :-/"
-        redirect_to business_path(params[:business_id])
-      end
-    end
+  
 end

@@ -90,13 +90,13 @@ class Business < ActiveRecord::Base
   def sub_category_name=(string)
     string.split(",").collect { |sub_category| 
       @relation = SubCategory.find_by_sub_category(sub_category.strip)
-         if self.sub_categories.find(:all, :conditions => ["sub_category_id = ?",@relation.id]).empty?
-           self.sub_categories << @relation
-         end
-      }
+      if self.sub_categories.find(:all, :conditions => ["sub_category_id = ?",@relation.id]).empty?
+        self.sub_categories << @relation
+      end
+    }
   end
  
-  
+
   protected
   
   def validate_timings
@@ -115,6 +115,7 @@ class Business < ActiveRecord::Base
   end
     
   private
+  
   def geocode_address
     geo=Geokit::Geocoders::MultiGeocoder.geocode(contact_address + "," + self.location + "," + self.city)
     errors.add(:contact_address, "Could not Geocode address") if !geo.success

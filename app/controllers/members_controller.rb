@@ -10,14 +10,12 @@ class MembersController < ApplicationController
 
  
   def show
-    @owned_businesses = @member.owned_businesses
-    @favorite_businesses = @member.favorite_businesses
     @title = @member.full_name
   end
 
   def show_list
-     @favorite_businesses = @member.favorite_businesses.paginate :page => params[:page], :per_page => 5
-     @title = @member.full_name
+    @favorite_businesses = @member.favorite_businesses.paginate :page => params[:page], :per_page => 5
+    @title = @member.full_name
    end
   
   def show_my_businesses
@@ -60,8 +58,7 @@ class MembersController < ApplicationController
          format.js
        end
     else
-      flash.now[:notice] = "Password not changed. Try again"
-      render :action => :change_password
+      flash_render("notice","Password not changed. Try again","change_password" )
     end
   end
  
@@ -77,8 +74,7 @@ class MembersController < ApplicationController
       if @member and @member.send_new_password
         flash_redirect("message","A new password has been sent by email.",login_path )
       else
-        flash[:notice] = "Unable to send the password. Try again"
-        render :action => :forgot_password
+        flash_render("notice", "Unable to send the password. Try again","forgot_password")
       end
     end
   end

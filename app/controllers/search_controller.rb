@@ -5,11 +5,17 @@ class SearchController < ApplicationController
     @conditions = Search.create_conditions_hash(params[:city], params[:names_and_categories], 
                                                 params[:search_type], params[:location])
                                                 
+    #Redirect back if invalid conditions                                            
     flash_redirect("notice", "Incorrect Details",session[:return_to]) unless @conditions
+    
+    #Get current location details
     @current_location = Search.set_current_location(params[:location],params[:current_loc])
-    @current_location_name = params[:location] unless params[:location] == "Location"
-    @current_location_name = params[:current_loc].slice!(/^[0-9a-zA-Z\s]+/).capitalize unless params[:current_loc] == "" or params[:current_loc] == nil
-    @search_results = Search.get_results(@conditions) 
+    @current_location_name = Search.get_location_name(params[:location],params[:current_loc])
+    
+    #search
+    @search_results = Search.get_results(@conditions)
+    
+    #Redirect back if not results found 
     flash_redirect("notice", "No results found.", session[:return_to]) if @search_results.empty? 
   end
 
