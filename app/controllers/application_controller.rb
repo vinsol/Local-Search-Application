@@ -50,6 +50,7 @@ class ApplicationController < ActionController::Base
     def flash_redirect(type,content,destination)
       flash[:"#{type}"] = content
       redirect_to destination
+     
     end
     
     def flash_render(type,content,action)

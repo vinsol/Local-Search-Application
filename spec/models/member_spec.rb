@@ -136,6 +136,17 @@ describe Member do
     
   end
   
+  #Test Generate random string
+  describe "generate random string" do
+    
+    it "should return a random string of specified length" do
+      @member = Member.create!(@valid_attributes)
+      @string = @member.generate_random_string(10)
+      @string.length.should == 10
+    end
+    
+  end
+  
   #Test Email Notifications
   describe "email notifications" do
     
@@ -212,6 +223,13 @@ describe Member do
   end
   
   #It should delete associated businesses during member deletion
-  
+  describe "member deletion" do
+    fixtures :members, :businesses, :business_relations
+    it "should delete owned and favorite businesses during member deletion" do
+      @member = Member.find(members(:members_001).id)
+      @member.destroy
+      puts @member.owned_businesses
+    end
+  end
   
 end

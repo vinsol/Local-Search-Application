@@ -11,6 +11,7 @@ class BusinessesController < ApplicationController
   
   def show
     @business = Business.find(params[:id])
+  
     @title = "Business Details - #{@business.name}"
     #Edit and Delete for owners and Add to Favorites for those who haven't added it yet.
  

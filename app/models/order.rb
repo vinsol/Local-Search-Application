@@ -37,7 +37,6 @@ class Order < ActiveRecord::Base
     unless credit_card.valid?
       credit_card.errors.full_messages.each do |message|
         errors.add_to_base message
-        p message
       end
     end
   end

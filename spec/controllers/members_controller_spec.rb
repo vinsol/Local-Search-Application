@@ -46,16 +46,6 @@ describe MembersController do
         get :show
       end
     
-      it "should find owned businesses" do
-        @member.should_receive(:owned_businesses).and_return(@owned_businesses)
-        get :show
-      end
-    
-      it "should find favorite businesses " do
-        @member.should_receive(:favorite_businesses).and_return(@favorite_businesses)
-        get :show
-      end
-    
       it "should set the correct title" do
         get :show
         assigns[:title].should == "Jigar Patel"
@@ -472,17 +462,12 @@ describe MembersController do
       describe "with invalid email" do
         before(:each) do
           @member = mock_model(Member)
-          Member.stub!(:find_by_email).with("invalid_email").and_return(false)
+          Member.stub!(:find_by_email).with("invalid_email").and_return(nil)
         end
 
         it "should not find a member with invalid email" do
-          Member.should_receive(:find_by_email).with("invalid_email").and_return(false)
+          Member.should_receive(:find_by_email).with("invalid_email").and_return(nil)
           post :forgot_password, :member => {:email => "invalid_email"}
-        end
-        
-        it "should set correct flash notice" do
-          post :forgot_password, :member => {:email => "invalid_email"}
-          flash[:notice].should == "Unable to send the password. Try again"
         end
         
         it "should render forgot passsword template" do

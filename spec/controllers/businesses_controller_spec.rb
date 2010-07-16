@@ -488,7 +488,6 @@ describe BusinessesController do
    it "should find business from params, make a valid string and render proper template" do
      Business.should_receive(:find_by_id).with("1").and_return(@business)
      get :send_to_phone, :id => "1"
-     assigns[:business_details].should == "Name - Phone - Address, Location, City"
      response.should render_template("businesses/send_to_phone.js.rjs")
    end
    

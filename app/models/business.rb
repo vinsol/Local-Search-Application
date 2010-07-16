@@ -31,7 +31,7 @@
 class Business < ActiveRecord::Base  
   
   #RELATIONS
-  has_many :business_relations
+  has_many :business_relations, :dependent => :destroy
   has_many :members, :through => :business_relations, :source => :member
   has_attached_file :photo, :styles => {:thumb => THUMB, :medium => MEDIUM }
   acts_as_mappable

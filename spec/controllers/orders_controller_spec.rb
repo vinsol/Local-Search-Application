@@ -47,7 +47,7 @@ describe OrdersController do
     describe "for successful order save" do
       before(:each) do
         @order = mock_model(Order, {:save! => true, :valid? => true })
-        Order.should_receive(:new).with("valid_data").and_return(@order)
+        Order.stub!(:new).and_return(@order)
         @order.should_receive(:business_id=)
         @order.should_receive(:ip_address=)
       end
@@ -56,7 +56,7 @@ describe OrdersController do
         @order.should_receive(:purchase).and_return(@response)
         @response.should_receive(:success?).and_return(true)
         post :create, {:order => "valid_data", :business_id => "1"}
-        flash[:message].should == "Transaction Successful. Your business will now appear in premium listings."
+        flash[:message].should == "Transaction Successful."
         response.should redirect_to(business_path("1"))
       end
      

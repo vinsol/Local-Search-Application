@@ -12,7 +12,7 @@
   		<p class="tags"></p> 
 	</div>
 	<div class="links"> 
-		<% if is_owner(@business) %>
+		<% if @member && is_owner(@business.id) %>
 			<p>	<%= link_to "Edit" , edit_member_business_path(@member.id,@business.id) %> |
 				<%= link_to "Delete", member_business_path(@member.id, @business.id), 
 											:method => :delete, 
@@ -27,7 +27,7 @@
 						:locals => {:business => @business} %>
 					
 			
-		<% elsif !is_favorite(@business) %>
+		<% elsif !is_favorite(@business.id) %>
 			<%= "<div id=Business_box_links_add_to_favorite_#{@business.id}>"%>
               	<%= render 	:partial => "send_to_phone", 
 							:locals => {:business => @business} %>

@@ -125,6 +125,6 @@ class Member < ActiveRecord::Base
   
   def delete_associated_businesses
     self.owned_businesses.each {|business| Business.destroy(business.id)}
-    self.business_relations.each {|business_relation| BusinessRelation.destroy(business_relation.id)}
+    self.business_relations.destroy_all
   end
 end
