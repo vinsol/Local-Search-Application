@@ -2,7 +2,7 @@ class Order < ActiveRecord::Base
   has_many :order_transactions
   attr_accessor :card_number, :card_verification
   
-  before_validation_on_create :valid_card
+  validate_on_create :valid_card
   validates_presence_of :address1, :city, :state, :country, :zip, :card_number, :card_type, :card_verification
   validates_format_of :zip, :with => /^\d{5}$/,
                             :message => " code must be a 5 digit number."
