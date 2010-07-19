@@ -31,8 +31,8 @@ class BusinessesController < ApplicationController
 
   def send_to_phone
     @business = Business.find_by_id(params[:id])
-    business_details = "#{@business.name} - #{@business.contact_phone}" +
-                        " - #{@business.contact_address}, #{@business.location}, #{@business.city}" 
+    business_details = @business.business_details
+    p business_details
     ##########################################################################################
     
     #SMS GATEWAY API
@@ -47,8 +47,7 @@ class BusinessesController < ApplicationController
   end
  
   def create
-    @business = Business.new(params[:business])
-    @business.owner = @member.full_name
+    @business = Business.new(params[:business].merge(:owner => @member.full_name))
     if @business.save and BusinessRelation.create(:member_id => @member.id,
                                                   :business_id => @business.id, 
                                                   :status => RELATION[:OWNED])

@@ -9,7 +9,7 @@
 			<%= link_to (result.name + ", " + result.location + ", " + result.city),
 			 			business_path(result.id)%>
 			
-			<% unless @current_location.lat == 0 && @current_location.lng == 0 %>
+			<% unless @current_location.lat == 0 and @current_location.lng == 0  %>
 				<div class="distance">
 					<% if result.distance.truncate == 0 %>
 						<%= (result.distance * 100).truncate %> m

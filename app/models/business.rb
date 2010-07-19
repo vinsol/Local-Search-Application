@@ -65,7 +65,7 @@ class Business < ActiveRecord::Base
       :unless => lambda{|a| a.contact_email.blank?}
       
   #ATTRIBUTES
-  attr_accessible :name, :location, :city, :owner, :contact_name, :contact_email, :photo, :sub_category_name, :is_premium
+  attr_accessible :name, :location, :city, :owner, :contact_name, :contact_email, :photo, :sub_category_name, :is_premium, :business_details
   attr_accessible :contact_phone, :contact_website, :contact_address, :description, :opening_time, :closing_time
   attr_accessor :distance
   cattr_reader :per_page
@@ -96,7 +96,9 @@ class Business < ActiveRecord::Base
     }
   end
  
-
+  def business_details
+    self.name + " - " + self.contact_phone + " - " + self.contact_address + ", " + self.location + ", " + self.city
+  end
   protected
   
   def validate_timings

@@ -17,7 +17,6 @@ class Location < ActiveRecord::Base
   
   validates_presence_of :location, :city_id
   
-
   
   private
     def geocode_location

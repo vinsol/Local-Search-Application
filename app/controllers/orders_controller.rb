@@ -13,9 +13,8 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.xml
   def create
-    @order = Order.new(params[:order])
-    @order.business_id = params[:business_id]
-    @order.ip_address = request.remote_ip
+    @order = Order.new(params[:order].merge(:business_id => params[:business_id], 
+                                            :ip_address => request.remote_ip))
     if @order.valid?
       if @order.save!
         begin
