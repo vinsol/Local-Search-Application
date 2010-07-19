@@ -33,6 +33,9 @@ class Business < ActiveRecord::Base
   #RELATIONS
   has_many :business_relations, :dependent => :destroy
   has_many :members, :through => :business_relations, :source => :member
+  has_many :orders
+
+  has_one :business_owner, :through => :business_relations, :source => :member, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
   has_attached_file :photo, :styles => {:thumb => THUMB, :medium => MEDIUM }
   acts_as_mappable
   #has_and_belongs_to_many :categories

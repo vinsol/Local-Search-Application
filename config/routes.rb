@@ -62,18 +62,16 @@ ActionController::Routing::Routes.draw do |map|
   map.get_names_and_categories "/get/names_and_categories", :controller => "autocomplete", :action => "names_and_categories"
 
   #RESOURCES
-  map.resources :members, :member => {:change_password => [:get], :update_password => [:post], :show_list => [:get], :show_my_businesses => [:get] }, :collection => {:forgot_password => [:get,:post], :get_locations => [:get] } do |members|
+  map.resources :members, :member => {:update_password => [:post], :show_list => [:get], :show_my_businesses => [:get] }, :collection => {:forgot_password => [:get,:post] } do |members|
                                   
     members.resources :businesses, :except => [:index, :show]
   end
   
-  map.resources :businesses,:only => [:index, :show], :member => {
-                        :add_favorite => [:get], :remove_favorite => [:delete], :show_on_map => [:get], 
-                        :locations => [:get],:business_names => [:get],:send_to_phone => [:post] } do |members|
+  map.resources :businesses,:only => [:index, :show], :member => { :add_favorite => [:get], :remove_favorite => [:delete], :send_to_phone => [:post] } do |members|
       members.resources :orders, :only => [:new,:create]
   end
                         
-  
+
   map.resources :search, :only => [:index], :collection => [:show_on_map]
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

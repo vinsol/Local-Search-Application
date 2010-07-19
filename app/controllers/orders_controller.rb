@@ -10,8 +10,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  # POST /orders
-  # POST /orders.xml
+ 
   def create
     @order = Order.new(params[:order])
     @order.business_id = params[:business_id]
@@ -24,9 +23,11 @@ class OrdersController < ApplicationController
           else
             flash_render("notice",@response.message,"new")
           end
-        rescue SocketError 
+        rescue SocketError => e
+          logger.warn e.message
           flash_render("notice","Unable to connect to payment gateway. Please try again.","new")
         rescue ActiveMerchant::ConnectionError
+          logger.warn e.message
           flash_render("notice","Connection timeout. Please try again","new")
         end
       else

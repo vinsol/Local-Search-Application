@@ -8,8 +8,11 @@ class AutocompleteController < ApplicationController
 
   def location
     @city = City.find_by_name(params[:city])
-    @locations = @city.locations.find_by_name(@search_query) unless @city == nil
-    @locations = Location.find_by_name(@search_query) if @city == nil
+    if @city == nil
+       @locations = Location.find_by_name(@search_query)
+    else
+      @locations = @city.locations.find_by_name(@search_query) 
+    end 
   end
 
   def sub_category
