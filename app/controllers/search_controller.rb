@@ -15,7 +15,7 @@ class SearchController < ApplicationController
     #search
     @search_results = Search.get_results(@conditions)
     
-    #Redirect back if not results found 
+    #Redirect back if no results found 
     flash_redirect("notice", "No results found.", session[:return_to]) if @search_results.empty? 
   end
 

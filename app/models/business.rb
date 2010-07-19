@@ -78,11 +78,54 @@ class Business < ActiveRecord::Base
       indexes sub_categories.sub_category, :as => :sub_category
       has is_premium
       set_property :enable_star => 1
-      set_property :min_infix_len => 3
-     
-      
+      set_property :min_infix_len => 3 
   end
   
+  #Class Methods
+  def self.find_businesses(city, location, name)
+    if city != 'City Name' && location != 'Location'
+      businesses = find_by_all(city, location, name) 
+    elsif city != 'City Name'
+      businesses = find_by_city_and_name(city, name) 
+    elsif location != "Location"
+      businesses = find_by_location_and_name(location, name)
+    else
+      businesses = find_by_name(name) 
+    end
+    return businesses
+  end
+  
+  def self.find_by_all(city, location, name)
+    return Business.find(:all, :conditions => [ 'name LIKE ? and city LIKE ? and location LIKE ?',
+                                                 "%#{name}%","%#{city}", "%#{location}" ])
+  end
+  
+  def self.find_by_city_and_name(city, name)
+    return Business.find(:all, :conditions => [ 'name LIKE ? and city LIKE ?',
+                                                 "%#{name}%","%#{city}"])
+  end
+  
+  def self.find_by_location_and_name(location, name)
+    return Business.find(:all, :conditions => [ 'name LIKE ? and location LIKE ?',
+                                                 "%#{name}%", "%#{location}" ])
+  end
+  
+  def self.find_by_name(name)
+    return Business.find(:all, :conditions => [ 'name LIKE ?',"%#{name}%"])
+  end
+  
+  #Instance Methods
+  def get_map
+    unless lat == nil or lng == nil
+      map = GoogleMap::Map.new
+      map.center = GoogleMap::Point.new(lat,lng)
+      map.zoom = 15
+      map.markers << GoogleMap::Marker.new(:map => map, :lat => lat, :lng => lng, :html => name)
+      return map
+    end
+  end
+   
+  #Virtual Attributes
   def sub_category_name
     self.sub_categories.collect { |sub_category| sub_category.sub_category + ","}
   end
@@ -99,22 +142,15 @@ class Business < ActiveRecord::Base
   def business_details
     self.name + " - " + self.contact_phone + " - " + self.contact_address + ", " + self.location + ", " + self.city
   end
+  
+  
   protected
   
   def validate_timings
      errors.add_to_base "Opening Time must be less than Closing Time" if self.opening_time > self.closing_time
   end
   
-  def self.get_map(lat,lng,name)
-    map = GoogleMap::Map.new
-    map.center = GoogleMap::Point.new(lat,lng)
-    map.zoom = 15
-    map.markers << GoogleMap::Marker.new(:map => map,
-                                         :lat => lat,
-                                         :lng => lng,
-                                         :html => name)
-    return map
-  end
+ 
     
   private
   

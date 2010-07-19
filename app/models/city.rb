@@ -12,4 +12,16 @@
 class City < ActiveRecord::Base
   validates_presence_of :city
   has_many :locations
+  
+  #Class methods
+  def self.find_by_name(name)
+    city = City.find(:first, :conditions => ['city LIKE ?', "%#{name}%"])
+    return city
+  end
+  
+  def self.find_cities_by_name(name)
+    cities = City.find(:all, :conditions => ['city LIKE ?', "%#{name}%"])
+    return cities 
+  end
+  
 end

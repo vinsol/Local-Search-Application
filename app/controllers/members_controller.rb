@@ -7,7 +7,6 @@ class MembersController < ApplicationController
     @cities = City.all
     @categories = Category.find(:all, :include => :sub_categories) 
   end
-
  
   def show
     @title = @member.full_name

@@ -1,36 +1,29 @@
 class BusinessesController < ApplicationController
-  
  skip_before_filter :authorize, :only => [:index, :search, :show, :locations, :business_names, :send_to_phone]
+ before_filter :find_business_by_id, :only => [:show, :edit, :send_to_phone, :update, :destroy,
+                                                :add_favorite, :remove_favorite ]
  
   def index
     @businesses = Business.paginate :page => params[:page], :order => 'name ASC'
     @title = "Listing Businesses"
   end
 
-  
-  
   def show
-    @business = Business.find(params[:id])
-  
     @title = "Business Details - #{@business.name}"
-    #Edit and Delete for owners and Add to Favorites for those who haven't added it yet.
- 
-    @map = Business.get_map(@business.lat, @business.lng, @business.name) unless @business.lat == nil && @business.lng ==nil
+    #Get business map
+    @map = @business.get_map 
   end
 
-  
   def new
     @title = "Add Business"
     @business = Business.new
   end
     
   def edit
-    @title = "Edit Business"
-    @business = Business.find(params[:id])
+    @title = "Edit Business"   
   end
 
   def send_to_phone
-    @business = Business.find_by_id(params[:id])
     business_details = @business.business_details
    
     ##########################################################################################
@@ -60,7 +53,6 @@ class BusinessesController < ApplicationController
   end
 
   def update
-    @business = Business.find(params[:id])
     #### Allow only if the user owns the business
     if is_owner(@business) 
       if @business.update_attributes(params[:business])
@@ -75,7 +67,6 @@ class BusinessesController < ApplicationController
 
  
   def destroy
-    @business = Business.find(params[:id])
     if is_owner(@business) 
       if @business.destroy
         flash_redirect("message","Business was successfully deleted",member_path(@member.id))
@@ -88,7 +79,6 @@ class BusinessesController < ApplicationController
   end
   
   def add_favorite
-    @business = Business.find_by_id(params[:id])
     #Adding same business twice in the list is not allowed
     if is_favorite(@business) 
       flash_redirect("notice", "Business already in your list", session[:return_to])
@@ -106,7 +96,6 @@ class BusinessesController < ApplicationController
   end
   
   def remove_favorite
-    @business = Business.find_by_id(params[:id])
     #Cannot remove business if it is not in favorite
     if !is_favorite(@business)
       flash_redirect("notice","Business not in your list",session[:return_to])
@@ -121,6 +110,10 @@ class BusinessesController < ApplicationController
     end
   end
 
-    
+  private 
+  
+    def find_business_by_id
+      @business = Business.find_by_id(params[:id])
+    end
     
 end

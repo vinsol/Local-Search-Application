@@ -30,6 +30,7 @@ class Member < ActiveRecord::Base
   has_many :owned_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
   has_many :favorite_businesses, :through => :business_relations, :source => :business, :conditions => ["business_relations.status = ?", RELATION[:FAVORITE]]
   
+  
   #VALIDATIONS
   validates_presence_of :email, :first_name, :last_name, :phone_number, :address
   validates_uniqueness_of :email
@@ -43,6 +44,7 @@ class Member < ActiveRecord::Base
                                     :if => Proc.new { |imports| !imports.photo_file_name.blank? }
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
                                             :if => Proc.new { |imports| !imports.photo_file_name.blank? }
+  
   #ATTRIBUTES
   attr_accessor :password_confirmation, :password_change, :remember_me
  
@@ -53,6 +55,7 @@ class Member < ActiveRecord::Base
   after_create :signup_notification 
   before_destroy :delete_associated_businesses
   
+  #Virtual Attributes
   def password
     @password
   end
@@ -61,17 +64,18 @@ class Member < ActiveRecord::Base
     @password = pass
     return if pass.blank?
     create_new_salt(15)
-    self.hashed_password = Member.encrypted_password(self.password, self.salt)
+    self.hashed_password = Member.encrypt_password(self.password, self.salt)
   end
 
   def full_name
     @full_name = self.first_name + " " + self.last_name
   end
   
+  #Class methods
   def self.authenticate(email,password,remember_me)
     member = Member.find_by_email(email)
     if member
-      expected_password = encrypted_password(password, member.salt)
+      expected_password = encrypt_password(password, member.salt)
       if expected_password != member.hashed_password
         member = nil
       end
@@ -81,9 +85,17 @@ class Member < ActiveRecord::Base
         member.save
       end
     end
-    member
+    return member
   end
   
+  #Instance Methods
+  def send_new_password
+    new_password = create_new_salt(7)
+    self.password = self.password_confirmation = new_password
+    self.save
+    Notifications.deliver_forgot_password(self.email, self.first_name, self.last_name, new_password)
+  end
+
   def generate_random_string(len)
       #generate a salt consisting of strings and digits
      chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
@@ -92,17 +104,12 @@ class Member < ActiveRecord::Base
      return random_string
   end
   
+  #Callbacks
+  
   def signup_notification
-    Notifications.deliver_send_notification_mail(self.first_name, self.last_name, self.email)
+     Notifications.deliver_send_notification_mail(self.first_name, self.last_name, self.email)
   end
-
-  def send_new_password
-    new_password = create_new_salt(7)
-    self.password = self.password_confirmation = new_password
-    self.save
-    Notifications.deliver_forgot_password(self.email, self.first_name, self.last_name, new_password)
-  end
-
+  
   private
 
   def create_new_salt(len)
@@ -112,9 +119,8 @@ class Member < ActiveRecord::Base
      1.upto(len) { |i| random_string << chars[rand(chars.size-1)] }
      self.salt = random_string
   end
-
   
-  def self.encrypted_password(password,salt)
+  def self.encrypt_password(password,salt)
     string_to_hash = password + "jagira" + salt
     Digest::SHA1.hexdigest(string_to_hash)
   end

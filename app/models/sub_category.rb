@@ -13,5 +13,9 @@ class SubCategory < ActiveRecord::Base
   validates_presence_of :sub_category
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :businesses
+
+ def self.find_by_name(name)
+   sub_categories = SubCategory.find(:all, :conditions => ['sub_category LIKE ?', "%#{name}%"])
+ end
  
 end
