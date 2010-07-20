@@ -1,4 +1,4 @@
-<%= "<div class=business_box id=#{@business.id} >"%>
+<div class="business_box id=<%= @business.id %>" >
 	<h2>
 		<%= link_to "#{@business.name}", business_path(@business.id)%>, <%= @business.location %>
 		<span style="float:right; font-size:13px"><% if @business.is_premium == 1 %>

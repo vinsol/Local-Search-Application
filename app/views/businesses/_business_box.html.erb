@@ -1,4 +1,4 @@
-<%="<div class=business_box id=#{@business.id} >"%>
+<div class=business_box id="<%=@business.id%>">
 	<h2>
 		<%= link_to "#{@business.name}", business_path(@business.id)%>, <%= @business.location %>
 		<span style="float:right; font-size:13px"><% if @business.is_premium == 1 %>
@@ -28,14 +28,14 @@
 					
 			
 		<% elsif !is_favorite(@business.id) %>
-			<%= "<div id=Business_box_links_add_to_favorite_#{@business.id}>"%>
+			<div id="Business_box_links_add_to_favorite_<%=@business.id %>">
               	<%= render 	:partial => "send_to_phone", 
 							:locals => {:business => @business} %>
 				<%= link_to_remote "Add to My List", 
 									{:url => add_favorite_business_path(@business.id),
 								 	 :method => :get} %>
 			</div>
-			<%= "<div id=Business_box_links_remove_favorite_#{@business.id} style='display:none'>"%>
+			<div id="Business_box_links_remove_favorite_<%=@business.id %>" style='display:none'>
               	<%= render 	:partial => "send_to_phone", 
 							:locals => {:business => @business} %>			
               	<%= link_to_remote "Remove from My List", 
@@ -43,14 +43,14 @@
 									 :method => :delete, :confirm => "Are you sure?"}%>
             </div>
 		<% else %>
-		  	<%= "<div id=Business_box_links_add_to_favorite_#{@business.id} style='display:none'>"%>
+		  	<div id="Business_box_links_add_to_favorite_<%=@business.id %>" style='display:none'>
            		<%= render 	:partial => "send_to_phone", 
 							:locals => {:business => @business} %>
 				<%= link_to_remote "Add to My List", 
 									{:url => add_favorite_business_path(@business.id),
 								 	:method => :get} %>
 			</div>
-			<%= "<div id=Business_box_links_remove_favorite_#{@business.id}>"%>
+			<div id="Business_box_links_remove_favorite_<%=@business.id %>">
             	<%= render 	:partial => "send_to_phone", 
 							:locals => {:business => @business} %>
 				<%= link_to_remote "Remove from My List", 
