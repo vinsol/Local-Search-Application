@@ -75,11 +75,7 @@ describe OrdersController do
         response.should render_template("orders/new.html.erb")
       end
       
-      it "should handle ActiveMerchant::ConnectionError" do
-        @order.should_receive(:purchase).and_raise(ActiveMerchant::ConnectionError)
-        post :create, {:order => "valid_data", :business_id => "1"}
-        response.should render_template("orders/new.html.erb")
-      end
+      
         
     end
     

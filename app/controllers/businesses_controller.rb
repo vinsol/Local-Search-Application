@@ -24,16 +24,7 @@ class BusinessesController < ApplicationController
   end
 
   def send_to_phone
-    business_details = @business.business_details
-   
-    ##########################################################################################
-    
-    #SMS GATEWAY API
-    url_details = URI.escape(business_details, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-    url = SMS_API + "#{url_details}&recipient=#{params[:number]}"
-    Net::HTTP.get_print URI.parse(url)
-    ############################################################################################
-    
+    @business.send_sms(params[:number])
     respond_to  do |format|
       format.js
     end

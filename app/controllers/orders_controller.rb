@@ -4,10 +4,6 @@ class OrdersController < ApplicationController
   
   def new
     @order = Order.new
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @order }
-    end
   end
 
  
@@ -41,12 +37,7 @@ class OrdersController < ApplicationController
   
    def check_if_owner
     @business = Business.find_by_id(params[:business_id])
-    unless @business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",  
-                                                                     @member.id,RELATION[:OWNED]])
-     
-      flash[:notice] = "Don't try to mess with me :-/"
-      redirect_to business_path(params[:business_id])
-    end
+    flash_redirect("notice",":-/",business_path(params[:business_id])) unless is_owner(@business)
    end
    
 end

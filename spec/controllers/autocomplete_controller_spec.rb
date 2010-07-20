@@ -16,17 +16,18 @@ describe AutocompleteController do
   
   describe "location" do
     it "should fetch all locations with given conditions if a city in not found" do
-      City.should_receive(:find).with(:first, {:conditions=>["city LIKE ?", "%test"]}).and_return(nil)
+      City.should_receive(:find).with(:first, {:conditions=>["city LIKE ?", "%test%"]}).and_return(nil)
       Location.should_receive(:find)
       get :location, {:search => "test", :city => "test"}
     end
     
     it "should fetch locations for a city if a city is found" do
       @city = mock_model(City, {:city => "test"})
-      City.should_receive(:find).with(:first, {:conditions=>["city LIKE ?", "%test"]}).and_return(@city)
+      City.should_receive(:find).with(:first, {:conditions=>["city LIKE ?", "%test%"]}).and_return(@city)
       @locations = mock_model(Location)
       @city.should_receive(:locations).and_return(@locations)
-      @locations.should_receive(:find).with(:all, {:conditions=>["location LIKE ?", "%test%"]})
+      @locations.should_receive(:find_by_name)
+     
       get :location, {:search => "test", :city => "test"}
     end
   end
@@ -50,7 +51,7 @@ describe AutocompleteController do
     end
     
     it "should find intersection of city and name when location is not mentioned" do
-      Business.should_receive(:find).with(:all, {:conditions=>["name LIKE ? and city LIKE ? ", "%test%", "%test"]}).and_return(@businesses)
+      Business.should_receive(:find).with(:all, {:conditions=>["name LIKE ? and city LIKE ?", "%test%", "%test"]}).and_return(@businesses)
       get :names_and_categories, {:search => "test", :city => "test", :location => "Location"}
     end
     

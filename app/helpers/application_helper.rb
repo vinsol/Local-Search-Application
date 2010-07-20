@@ -1,6 +1,14 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
+  def title
+    if @title 
+			title = @title + " | Local Product Search Engine"
+		else 
+			title = "Local Product Search Engine"
+		end 
+	end
+	
   def is_favorite(business_id)
     business = Business.find_by_id(business_id)
     if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",session[:member_id],RELATION[:FAVORITE]])

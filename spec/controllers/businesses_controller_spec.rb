@@ -37,6 +37,7 @@ describe BusinessesController do
       Member.stub!(:find_by_id).with(1).and_return(@member)
       @business = mock_model(Business, {:lat => 77.777777, :lng => 77.777777})
       @business.stub!(:name).and_return("name")
+      @business.stub!(:get_map).and_return(@map)
       Business.stub!(:find).and_return(@business)
       @business_relations = mock_model(BusinessRelation)
       @business.stub!(:business_relations).and_return(@business_relations)
@@ -53,11 +54,6 @@ describe BusinessesController do
     it "should find member from session" do
       Member.should_receive(:find_by_id).with(session[:member_id]).and_return(@member)
       get :show
-    end
-    
-    it "should find business from params" do
-      Business.should_receive(:find).with((@business.id).to_s).and_return(@business)
-      get :show, :id => @business.id
     end
     
     it "should set correct title" do
@@ -134,21 +130,15 @@ describe BusinessesController do
     end
     
     it "should set correct title" do
+      Business.should_receive(:find).with(:first,{:conditions=>
+                                                  {:id=>"valid_business_id"}}).and_return(@business)
       get :edit, :id => "valid_business_id"
       assigns[:title].should == "Edit Business"
     end
     
-    it "should find member from session" do
-      Member.should_receive(:find_by_id).with(session[:member_id]).and_return(@member)
-      get :edit, :id => "valid_business_id"
-    end
-    
-    it "should find business from params" do
-      Business.should_receive(:find).with("valid_business_id").and_return(@business)
-      get :edit, :id => "valid_business_id"
-    end
-    
     it "should render edit template" do
+      Business.should_receive(:find).with(:first, {:conditions=>
+                                                  {:id=>"valid_business_id"}}).and_return(@business)
       get :edit, :id => "valid_business_id"
       response.should render_template("businesses/edit.html.erb")
     end
@@ -163,10 +153,11 @@ describe BusinessesController do
         Member.stub!(:find_by_id).with(1).and_return(@member)
         @business = mock_model(Business, :save => true)
         @member.stub!(:full_name).and_return("Jigar Patel")
-        Business.stub!(:new).with("valid_attr").and_return(@business)
         Business.stub!(:new).and_return(@business)
         @business.stub!(:owner=).and_return("Jigar Patel")
-        @business_relation = mock_model(BusinessRelation, :create => true)
+        @business_relations = mock_model(BusinessRelation, :save => true)
+        @business.stub!(:business_relations).and_return(@business_relations)
+        
       end
       
       it "should not allow non logged in users" do
@@ -175,37 +166,36 @@ describe BusinessesController do
         response.should redirect_to(login_path)
       end
       
-      it "should find member from session" do
-        Member.should_receive(:find_by_id).with(session[:member_id]).and_return(@member)
-        post :create, :business => "valid_attr"
-      end
+    
       
       it "should create a instance of Business with valid attr" do
-        Business.should_receive(:new).with("valid_attr").and_return(@business)
-        post :create, :business => "valid_attr"
+        @business_relations.should_receive(:build).and_return(true)
+        Business.should_receive(:new).and_return(@business)
+        post :create
       end
       
       it "should set the business owner" do
+        @business_relations.should_receive(:build).and_return(true)
         @business.should_receive(:owner=).and_return("Jigar Patel")
         post :create, :business => "valid_atrr"
       end
       
       it "should save the business with valid attr" do
+        @business_relations.should_receive(:build).and_return(true)
         @business.should_receive(:save).and_return(true)
         post :create, :business => "valid_attr"
       end
       
-      it "should create a  business relation" do
-        BusinessRelation.should_receive(:create).and_return(true)
-        post :create, :business => "valid_attr"
-      end
+     
       
       it "should set correct flash message" do
+        @business_relations.should_receive(:build).and_return(true)
         post :create, :business => "valid_attr"
         flash[:message].should == "Business was successfully added"
       end
       
       it "should redirect to businesses path" do
+        @business_relations.should_receive(:build).and_return(true)
         post :create, :business => "valid_attr"
         response.should redirect_to(businesses_path)
       end
@@ -223,20 +213,20 @@ describe BusinessesController do
         Business.stub!(:new).and_return(@business)
         @business.stub!(:owner=).and_return("Jigar Patel")
         @business.stub!(:destroy).and_return(true)
-        
+        @business_relations = mock_model(BusinessRelation)
+        @business.stub!(:business_relations).and_return(@business_relations)        
       end
       
       it"should not save the business with invalid attr" do
+        @business_relations.should_receive(:build).and_return(false)
         @business.should_receive(:save).and_return(false)
         post :create, :business => "invalid_attr"
       end
       
-      it "should destroy the business" do
-        @business.should_receive(:destroy).and_return(true)
-        post :create, :business => "invalid_attr"
-      end
+     
       
       it "should render new business template" do
+        @business_relations.should_receive(:build).and_return(false)
         post :create, :business => "invalid_attr"
         response.should  render_template("businesses/new.html.erb")
       end
@@ -250,7 +240,7 @@ describe BusinessesController do
       @member = mock_model(Member, {:first_name => "Jigar", :last_name => "Patel"})
       Member.stub!(:find_by_id).with(1).and_return(@member)
       @business = mock_model(Business, :update_attributes => true)
-      Business.stub!(:find).with('valid_business_id').and_return(@business)
+      Business.stub!(:find_by_id).with('valid_business_id').and_return(@business)
     end
     
     describe "when member is owner" do
@@ -288,10 +278,11 @@ describe BusinessesController do
         @business_relations = mock_model(BusinessRelation)
         @business.stub!(:business_relations).and_return(@business_relations)
         @business_relations.stub!(:find).and_return(true)
-        
+        @business.should_receive(:business_relations).and_return(@business_relations)
       end
         
       it "should not update the business" do
+        
         @business.should_receive(:update_attributes).and_return(false)
         put :update, :id => "valid_business_id"
       end

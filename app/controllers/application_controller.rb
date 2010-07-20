@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   # Scrub sensitive parameters from your log
-   filter_parameter_logging :password
+   filter_parameter_logging :password, :salt, :hashed_password
   protected
     def authorize
       flash_redirect("message", "Please Login", login_path) unless is_logged_in
@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
     end
     
     def flash_redirect(type,content,destination)
-      flash[:"#{type}"] = content
+      flash["#{type}".to_sym] = content
       redirect_to destination
      
     end
@@ -60,13 +60,7 @@ class ApplicationController < ActionController::Base
     
     #Checks whether the person is owner or not.
     def is_owner(business)
-      if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",  
-                                                                  @member.id,RELATION[:OWNED]])
-                                                                 
-        return true
-      else
-        return false
-      end
+      @member.owned_businesses.include?(business)
     end
     
     #checks whether the person has added the business as favorite.
@@ -74,20 +68,16 @@ class ApplicationController < ActionController::Base
       @business_relation = business.business_relations.find(:first, 
                                                             :conditions => ["member_id = ? AND status = ?",
                                                                   @member.id,RELATION[:FAVORITE]])
-      if @business_relation
-        return true
-      else
-        return false
-      end
+      @business_relation ? true : false
     end
     
    
     
     def check_admin
-      if @member.is_admin == true
-        return true
+      if @member.is_admin
+        true
       else
-        redirect_to root_path
+        flash_redirect("notice","You are not expected here.", root_path)
       end
     end
     

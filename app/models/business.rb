@@ -46,7 +46,8 @@ class Business < ActiveRecord::Base
   #CALLBACKS
   before_validation_on_create :geocode_address, :unless => lambda{|a| a.contact_address.blank?}
   before_save :geocode_address, :unless => lambda{|a| a.contact_address.blank?}
-    
+  
+  #after_create :build_business_relation  
   
   #VALIDATIONS
   validates_attachment_size :photo, :less_than => 1.megabytes, 
@@ -70,7 +71,7 @@ class Business < ActiveRecord::Base
       :unless => lambda{|a| a.contact_email.blank?}
       
   #ATTRIBUTES
-  attr_accessible :name, :location, :city, :owner, :contact_name, :contact_email, :photo, :sub_category_name, :is_premium, :business_details
+  attr_accessible :name, :location, :city, :owner, :contact_name, :contact_email, :photo, :sub_category_name, :is_premium, :business_details, :title, :send_sms
   attr_accessible :contact_phone, :contact_website, :contact_address, :description, :opening_time, :closing_time
   attr_accessor :distance
   cattr_reader :per_page
@@ -144,11 +145,20 @@ class Business < ActiveRecord::Base
     }
   end
  
+  def title
+    self.name + ", " + self.location + ", " + self.city
+  end
+  
   def business_details
     self.name + " - " + self.contact_phone + " - " + self.contact_address + ", " + self.location + ", " + self.city
   end
   
-  
+  def send_sms(number)
+    url_details = URI.escape(business_details, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+    url = SMS_API + url_details + "&recipient=" + number
+    Net::HTTP.get_print URI.parse(url)
+  end
+    
   protected
   
   def validate_timings
@@ -157,6 +167,7 @@ class Business < ActiveRecord::Base
     
   private
   
+ 
   def geocode_address
     geo=Geokit::Geocoders::MultiGeocoder.geocode(contact_address + "," + self.location + "," + self.city)
     errors.add(:contact_address, "Could not Geocode address") if !geo.success

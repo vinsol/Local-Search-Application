@@ -320,29 +320,7 @@ describe MembersController do
     end
   end
   
-  describe "change password" do
-    
-    before(:each) do
-      Member.stub!(:find_by_id).with(1).and_return(mock_model(Member))
-      session[:member_id] = 1
-    end
-      
-    it "should not allow non logged in users" do
-      session[:member_id] = nil
-      xhr :get, :change_password
-      response.should redirect_to(login_path)
-    end
-      
-    it "should find member using session" do
-      Member.should_receive(:find_by_id).with(1).and_return(mock_model(Member))
-      xhr :get, :change_password
-    end
-    
-    it "should respond render change password rjs" do
-      xhr :get, :change_password
-      response.should render_template('members/change_password.js.rjs')
-    end
-  end
+  
   
   describe "update password with valid password" do
     before(:each) do
@@ -406,10 +384,6 @@ describe MembersController do
       flash.now[:notice].should == "Password not changed. Try again"
     end
     
-    it "should render change password template" do
-      xhr :post, :update_password, :member => "valid_attributes"
-      response.should render_template("members/change_password.js.rjs")
-    end
   end
   
   describe " GET forgot password" do

@@ -56,6 +56,9 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_cities "/admin/cities", :controller => "admin/cities", :action => :index
   map.admin_categories "/admin/categories", :controller => "admin/categories", :action => :index
   map.admin_subcategories "/admin/subcategories", :controller => "admin/sub_categories", :action => :index
+  map.admin_orders "/admin/orders", :controller => "admin/orders", :action => :index
+  map.admin_order_transactions "/admin/order_transactions", :controller => "admin/order_transactions", :action => :index
+  
   map.get_cities "/get_cities", :controller => "autocomplete", :action => "city"
   map.get_locations "/get_locations", :controller => "autocomplete", :action => "location"
   map.get_sub_categories "/get_sub_categories", :controller => "autocomplete", :action => "sub_category"
