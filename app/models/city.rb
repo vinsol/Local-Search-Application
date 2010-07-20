@@ -15,13 +15,11 @@ class City < ActiveRecord::Base
   
   #Class methods
   def self.find_by_name(name)
-    city = City.find(:first, :conditions => ['city LIKE ?', "%#{name}%"])
-    return city
+    City.find(:first, :conditions => ['city LIKE ?', "%#{name}%"])
   end
   
   def self.find_cities_by_name(name)
-    cities = City.find(:all, :conditions => ['city LIKE ?', "%#{name}%"])
-    return cities 
+    City.find(:all, :conditions => ['city LIKE ?', "%#{name}%"])
   end
   
 end

@@ -37,7 +37,9 @@ class Business < ActiveRecord::Base
 
   has_one :business_owner, :through => :business_relations, :source => :member, :conditions => ["business_relations.status = ?", RELATION[:OWNED]]
   has_attached_file :photo, :styles => {:thumb => THUMB, :medium => MEDIUM }
+  
   acts_as_mappable
+  
   #has_and_belongs_to_many :categories
   has_and_belongs_to_many :sub_categories
   
@@ -99,22 +101,22 @@ class Business < ActiveRecord::Base
   end
   
   def self.find_by_all(city, location, name)
-    return Business.find(:all, :conditions => [ 'name LIKE ? and city LIKE ? and location LIKE ?',
+    Business.find(:all, :conditions => [ 'name LIKE ? and city LIKE ? and location LIKE ?',
                                                  "%#{name}%","%#{city}", "%#{location}" ])
   end
   
   def self.find_by_city_and_name(city, name)
-    return Business.find(:all, :conditions => [ 'name LIKE ? and city LIKE ?',
+    Business.find(:all, :conditions => [ 'name LIKE ? and city LIKE ?',
                                                  "%#{name}%","%#{city}"])
   end
   
   def self.find_by_location_and_name(location, name)
-    return Business.find(:all, :conditions => [ 'name LIKE ? and location LIKE ?',
+    Business.find(:all, :conditions => [ 'name LIKE ? and location LIKE ?',
                                                  "%#{name}%", "%#{location}" ])
   end
   
   def self.find_by_name(name)
-    return Business.find(:all, :conditions => [ 'name LIKE ?',"%#{name}%"])
+    Business.find(:all, :conditions => [ 'name LIKE ?',"%#{name}%"])
   end
   
   #Instance Methods
@@ -138,7 +140,7 @@ class Business < ActiveRecord::Base
       @relation = SubCategory.find_by_sub_category(sub_category.strip)
       if self.sub_categories.find(:all, :conditions => ["sub_category_id = ?",@relation.id]).empty?
         self.sub_categories << @relation
-      end
+      end 
     }
   end
  
@@ -152,15 +154,13 @@ class Business < ActiveRecord::Base
   def validate_timings
      errors.add_to_base "Opening Time must be less than Closing Time" if self.opening_time > self.closing_time
   end
-  
- 
     
   private
   
   def geocode_address
     geo=Geokit::Geocoders::MultiGeocoder.geocode(contact_address + "," + self.location + "," + self.city)
     errors.add(:contact_address, "Could not Geocode address") if !geo.success
-    self.lat, self.lng = geo.lat,geo.lng if geo.success
+    self.lat, self.lng = geo.lat, geo.lng if geo.success
   end
   
 end

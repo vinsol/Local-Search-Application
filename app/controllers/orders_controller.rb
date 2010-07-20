@@ -42,10 +42,9 @@ class OrdersController < ApplicationController
   
    def check_if_owner
     @business = Business.find_by_id(params[:business_id])
-    if @business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",  
-                                                                  @member.id,RELATION[:OWNED]])
-      return true
-    else
+    unless @business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",  
+                                                                     @member.id,RELATION[:OWNED]])
+     
       flash[:notice] = "Don't try to mess with me :-/"
       redirect_to business_path(params[:business_id])
     end

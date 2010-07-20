@@ -19,14 +19,12 @@ class Location < ActiveRecord::Base
  
   #Class methods
   def self.find_by_name(name)
-    locations = Location.find(:all, :conditions => ['location LIKE ?', "%#{name}%"])
-    return locations
+    Location.find(:all, :conditions => ['location LIKE ?', "%#{name}%"])
   end
   
   #Instance methods
   def find_by_name(name)
-    locations = Self.find(:all, :conditions => ['location LIKE ?', "%#{name}%"])
-    return locations
+    Self.find(:all, :conditions => ['location LIKE ?', "%#{name}%"])
   end
   
   private

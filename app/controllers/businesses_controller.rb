@@ -93,7 +93,7 @@ class BusinessesController < ApplicationController
   
   def remove_favorite
     #Cannot remove business if it is not in favorite
-    if !is_favorite(@business)
+    unless is_favorite(@business)
       flash_redirect("notice","Business not in your list",session[:return_to])
     else
       if BusinessRelation.destroy(@business_relation.id)

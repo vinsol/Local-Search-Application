@@ -8,6 +8,7 @@ class AutocompleteController < ApplicationController
 
   def location
     @city = City.find_by_name(params[:city])
+    #If user has selected a city fetch locations for that city
     if @city == nil
        @locations = Location.find_by_name(@search_query)
     else
