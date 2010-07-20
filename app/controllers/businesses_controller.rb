@@ -42,13 +42,11 @@ class BusinessesController < ApplicationController
   def create
     @business = Business.new(params[:business])
     @business.owner = @member.full_name
-    if @business.save and BusinessRelation.create(:member_id => @member.id,
-                                                  :business_id => @business.id, 
-                                                  :status => RELATION[:OWNED])
+    @business.business_relations.build(:member_id => @member.id,:status => RELATION[:OWNED])
+    if @business.save
       flash_redirect("message","Business was successfully added",businesses_path)
     else
-      @business.destroy
-      render  :action => :new
+      flash_render("notice", "Unable to save business", "new")
     end
   end
 
@@ -83,9 +81,7 @@ class BusinessesController < ApplicationController
     if is_favorite(@business) 
       flash_redirect("notice", "Business already in your list", session[:return_to])
     else
-      if BusinessRelation.create( :member_id => @member.id, 
-                                  :business_id => @business.id, 
-                                  :status => RELATION[:FAVORITE])
+      if @business.business_relations.create(:member_id => @member.id, :status => RELATION[:FAVORITE])
         respond_to do |format|
           format.js 
         end
