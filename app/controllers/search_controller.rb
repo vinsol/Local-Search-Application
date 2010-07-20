@@ -6,7 +6,7 @@ class SearchController < ApplicationController
                                                 params[:search_type], params[:location])
                                                 
     #Redirect back if invalid conditions                                            
-    flash_redirect("notice", "Incorrect Details", session[:return_to]) unless @conditions
+    flash_redirect("notice", "Enter valid search parameters", session[:return_to]) if @conditions.empty?
     
     #Get current location details
     @current_location = Search.set_current_location(params[:location],params[:current_loc])

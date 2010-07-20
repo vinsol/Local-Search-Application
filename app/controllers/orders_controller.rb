@@ -13,8 +13,7 @@ class OrdersController < ApplicationController
  
   def create
     @order = Order.new(params[:order])
-    @order.business_id = params[:business_id]
-    @order.ip_address = request.remote_ip
+    @order.business_id, @order.ip_address = params[:business_id], request.remote_ip
     if @order.valid?
       if @order.save!
         begin

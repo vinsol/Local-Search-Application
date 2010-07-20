@@ -11,8 +11,7 @@ class Search < ActiveRecord::Base
       @conditions[:name] = names_and_categories if n_a_c_type == 'name' 
       @conditions[:sub_category] = names_and_categories if n_a_c_type == 'category'
     end
-    return false if @conditions.empty?
-    return @conditions 
+    @conditions 
   end
     
   def self.get_results(conditions)
@@ -21,7 +20,7 @@ class Search < ActiveRecord::Base
       conditions.delete(:location)
       results = search(conditions)
     end
-    return results
+    results
   end
     
   def self.search(conditions)
@@ -36,7 +35,7 @@ class Search < ActiveRecord::Base
       end
     end
     @results.sort! { |a,b| a.distance <=> b.distance }
-    return @results
+    @results
   end
   
  
@@ -45,13 +44,12 @@ class Search < ActiveRecord::Base
     @current_location = Location.find(:first, 
                                       :conditions => ['location = ?',location]) if @current_location == nil
     @current_location = Location.new if @current_location == nil
-    
-    return @current_location
+    @current_location
   end
   
   def self.get_location_name(location, current_loc)
     name = location unless location == "Location"
     name = current_loc.slice!(/^[0-9a-zA-Z\s]+/).capitalize unless current_loc == "" or current_loc == nil
-    return name
+    name
   end
 end

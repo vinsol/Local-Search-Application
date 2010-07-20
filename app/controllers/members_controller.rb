@@ -70,10 +70,14 @@ class MembersController < ApplicationController
     @title = "Forgot Password"
     if request.post? and params[:member][:email]
       @member = Member.find_by_email(params[:member][:email])
-      if @member and @member.send_new_password
-        flash_redirect("message","A new password has been sent by email.",login_path )
+      if @member
+        if @member.send_new_password
+          flash_redirect("message","A new password has been sent by email.",login_path )
+        else
+          flash_render("notice", "Unable to send the password. Try again","forgot_password")
+        end
       else
-        flash_render("notice", "Unable to send the password. Try again","forgot_password")
+        flash_render("notice", "Invalid email", "forgot_password")
       end
     end
   end

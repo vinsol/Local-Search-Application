@@ -16,7 +16,6 @@ class Notifications < ActionMailer::Base
     recipients email
     from 'jagira@gmail.com'
     sent_on sent_at
-    
     body :name => first_name + " " + last_name
     body :password => password
     content_type "text/html"

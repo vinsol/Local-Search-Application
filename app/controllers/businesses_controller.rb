@@ -107,7 +107,6 @@ class BusinessesController < ApplicationController
   end
 
   private 
-  
     def find_business_by_id
       @business = Business.find_by_id(params[:id])
     end
