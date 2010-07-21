@@ -8,7 +8,7 @@
 		<p><%= link_to "Add a new business", new_member_business_path(@member.id) %></p>
 		<% for @business in @owned_businesses do %>
 			<%= render 	:partial => "business_box", 
-						:locals => {:owned_business => true }%>
+						:locals => {:owned_business => true, :business => @business, :member => @member }%>
 		<% end %>
 	</div>
 	<p><%= will_paginate @owned_businesses %></p>

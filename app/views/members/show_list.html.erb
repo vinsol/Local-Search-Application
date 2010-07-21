@@ -9,7 +9,7 @@
 		</div>
 		<% for @business in @favorite_businesses do %>
 			<%= render 	:partial => "business_box", 
-						:locals => {:owned_business => false }%>
+						:locals => {:owned_business => false, :business => @business, :member => @member }%>
 		<% end %>
 		
 		<p><%= will_paginate @favorite_businesses %></p>

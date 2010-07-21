@@ -3,7 +3,7 @@
 <div id="show_business">
 	<%= render :partial => "ajax_response" %>
 	<%= render 	:partial => "business_box", 
-				:locals => {:show_business_page => false }%> 
+				:locals => {:show_business_page => false, :business => @business, :member => @member }%> 
 							
 	<% if @map != nil %>
 		<%= @map.to_html %>						

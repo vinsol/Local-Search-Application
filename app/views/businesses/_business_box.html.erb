@@ -1,60 +1,60 @@
-<div class=business_box id="<%=@business.id%>">
+<div class=business_box id="<%=business.id%>">
 	<h2>
-		<%= link_to "#{@business.name}", business_path(@business.id)%>, <%= @business.location %>
-		<span style="float:right; font-size:13px"><% if @business.is_premium == 1 %>
+		<%= link_to "#{business.name}", business_path(business.id)%>, <%= business.location %>
+		<span style="float:right; font-size:13px"><% if business.is_premium == 1 %>
 									*Premium Business*
 								  <% end %>
 		</span>   
 	</h2> 
 	<div class="resultInfo"> 
-  		<p class="phone"><%= @business.contact_phone %></p> 
-  		<p><%= @business.contact_address %>, <%= @business.location%>, <%= @business.city %></p> 
+  		<p class="phone"><%= business.contact_phone %></p> 
+  		<p><%= business.contact_address %>, <%= business.location%>, <%= business.city %></p> 
   		<p class="tags"></p> 
 	</div>
 	<div class="links"> 
-		<% if @member && is_owner(@business.id) %>
-			<p>	<%= link_to "Edit" , edit_member_business_path(@member.id,@business.id) %> |
-				<%= link_to "Delete", member_business_path(@member.id, @business.id), 
+		<% if member && is_owner(business.id) %>
+			<p>	<%= link_to "Edit" , edit_member_business_path(member.id,business.id) %> |
+				<%= link_to "Delete", member_business_path(member.id, business.id), 
 											:method => :delete, 
 											:confirm => "Are you sure?"%>
-				<% unless @business.is_premium == 1 %>
-					<%= link_to "Make Premium", new_business_order_path(@business.id)%>
+				<% unless business.is_premium == 1 %>
+					<%= link_to "Make Premium", new_business_order_path(business.id)%>
 				<% end %>
 			</p>
 		<% end %>
-    	<% if !@member %>
+    	<% if !member %>
 			<%= render 	:partial => "send_to_phone", 
-						:locals => {:business => @business} %>
+						:locals => {:business => business} %>
 					
 			
-		<% elsif !is_favorite(@business.id) %>
-			<div id="Business_box_links_add_to_favorite_<%=@business.id %>">
+		<% elsif !is_favorite(business.id) %>
+			<div id="Business_box_links_add_to_favorite_<%=business.id %>">
               	<%= render 	:partial => "send_to_phone", 
-							:locals => {:business => @business} %>
+							:locals => {:business => business} %>
 				<%= link_to_remote "Add to My List", 
-									{:url => add_favorite_business_path(@business.id),
+									{:url => add_favorite_business_path(business.id),
 								 	 :method => :get} %>
 			</div>
-			<div id="Business_box_links_remove_favorite_<%=@business.id %>" style='display:none'>
+			<div id="Business_box_links_remove_favorite_<%=business.id %>" style='display:none'>
               	<%= render 	:partial => "send_to_phone", 
-							:locals => {:business => @business} %>			
+							:locals => {:business => business} %>			
               	<%= link_to_remote "Remove from My List", 
-									{:url => remove_favorite_business_path(@business.id), 
+									{:url => remove_favorite_business_path(business.id), 
 									 :method => :delete, :confirm => "Are you sure?"}%>
             </div>
 		<% else %>
-		  	<div id="Business_box_links_add_to_favorite_<%=@business.id %>" style='display:none'>
+		  	<div id="Business_box_links_add_to_favorite_<%=business.id %>" style='display:none'>
            		<%= render 	:partial => "send_to_phone", 
-							:locals => {:business => @business} %>
+							:locals => {:business => business} %>
 				<%= link_to_remote "Add to My List", 
-									{:url => add_favorite_business_path(@business.id),
+									{:url => add_favorite_business_path(business.id),
 								 	:method => :get} %>
 			</div>
-			<div id="Business_box_links_remove_favorite_<%=@business.id %>">
+			<div id="Business_box_links_remove_favorite_<%=business.id %>">
             	<%= render 	:partial => "send_to_phone", 
-							:locals => {:business => @business} %>
+							:locals => {:business => business} %>
 				<%= link_to_remote "Remove from My List", 
-									{:url => remove_favorite_business_path(@business.id), 
+									{:url => remove_favorite_business_path(business.id), 
 									 :method => :delete, :confirm => "Are you sure?"}%>
            	</div>
 		<% end %>

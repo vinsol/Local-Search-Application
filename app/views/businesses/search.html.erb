@@ -2,7 +2,7 @@
 
 <% if @search_results != nil %>
 <p><%= @text %></p>
-	<%= render 	:partial => "business_search_results"%>
+	<%= render 	:partial => "business_search_results", :locals => {:search_results => @search_results} %>
 <% else %>
 	<p><%= @text %></p>
 <% end %>

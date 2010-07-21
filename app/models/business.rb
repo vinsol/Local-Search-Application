@@ -89,45 +89,23 @@ class Business < ActiveRecord::Base
   
   #Class Methods
   def self.find_businesses(city, location, name)
-    if city != 'City Name' && location != 'Location'
-      businesses = find_by_all(city, location, name) 
-    elsif city != 'City Name'
-      businesses = find_by_city_and_name(city, name) 
-    elsif location != "Location"
-      businesses = find_by_location_and_name(location, name)
-    else
-      businesses = find_by_name(name) 
-    end
+    city = '%' if city == 'City Name'
+    location = '%' if location == 'Location'
+    businesses = find_by_all(city, location, name) 
     return businesses
   end
   
   def self.find_by_all(city, location, name)
     Business.find(:all, :conditions => [ 'name LIKE ? and city LIKE ? and location LIKE ?',
-                                                 "%#{name}%","%#{city}", "%#{location}" ])
-  end
-  
-  def self.find_by_city_and_name(city, name)
-    Business.find(:all, :conditions => [ 'name LIKE ? and city LIKE ?',
-                                                 "%#{name}%","%#{city}"])
-  end
-  
-  def self.find_by_location_and_name(location, name)
-    Business.find(:all, :conditions => [ 'name LIKE ? and location LIKE ?',
-                                                 "%#{name}%", "%#{location}" ])
-  end
-  
-  def self.find_by_name(name)
-    Business.find(:all, :conditions => [ 'name LIKE ?',"%#{name}%"])
+                                                 "%#{name}%","%#{city}", "%#{location}%" ])
   end
   
   #Instance Methods
   def get_map
     unless lat == nil or lng == nil
-      map = GoogleMap::Map.new
-      map.center = GoogleMap::Point.new(lat,lng)
-      map.zoom = 15
-      map.markers << GoogleMap::Marker.new(:map => map, :lat => lat, :lng => lng, :html => name)
-      return map
+      map = GoogleMap::Map.new(:center => GoogleMap::Point.new(lat,lng), :zoom => 15)
+      map.markers = GoogleMap::Marker.new(:map => map, :lat => lat, :lng => lng, :html => name)
+      map
     end
   end
    

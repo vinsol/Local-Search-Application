@@ -7,6 +7,8 @@ describe MembersController do
      Member.stub!(:find_by_id).with("id").and_return(@member)
   end
   
+  
+  
   describe "Index" do
     before(:each) do
       @cities = [mock_model(City), mock_model(City)]
@@ -20,6 +22,7 @@ describe MembersController do
       get :index
       response.should_not redirect_to(login_path)
     end
+    
     
     it "should set correct title" do
       get :index
@@ -56,6 +59,63 @@ describe MembersController do
     
   end
   
+  describe "Show List" do
+    before(:each) do
+      session[:member_id] = "id"
+      is_logged_in
+      @favorite_businesses = [mock_model(Business), mock_model(Business)]
+      @member.stub!(:favorite_businesses).and_return(@favorite_businesses)
+    end
+    
+    it "should fetch favorite businesses" do
+      get :show_list
+      assigns[:favorite_businesses].should_not be_empty
+    end
+    
+    it "should set correct title" do
+      get :show_list
+      assigns[:title].should_not be_nil
+    end
+  end
+  
+  describe "Show My Businesses" do
+    before(:each) do
+      session[:member_id] = "id"
+      is_logged_in
+      @owned_businesses = [mock_model(Business), mock_model(Business)]
+      @member.stub!(:owned_businesses).and_return(@owned_businesses)
+    end
+    
+    it "should fetch owned businesses" do
+      get :show_my_businesses
+      assigns[:owned_businesses].should_not be_empty
+    end
+    
+    it "should set correct title" do
+      get :show_my_businesses
+      assigns[:title].should_not be_nil
+    end
+    
+  end
+  
+  describe "New" do
+    before(:each) do
+      @business = mock_model(Business)
+      Business.stub!(:new).and_return(@business)
+    end
+    
+    it "should set correct title" do
+      get :new
+      assigns[:title].should_not be_nil
+    end
+    
+    it "should create new instance of Member" do
+      get :new
+      assigns[:member].should_not be_nil
+    end
+    
+  end
+    
   describe "Edit" do
     before(:each) do
       is_logged_in

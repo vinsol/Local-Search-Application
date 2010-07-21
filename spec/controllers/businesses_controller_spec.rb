@@ -202,6 +202,36 @@ describe BusinessesController do
     end
   end
   
+  describe "Destroy" do
+    before(:each) do
+      session[:member_id] = "id"
+      is_logged_in
+      find_business_by_id
+      @businesses = [mock_model(Business), mock_model(Business)]
+      @member.stub!(:owned_businesses).and_return(@businesses)
+      @businesses.stub!(:include?).and_return(true)
+    end
+    
+    it "should not allow non owners" do
+      @businesses.stub!(:include?).and_return(false)
+      delete :destroy, :id => "id"
+      response.should redirect_to(member_path(@member.id))
+    end
+    
+    it "should set flash and redirect to member path on successful destroy" do
+      @business.stub!(:destroy).and_return(true)
+      delete :destroy, :id => "id"
+      flash[:message].should == "Business was successfully deleted"
+      response.should redirect_to(member_path(@member.id))
+    end
+    
+    it "should redirect to business path in case of failed destruction" do
+      @business.stub!(:destroy).and_return(false)
+      delete :destroy, :id => "id"
+      response.should redirect_to(business_path(@business.id))
+    end
+  end
+    
   describe "Add Favorite" do
     before(:each) do
       session[:return_to] = root_path

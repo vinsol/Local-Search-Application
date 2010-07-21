@@ -1,5 +1,5 @@
 <div class="form">
-	<% form_for @member, :html => { :multipart => true } do |f| %>
+	<% form_for member, :html => { :multipart => true } do |f| %>
   		<%= f.error_messages %>
   		<fieldset>
 	
@@ -36,8 +36,8 @@
 			</p>
 			<p>
 				<%= f.label :photo, "Photo" %>
-				<% if new_form == false and @member.photo != nil %>
-					<%= image_tag @member.photo.url(:thumb) %>
+				<% if new_form == false and member.photo != nil %>
+					<%= image_tag member.photo.url(:thumb) %>
 				<% end %>
 				<%= f.file_field :photo %>
 			</p>

@@ -6,7 +6,7 @@
 	<%= render :partial => "ajax_response" %>
 	<% @businesses.each do |@business| %>
 		<%= render 	:partial => "business_box", 
-					:locals => {:show_business_page => false}%>
+					:locals => {:show_business_page => false, :business => @business, :member => @member}%>
 	<% end %>
 </div>
 
