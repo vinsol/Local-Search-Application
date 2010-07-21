@@ -57,7 +57,7 @@ class MembersController < ApplicationController
          format.js
        end
     else
-      flash_render("notice","Password not changed. Try again","change_password" )
+      flash_render("notice","Password not changed. Try again","update_password" )
     end
   end
  
