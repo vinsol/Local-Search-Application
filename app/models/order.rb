@@ -14,6 +14,8 @@ class Order < ActiveRecord::Base
       @business = Business.find_by_id(business_id)
       @business.update_attribute(:is_premium, PREMIUM)
     end
+    p response
+    puts response
     return response
   end
   

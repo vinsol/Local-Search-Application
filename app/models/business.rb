@@ -138,9 +138,9 @@ class Business < ActiveRecord::Base
   
   def sub_category_name=(string)
     string.split(",").collect { |sub_category| 
-      @relation = SubCategory.find_by_sub_category(sub_category.strip)
-      if self.sub_categories.find(:all, :conditions => ["sub_category_id = ?",@relation.id]).empty?
-        self.sub_categories << @relation
+      @sub_cat = SubCategory.find_by_sub_category(sub_category.strip)
+      if self.sub_categories.find(:all, :conditions => ["sub_category_id = ?",@sub_cat.id]).empty?
+        self.sub_categories << @sub_cat
       end 
     }
   end

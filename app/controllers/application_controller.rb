@@ -57,6 +57,7 @@ class ApplicationController < ActionController::Base
     
     #Checks whether the person is owner or not.
     def is_owner(business)
+      p @member.owned_businesses
       @member.owned_businesses.include?(business)
     end
     

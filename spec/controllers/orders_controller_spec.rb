@@ -1,113 +1,97 @@
 require 'spec_helper'
 
 describe OrdersController do
-
   
-  describe "New Order" do
+  def check_if_owner
+    @business = mock_model(Business)
+    Business.stub!(:find_by_id).with("id").and_return(@business)
+    @businesses = [mock_model(Business), mock_model(Business)]
+    @member.stub!(:owned_businesses).and_return(@businesses)
+    @businesses.stub!(:include?).and_return(true)
+  end
+  
+  def is_logged_in
+     @member = mock_model(Member, {:full_name => "Name"})
+     Member.stub!(:find_by_id).with("id").and_return(@member)
+  end
+  
+  describe "new" do
     before(:each) do
-      session[:member_id] = "2"
-      @member = mock_model(Member)
-      Member.stub!(:find_by_id).with(1).and_return(@member)
-      @business = mock_model(Business)
-      Business.stub!(:find).with("valid_business_id").and_return(@business)
-      @business_relations = mock_model(BusinessRelation)
-      @business.stub!(:business_relations).and_return(@business_relations)
-      
-    end
-
-    it "should create a new instance of Order model for owners" do
-      @business_relations.stub!(:find).and_return(true)
       @order = mock_model(Order)
-      Order.should_receive(:new).and_return(@order)
-      Business.should_receive(:find).and_return(@business)
-      get :new
+      Order.stub!(:new).and_return(@order)
+      is_logged_in
+      check_if_owner
     end
     
-    it "should not allow non owners" do
-      @business_relations.stub!(:find).and_return(false)
-      Business.should_receive(:find).and_return(@business)
-      get :new, :business_id => "2"
-      response.should redirect_to(business_path("2"))
+    it "should allow owners only" do
+      @businesses.stub!(:include?).and_return(false)
+      session[:member_id] = "id"
+      get :new, :business_id => "id"
+      response.should redirect_to(business_path("id"))
     end
     
+    it "should create a new instance of Order" do
+      session[:member_id] = "id"
+      get :new, :business_id => "id"
+      assigns[:order].should_not be_nil
+    end
   end
   
-  describe "Create Order" do
+  describe "Create" do
     before(:each) do
-      session[:member_id] = "2"
-      @member = mock_model(Member)
-      Member.stub!(:find_by_id).with(1).and_return(@member)
-      @business = mock_model(Business)
-      Business.should_receive(:find).and_return(@business)
-      @business_relations = mock_model(BusinessRelation)
-      @business.stub!(:business_relations).and_return(@business_relations)
-      @business_relations.stub!(:find).and_return(true)     
+      session[:member_id] = "id"
+      is_logged_in
+      check_if_owner
+      @order = mock_model(Order)
+      Order.stub!(:new).and_return(@order)
+      @order.stub!(:business_id=)
+      @order.stub!(:ip_address=)
+      @order.stub!(:valid?).and_return(true)
+      @order.stub!(:save!).and_return(true)
     end
     
-    describe "for successful order save" do
-      before(:each) do
-        @order = mock_model(Order, {:save! => true, :valid? => true })
-        Order.stub!(:new).and_return(@order)
-        @order.should_receive(:business_id=)
-        @order.should_receive(:ip_address=)
-      end
-      
-      it "should create a new instance of Order from the params" do
-        @order.should_receive(:purchase).and_return(@response)
-        @response.should_receive(:success?).and_return(true)
-        post :create, {:order => "valid_data", :business_id => "1"}
-        flash[:message].should == "Transaction Successful."
-        response.should redirect_to(business_path("1"))
-      end
-     
-      it "should render new template in case of purchase failure" do
-        @order.should_receive(:purchase).and_return(@purchase)
-        @purchase.stub!(:message).and_return("Test Message")
-        @purchase.should_receive(:success?).and_return(false)
-        
-        post :create, {:order => "valid_data", :business_id => "1"}
-        response.should render_template("orders/new.html.erb")
-      end
-      
-      it "should handle socket error" do
-        @order.should_receive(:purchase).and_raise(SocketError)
-        post :create, {:order => "valid_data", :business_id => "1"}
-        response.should render_template("orders/new.html.erb")
-      end
-      
-      
-        
+    it "should not render new if order is invalid" do
+      @order.stub!(:valid?).and_return(false)
+      post :create
+      response.should render_template("orders/new")
     end
     
-    describe "For unsuccessful order save" do
-      before(:each) do
-        @order = mock_model(Order, {:save! => false, :valid? => true })
-        Order.should_receive(:new).with("valid_data").and_return(@order)
-        @order.should_receive(:business_id=)
-        @order.should_receive(:ip_address=)
-      end
-      
-      it "should render new action" do
-        post :create, {:order => "valid_data", :business_id => "1"}
-        response.should render_template("orders/new.html.erb")
-      end
-      
+    it "should render new in case of save failure" do
+      @order.stub!(:save!).and_return(false)
+      post :create
+      response.should render_template("orders/new")
     end
     
-    describe "For invalid data" do
-      before(:each) do
-         @order = mock_model(Order, {:save! => false, :valid? => false })
-          Order.should_receive(:new).with("valid_data").and_return(@order)
-          @order.should_receive(:business_id=)
-          @order.should_receive(:ip_address=)
-        end
-
-      it "should render new action" do
-        post :create, {:order => "valid_data", :business_id => "1"}
-        response.should render_template("orders/new.html.erb")
-      end
-
+    it "should redirect to business path in case of successful purchase" do
+      @purchase_response = "test"
+      @order.stub!(:purchase).and_return(@purchase_response)
+      @purchase_response.stub!(:success?).and_return(true)
+      post :create, :business_id => "id"
+      response.should redirect_to(business_path("id"))
     end
-        
+ 
+    it "should render new in case of purchase failure" do
+      @purchase_response = "test"
+      @order.stub!(:purchase).and_return(@purchase_response)
+      @purchase_response.stub!(:success?).and_return(false)
+      @purchase_response.stub!(:message)
+      post :create, :business_id => "id"
+      response.should render_template("orders/new")
+    end
+    
+    it "should handle SocketError" do
+      @order.stub!(:purchase).and_raise(SocketError)
+      post :create, :business_id => "id"
+      response.should render_template("orders/new.html.erb")
+    end
+    
+    it "should handle ActiveMerchant::ConnectionError" do
+      @order.stub!(:purchase).and_raise(ActiveMerchant::ConnectionError)
+      post :create, :business_id => "id"
+      response.should render_template("orders/new.html.erb")
+    end
+      
   end
+  
+  
 end

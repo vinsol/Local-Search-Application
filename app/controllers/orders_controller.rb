@@ -13,15 +13,16 @@ class OrdersController < ApplicationController
     if @order.valid?
       if @order.save!
         begin
-          if @order.purchase.success?
+          @purchase_response = @order.purchase
+          if @purchase_response.success?
             flash_redirect("message","Transaction Successful.",business_path(params[:business_id]))
           else
-            flash_render("notice",@response.message,"new")
+            flash_render("notice",@purchase_response.message,"new")
           end
         rescue SocketError => e
           logger.warn e.message
           flash_render("notice","Unable to connect to payment gateway. Please try again.","new")
-        rescue ActiveMerchant::ConnectionError
+        rescue ActiveMerchant::ConnectionError => e
           logger.warn e.message
           flash_render("notice","Connection timeout. Please try again","new")
         end

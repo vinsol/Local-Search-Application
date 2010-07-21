@@ -5,18 +5,20 @@ class SearchController < ApplicationController
     @conditions = Search.create_conditions_hash(params[:city], params[:names_and_categories], 
                                                 params[:search_type], params[:location])
                                                 
-    #Redirect back if invalid conditions                                            
-    flash_redirect("notice", "Enter valid search parameters", session[:return_to]) if @conditions.empty?
+    #Redirect back if invalid conditions 
+    if @conditions.empty?                                           
+      flash_redirect("notice", "Enter valid search parameters", session[:return_to])
+    else
+      #Get current location details
+      @current_location = Search.set_current_location(params[:location],params[:current_loc])
+      @current_location_name = Search.get_location_name(params[:location],params[:current_loc])
     
-    #Get current location details
-    @current_location = Search.set_current_location(params[:location],params[:current_loc])
-    @current_location_name = Search.get_location_name(params[:location],params[:current_loc])
+      #search
+      @search_results = Search.get_results(@conditions)
     
-    #search
-    @search_results = Search.get_results(@conditions)
-    
-    #Redirect back if no results found 
-    flash_redirect("notice", "No results found.", session[:return_to]) if @search_results.empty? 
+      #Redirect back if no results found 
+      flash_redirect("notice", "No results found.", session[:return_to]) if @search_results.empty? 
+    end
   end
 
   
