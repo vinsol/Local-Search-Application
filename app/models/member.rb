@@ -63,7 +63,7 @@ class Member < ActiveRecord::Base
   def password=(pass)
     @password = pass
     return if pass.blank?
-    create_new_salt(15)
+    self.salt = generate_random_string(15)
     self.hashed_password = Member.encrypt_password(self.password, self.salt)
   end
 
@@ -90,14 +90,13 @@ class Member < ActiveRecord::Base
   
   #Instance Methods
   def send_new_password
-    new_password = create_new_salt(7)
+    new_password = generate_random_string(7)
     self.password = self.password_confirmation = new_password
-    self.save
-    Notifications.deliver_forgot_password(self.email, self.first_name, self.last_name, new_password)
+    Notifications.deliver_forgot_password(self.email, self.first_name, self.last_name, new_password) if self.save
   end
 
   def generate_random_string(len)
-      #generate a salt consisting of strings and digits
+    #generate a salt consisting of strings and digits
      chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
      random_string = ""
      1.upto(len) { |i| random_string << chars[rand(chars.size-1)] }
@@ -111,14 +110,6 @@ class Member < ActiveRecord::Base
   end
   
   private
-
-  def create_new_salt(len)
-     #generate a salt consisting of strings and digits
-     chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-     random_string = ""
-     1.upto(len) { |i| random_string << chars[rand(chars.size-1)] }
-     self.salt = random_string
-  end
   
   def self.encrypt_password(password,salt)
     string_to_hash = password + "jagira" + salt

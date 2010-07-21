@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   
   # Scrub sensitive parameters from your log
    filter_parameter_logging :password, :salt, :hashed_password
+   
   protected
     def authorize
       flash_redirect("message", "Please Login", login_path) unless is_logged_in
@@ -41,16 +42,12 @@ class ApplicationController < ActionController::Base
     end
     
     def restrict_if_logged_in
-      if @member
-        @logged_in = true
-        flash_redirect("message","You are already logged in", session[:return_to])
-      end
+      @member ? (@logged_in=true, flash_redirect("message","You are already logged in", session[:return_to])) : false
     end
     
     def flash_redirect(type,content,destination)
       flash["#{type}".to_sym] = content
       redirect_to destination
-     
     end
     
     def flash_render(type,content,action)
@@ -74,11 +71,7 @@ class ApplicationController < ActionController::Base
    
     
     def check_admin
-      if @member.is_admin
-        true
-      else
-        flash_redirect("notice","You are not expected here.", root_path)
-      end
+      @member.is_admin ? true : flash_redirect("notice","You are not expected here.", root_path)
     end
     
     def store_return_path
