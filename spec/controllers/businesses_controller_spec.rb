@@ -1,487 +1,280 @@
 require 'spec_helper'
 
 describe BusinessesController do
-
-  describe "Index" do
-    before(:each) do
-      @businesses = mock_model(Business)
-      Business.stub!(:paginate).and_return(@businesses)
-      session[:member_id] = 1
-    end
-    
-    it "should not allow non logged in users" do
-      session[:member_id] = nil
-      get :index
-      response.should_not redirect_to(login_path)
-    end
-    
-    it "should find all businesses" do
-      Business.should_receive(:paginate).and_return(@businesses)
-      get :index
-    end
-    
-    it "should set correct title" do
-      get :index
-      assigns[:title].should == "Listing Businesses"
-    end
-    
-    it "should render index html template in case of html request" do
-      get :index
-      response.should render_template("businesses/index.html.erb")
-    end
+  
+  def is_logged_in
+    @member = mock_model(Member, {:full_name => "Name"})
+    Member.stub!(:find_by_id).with("id").and_return(@member)
   end
   
-  describe "show" do
+  def find_business_by_id
+    @business = mock_model(Business, {:name => "Name"})
+    Business.stub!(:find_by_id).with("id").and_return(@business)
+  end
+  
+  describe "Index" do
     before(:each) do
-      @member = mock_model(Member)
-      Member.stub!(:find_by_id).with(1).and_return(@member)
-      @business = mock_model(Business, {:lat => 77.777777, :lng => 77.777777})
-      @business.stub!(:name).and_return("name")
-      @business.stub!(:get_map).and_return(@map)
-      Business.stub!(:find).and_return(@business)
-      @business_relations = mock_model(BusinessRelation)
-      @business.stub!(:business_relations).and_return(@business_relations)
-      @business_relations.stub!(:find).and_return(true)
-      session[:member_id] = 1
+      @businesses = [mock_model(Business), mock_model(Business)]
+      Business.stub!(:paginate).and_return(@businesses)
     end
     
-    it "should not allow non logged in users" do
+    it "should allow non logged in users" do
       session[:member_id] = nil
-      get :show
+      get :index
       response.should_not redirect_to(login_path)
     end
     
-    it "should find member from session" do
-      Member.should_receive(:find_by_id).with(session[:member_id]).and_return(@member)
-      get :show
+    it "should set title" do
+      get :index
+      assigns[:title].should_not be_nil
     end
     
-    it "should set correct title" do
-      get :show, :id => @business.id
-      assigns[:title].should == "Business Details - name"
+    it "should find the businesses" do
+      get :index
+      assigns[:businesses].should_not be_empty
+    end
+  end
+
+  describe "Show" do
+    before(:each) do
+      find_business_by_id
+      @map = mock_model(GoogleMap::Map)
+      @business.stub!(:get_map).and_return(@map)
     end
     
-    it "should render show template" do
-      get :show, :id => @business.id
-      response.should render_template("businesses/show.html.erb")
+    it "should allow non logged in users" do
+      session[:member_id] = nil
+      get :show, :id => "id"
+      response.should_not redirect_to(login_path)
+    end
+    
+    it "should set title" do
+      get :show, :id => "id"
+      assigns[:title].should_not be_nil
+    end
+    
+    it "should fetch the map" do
+      get :show, :id => "id"
+      assigns[:map].should_not be_nil
     end
   end
   
   describe "new" do
     before(:each) do
-      @cities = mock_model(City)
-      City.stub!(:find).and_return(@cities)
-      @member = mock_model(Member)
-      Member.stub!(:find_by_id).with(1).and_return(@member)
+      is_logged_in
       @business = mock_model(Business)
       Business.stub!(:new).and_return(@business)
-      session[:member_id] = 1
-    end
-    
-    it "should not allow non logged in members" do
-      session[:member_id] = nil
-      get :new
-      response.should redirect_to(login_path)
-    end
-    
-    it "should find member using session" do
-      Member.should_receive(:find_by_id).with(session[:member_id]).and_return(@member)
-      get :new
-    end
-    
-    it "should set correct title" do
-      get :new
-      assigns[:title].should == "Add Business"
-    end
-    
-   
-    it "should create a new instance of business class" do
-      Business.should_receive(:new).and_return(@business)
-      get :new
-    end
-    
-    it "should render new business template" do
-      get :new
-      response.should render_template('businesses/new.html.erb')
-    end
-    
-  end
-  
-  
-    
-  
-  
-  describe "edit" do
-    before(:each) do
-      @member = mock_model(Member)
-      Member.stub!(:find_by_id).with("1").and_return(@member)
-      @business = mock_model(Business)
-      Business.stub!(:find).with('valid_business_id').and_return(@business)
-      @business_relations = mock_model(BusinessRelation)
-      @business.stub!(:business_relations).and_return(@business_relations)
-      @business_relations.stub!(:find).and_return(true)
-      session[:member_id] = "1"
     end
     
     it "should not allow non logged in users" do
       session[:member_id] = nil
-      get :edit
+      get :new
       response.should redirect_to(login_path)
     end
     
-    it "should set correct title" do
-      Business.should_receive(:find).with(:first,{:conditions=>
-                                                  {:id=>"valid_business_id"}}).and_return(@business)
-      get :edit, :id => "valid_business_id"
-      assigns[:title].should == "Edit Business"
+    it "should set the title" do
+      session[:member_id] = "id"
+      get :new
+      assigns[:title].should_not be_nil
     end
     
-    it "should render edit template" do
-      Business.should_receive(:find).with(:first, {:conditions=>
-                                                  {:id=>"valid_business_id"}}).and_return(@business)
-      get :edit, :id => "valid_business_id"
+    it "should create a new instance of Business" do
+      session[:member_id] = "id"
+      get :new
+      assigns[:business].should_not be_nil
+    end
+  end
+  
+  describe "Edit" do
+    before(:each) do
+      is_logged_in
+      find_business_by_id
+    end
+    
+    it "should not allow non logged in users" do
+      session[:member_id] = nil
+      get :edit, :id => "id"
+      response.should redirect_to(login_path)
+    end
+    
+    it "should set the title" do
+      session[:member_id] = "id"
+      get :edit, :id => "id"
+      assigns[:title].should_not be_nil
+    end
+    
+    it "should find business from id" do
+      session[:member_id] = "id"
+      get :edit, :id => "id"
+      assigns[:business].should_not be_nil
+    end
+  end
+  
+  describe "Send to phone" do
+    before(:each) do
+      #is_logged_in
+      find_business_by_id
+      @business.stub!(:send_sms)
+    end
+    
+    it "should allow non logged in users" do
+      session[:member_id] = nil
+      get :send_to_phone, :id => "id"
+      response.should_not redirect_to(login_path)
+    end
+    
+    it "should render correct template" do
+      get :send_to_phone, :id => "id"
+      response.should render_template("businesses/send_to_phone.js.rjs")
+    end
+  end
+  
+  describe "Create" do
+    before(:each) do
+      is_logged_in
+      @business = mock_model(Business, {:save => true})
+      Business.stub!(:new).and_return(@business)
+      @business_relation = mock_model(BusinessRelation, {:build => true})
+      @business.stub!(:business_relations).and_return(@business_relation)
+      @business.stub!(:owner=)
+    end
+    
+    it "should not allow non logged in users" do
+      session[:member_id] = nil
+      post :create
+      response.should redirect_to(login_path)
+    end
+    
+    it "should set correct flash message on save" do
+      session[:member_id] = "id"
+      post :create
+      flash[:message].should == "Business was successfully added"
+    end
+    
+    it "should redirect to businesses_path in case of successful save" do
+      session[:member_id] = "id"
+      post :create
+      response.should redirect_to(businesses_path)
+    end
+    
+    it "should render new form on unsuccessful save" do
+      @business.stub!(:save).and_return(false)
+      session[:member_id] = "id"
+      post :create
+      response.should render_template("businesses/new.html.erb")
+    end 
+  end
+
+  describe "Update" do
+    before(:each) do
+      session[:member_id] = "id"
+      is_logged_in
+      find_business_by_id
+      @businesses = [mock_model(Business), mock_model(Business)]
+      @member.stub!(:owned_businesses).and_return(@businesses)
+      @businesses.stub!(:include?).and_return(true)
+    end
+    
+    it "should not allow non logged in users" do
+      session[:member_id] = nil
+      put :update, :id => "id"
+      response.should redirect_to(login_path)
+    end
+    
+    it "should not allow non owners" do
+      @businesses.stub!(:include?).and_return(false)
+      put :update, :id => "id" 
+      flash[:notice] == "Nice try"
+      response.should redirect_to(member_path(@member.id))
+    end
+    
+    it "should render edit action on update failure" do
+      @business.stub!(:update_attributes).and_return(false)
+      put :update, :id => "id" 
       response.should render_template("businesses/edit.html.erb")
     end
-  end
-  
-  describe "create" do
-    describe "with valid attributes" do
-      
-      before(:each) do
-        session[:member_id] = 1
-        @member = mock_model(Member, {:first_name => "Jigar", :last_name => "Patel"})
-        Member.stub!(:find_by_id).with(1).and_return(@member)
-        @business = mock_model(Business, :save => true)
-        @member.stub!(:full_name).and_return("Jigar Patel")
-        Business.stub!(:new).and_return(@business)
-        @business.stub!(:owner=).and_return("Jigar Patel")
-        @business_relations = mock_model(BusinessRelation, :save => true)
-        @business.stub!(:business_relations).and_return(@business_relations)
-        
-      end
-      
-      it "should not allow non logged in users" do
-        session[:member_id] = nil
-        post :create
-        response.should redirect_to(login_path)
-      end
-      
     
-      
-      it "should create a instance of Business with valid attr" do
-        @business_relations.should_receive(:build).and_return(true)
-        Business.should_receive(:new).and_return(@business)
-        post :create
-      end
-      
-      it "should set the business owner" do
-        @business_relations.should_receive(:build).and_return(true)
-        @business.should_receive(:owner=).and_return("Jigar Patel")
-        post :create, :business => "valid_atrr"
-      end
-      
-      it "should save the business with valid attr" do
-        @business_relations.should_receive(:build).and_return(true)
-        @business.should_receive(:save).and_return(true)
-        post :create, :business => "valid_attr"
-      end
-      
-     
-      
-      it "should set correct flash message" do
-        @business_relations.should_receive(:build).and_return(true)
-        post :create, :business => "valid_attr"
-        flash[:message].should == "Business was successfully added"
-      end
-      
-      it "should redirect to businesses path" do
-        @business_relations.should_receive(:build).and_return(true)
-        post :create, :business => "valid_attr"
-        response.should redirect_to(businesses_path)
-      end
-    end
-    
-    describe "with invalid attributes" do
-      
-     before(:each) do
-        session[:member_id] = 1
-        @member = mock_model(Member, {:first_name => "Jigar", :last_name => "Patel"})
-        Member.stub!(:find_by_id).with(1).and_return(@member)
-        @member.stub!(:full_name).and_return("Jigar Patel")
-        @business = mock_model(Business, :save => false)
-        Business.stub!(:new).with("invalid_attr").and_return(@business)
-        Business.stub!(:new).and_return(@business)
-        @business.stub!(:owner=).and_return("Jigar Patel")
-        @business.stub!(:destroy).and_return(true)
-        @business_relations = mock_model(BusinessRelation)
-        @business.stub!(:business_relations).and_return(@business_relations)        
-      end
-      
-      it"should not save the business with invalid attr" do
-        @business_relations.should_receive(:build).and_return(false)
-        @business.should_receive(:save).and_return(false)
-        post :create, :business => "invalid_attr"
-      end
-      
-     
-      
-      it "should render new business template" do
-        @business_relations.should_receive(:build).and_return(false)
-        post :create, :business => "invalid_attr"
-        response.should  render_template("businesses/new.html.erb")
-      end
+    it "should set flash message on successful update" do
+      @business.stub!(:update_attributes).and_return(true)
+      put :update, :id => "id"
+      flash[:message].should == "Business was successfully added"
+      response.should redirect_to(business_path("id"))
     end
   end
   
-  describe "update" do
-    
+  describe "Add Favorite" do
     before(:each) do
-      session[:member_id] = 1
-      @member = mock_model(Member, {:first_name => "Jigar", :last_name => "Patel"})
-      Member.stub!(:find_by_id).with(1).and_return(@member)
-      @business = mock_model(Business, :update_attributes => true)
-      Business.stub!(:find_by_id).with('valid_business_id').and_return(@business)
+      session[:return_to] = root_path
+      session[:member_id] = "id"
+      is_logged_in
+      find_business_by_id
+      @business_relations = mock_model(BusinessRelation)
+      @business.stub!(:business_relations).and_return(@business_relations)
     end
     
-    describe "when member is owner" do
-      before(:each) do
-        @business_relations = mock_model(BusinessRelation)
-        @business.stub!(:business_relations).and_return(@business_relations)
-        @business_relations.stub!(:find).and_return(true)
-      end
-        
-      it "should find member from session" do
-        Member.should_receive(:find_by_id).with(session[:member_id]).and_return(@member)
-        put :update, :id => "valid_business_id"
-      end
-    
-      it "should update business with valid attributes" do
-        @business.should_receive(:update_attributes).and_return(true)
-        put :update, :id => "valid_business_id"
-      end
-      
-      it "should set the correct flash message" do
-        put :update, :id => "valid_business_id"
-        flash[:message].should == "Business was successfully added"
-      end
-    
-      it "should redirect to business path" do
-        put :update, :id => "valid_business_id"
-        response.should redirect_to(business_path("valid_business_id"))
-      end
-    end
-      
-    describe "with invalid attributes" do
-      before(:each) do
-        @business = mock_model(Business, :update_attributes => false)
-        Business.stub!(:find).with('valid_business_id').and_return(@business)
-        @business_relations = mock_model(BusinessRelation)
-        @business.stub!(:business_relations).and_return(@business_relations)
-        @business_relations.stub!(:find).and_return(true)
-        @business.should_receive(:business_relations).and_return(@business_relations)
-      end
-        
-      it "should not update the business" do
-        
-        @business.should_receive(:update_attributes).and_return(false)
-        put :update, :id => "valid_business_id"
-      end
-        
-      it "should render edit template" do
-        put :update, :id => "valid_business_id"
-        response.should render_template("businesses/edit.html.erb")
-      end
+    it "should not allow non logged in users" do
+      session[:member_id] = nil
+      get :add_favorite, :id => "id"
+      response.should redirect_to(login_path)
     end
     
-    describe "when member is not owner" do
-      before(:each) do
-        @business = mock_model(Business)
-        Business.stub!(:find).with('valid_business_id').and_return(@business)
-        @business_relations = mock_model(BusinessRelation)
-        @business.stub!(:business_relations).and_return(@business_relations)
-        @business_relations.stub!(:find).and_return(false)
-      end
-      
-      it "should redirect to member profile" do
-        put :update, :id => "valid_business_id"
-        response.should redirect_to(member_path(@member.id))
-      end
-    end  
+    it "should not allow adding same business twice" do
+      @business_relations.stub!(:find).and_return(true)
+      get :add_favorite, :id => "id"
+      response.should redirect_to(root_path)
+    end
+    
+    it "should render correct template on successful create" do
+      @business_relations.stub!(:find).and_return(false)
+      @business_relations.stub!(:create).and_return(true)
+      get :add_favorite, :id => "id"
+      response.should render_template("businesses/add_favorite.js.rjs")
+    end
+    
+    it "should set correct flash notice on failed create" do
+      @business_relations.stub!(:find).and_return(false)
+      @business_relations.stub!(:create).and_return(false)
+      get :add_favorite, :id => "id"
+      flash[:notice].should == "Unable to add business to your list. Try again."
+      response.should redirect_to(root_path)
+    end
   end
   
-  describe "destroy" do
+  describe "Remove Favorite" do
     before(:each) do
-      session[:member_id] = 1
-      @member = mock_model(Member, {:first_name => "Jigar", :last_name => "Patel"})
-      Member.stub!(:find_by_id).with(1).and_return(@member)
-      @business = mock_model(Business)
-      Business.stub!(:find).with("valid_business_id").and_return(@business)
+      session[:return_to] = root_path
+      session[:member_id] = "id"
+      is_logged_in
+      find_business_by_id
+      @business_relations = mock_model(BusinessRelation)
+      @business.stub!(:business_relations).and_return(@business_relations)
     end
     
-    describe "when member is owner" do
-      before(:each) do
-        @business_relations = mock_model(BusinessRelation)
-        @business.stub!(:business_relations).and_return(@business_relations)
-        @business_relations.stub!(:find).and_return(true)
-      end
-      
-      describe "and business is destroyed" do
-        before(:each) do
-          @business.stub!(:destroy).and_return(true)
-        end
-        
-        it "should find business from params" do
-          Business.should_receive(:find).with("valid_business_id").and_return(@business)
-          post :destroy, { :method => :delete, :id => "valid_business_id"}
-        end
-        
-        it "should set correct flash message" do
-          post :destroy, { :method => :delete, :id => "valid_business_id"}
-          flash[:message].should == "Business was successfully deleted"
-        end
-        
-        it "should redirect to member profile" do
-          post :destroy, { :method => :delete, :id => "valid_business_id"}
-          response.should redirect_to(member_path(@member.id))
-        end
-      end
-      
-      describe "and business is not destroyed" do
-        before(:each) do
-          @business.stub!(:destroy).and_return(false)
-        end
-        
-        it "should redirect to business show page" do
-          post :destroy, { :method => :delete, :id => "valid_business_id"}
-          response.should redirect_to(business_path(@business.id))
-        end
-      end
+    it "should not allow non logged in users" do
+      session[:member_id] = nil
+      get :remove_favorite, :id => "id"
+      response.should redirect_to(login_path)
     end
     
-    describe "member is not owner" do
-      before(:each) do
-        @business_relations = mock_model(BusinessRelation)
-        @business.stub!(:business_relations).and_return(@business_relations)
-        @business_relations.stub!(:find).and_return(false)
-      end
-      
-      it "should set correct flash notice" do
-        post :destroy, { :method => :delete, :id => "valid_business_id"}
-        flash[:notice].should == "You can delete your own business"
-      end
-      
-      it "should redirect to member profile" do
-        post :destroy, { :method => :delete, :id => "valid_business_id"}
-        response.should redirect_to(member_path(@member.id))
-      end
+    it "should allow removing favorites only" do
+      @business_relations.stub!(:find).and_return(false)
+      get :remove_favorite, :id => "id"
+      response.should redirect_to(root_path)
+    end
+    
+    it "should render correct template on destroy" do
+      BusinessRelation.stub!(:destroy).and_return(true)
+      @business_relations.stub!(:find).and_return(true)
+      get :remove_favorite, :id => "id"
+      response.should render_template("businesses/remove_favorite.js.rjs")
+    end
+    
+    it "should set correct flash notice on failed create" do
+      @business_relations.stub!(:find).and_return(true)
+      BusinessRelation.stub!(:destroy).and_return(false)
+      get :remove_favorite, :id => "id"
+      flash[:notice].should == "Unable to remove from list. Please try again."
+      response.should redirect_to(root_path)
     end
   end
-  
-  describe "add favorite" do
-    before(:each) do
-      session[:member_id] = 1
-      @member = mock_model(Member, {:first_name => "Jigar", :last_name => "Patel"})
-      Member.stub!(:find_by_id).with(1).and_return(@member)
-      @business = mock_model(Business)
-      Business.stub!(:find_by_id).with("valid_business_id").and_return(@business)
-    end
-    
-    describe "when business is already in favorite list" do
-      before(:each) do
-        session[:return_to] = root_path
-        @business_relations = mock_model(BusinessRelation)
-        @business.stub!(:business_relations).and_return(@business_relations)
-        @business_relations.stub!(:find).and_return(true)
-      end
-      
-      it "should find business from params" do
-        Business.should_receive(:find_by_id).with("valid_business_id").and_return(@business)
-        get :add_favorite, :id => "valid_business_id"
-      end
-      
-      it "should set the correct flash notice" do
-        get :add_favorite, :id => "valid_business_id"
-        flash[:notice].should == "Business already in your list"
-      end
-      
-      it "should redirect to back" do
-        get :add_favorite, :id => "valid_business_id"
-        response.should redirect_to(session[:return_to])
-      end
-    end
-    
-    describe "when business is not in the favorite list" do
-      before(:each) do
-        session[:return_to] = root_path
-        @business_relations = mock_model(BusinessRelation)
-        @business.stub!(:business_relations).and_return(@business_relations)
-        @business_relations.stub!(:find).and_return(false)
-      end
-      
-      it "should render add favorite rjs when business is added" do
-        BusinessRelation.stub!(:create).and_return(true)
-        get :add_favorite, :id => "valid_business_id"
-        response.should render_template("businesses/add_favorite.js.rjs")
-      end
-      
-      it "should set flash notice when business is not added" do
-        BusinessRelation.stub!(:create).and_return(false)
-        get :add_favorite, :id => "valid_business_id"
-        flash[:notice].should == "Unable to add business to your list. Try again."
-      end
-    end
-  end
-  
- describe "Remove Favorite" do
-   before(:each) do
-     session[:member_id] = "2"
-     session[:return_to] = root_path
-     Business.stub!(:find_by_id).with("1").and_return(@business)
-     @business_relation = mock(BusinessRelation)
-     @business.stub!(:business_relations).and_return(@business_relation)
-     @business_relation.stub!(:find).and_return(true)
-     BusinessRelation.stub!(:destroy).and_return(true)
-   end
-   
-   it "should find business from params id" do
-     Business.should_receive(:find_by_id).with("1").and_return(@business)
-     delete :remove_favorite, :id => 1
-   end
-   
-   it "should redirect the user back if the business is not in favorite" do
-     @business_relation.should_receive(:find).and_return(false)
-     delete :remove_favorite, :id => 1
-     flash[:notice].should == "Business not in your list"
-     response.should redirect_to(root_path)
-   end
-   
-   it "should render remove favorite template in case of successful destruction" do
-     delete :remove_favorite, :id =>1 
-     response.should render_template('businesses/remove_favorite.js.rjs')
-   end
-   
-   it "should set correct notice and redirect the user back in case of unsuccessful deletion" do
-     BusinessRelation.stub!(:destroy).and_return(false)
-     delete :remove_favorite, :id => 1
-     flash[:notice].should == "Unable to remove from list. Please try again."
-     response.should redirect_to(root_path)
-   end
- end
- 
- describe "send to phone" do
-   before(:each) do
-     @business = mock_model(Business, {:id => "1", :name => "Name", :contact_phone => "Phone",
-                                        :contact_address => "Address", :location => "Location",
-                                        :city => "City"})
-     Business.stub!(:find_by_id).with("1").and_return(@business)
-   end
-    
-   #it "should find business from params, make a valid string and render proper template" do
-    # Business.should_receive(:find_by_id).with("1").and_return(@business)
-   #  @business.should_receive(:business_details)
-   #  get :send_to_phone, :id => "1"
-   #  response.should render_template("businesses/send_to_phone.js.rjs")
-  # end
-   
- end
 end
