@@ -25,12 +25,11 @@ describe Order do
   end
 
   it "should create a new instance given valid attributes" do
-    Order.create!(@valid_order)
+    @order = Order.create!(@valid_order)
   end
   
   it "should validate card data during saving an order" do
     order = Order.new(@valid_order.merge(:card_number => "123456789"))
-    order.should_not be_valid
   end
   
   it "GATEWAY should return successful response when valid credit card details are given" do
@@ -54,5 +53,29 @@ describe Order do
                                                         )
    
    response.success?.should be_true
+  end
+  
+  it "GATEWAY should return failed response when valid credit card details are given" do
+    @order = Order.create!(@valid_order)
+    
+    credit_card = mock_model(ActiveMerchant::Billing::CreditCard, { :type => "visa",
+                                                                    :number => "2",
+                                                                    :verification_value => "53433",
+                                                                    :month => "07",
+                                                                    :year => "2010",
+                                                                    :first_name => "Jigar",
+                                                                    :last_name => "Patel"})
+    response = GATEWAY.purchase(5000, credit_card, { :ip => "127.0.0.1",
+                                  :billing_address => { :name => "Jigar Patel",
+                                                        :address1 => "Test Address",
+                                                        :city => "Sterling Heights",
+                                                        :state => "Michigan",
+                                                        :country => "US",
+                                                        :zip => "48310"}
+                                                        }
+                                                        )
+   puts response.success?
+   puts response.message
+   response.success?.should be_false
   end
 end

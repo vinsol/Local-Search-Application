@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Business do
+  fixtures :businesses, :sub_categories
   before(:each) do
     @valid_attributes = { :name => "Business_temp",
                           :location => "Rajiv Chowk",
@@ -96,5 +97,38 @@ describe Business do
     end
     
   end
+  
+  it "should set business details" do
+    @business = Business.find(businesses(:businesses_001))
+    @business.business_details.should_not be_nil
+  end
+  
+  it "should set business title" do
+    @business = Business.find(businesses(:businesses_001))
+    @business.title.should_not be_nil
+  end
+  
+  it "should send sms" do
+    @business = Business.find(businesses(:businesses_001))
+    @business.send_sms("9899744815")
+  end
+  
+  it "should fetch string of sub categories" do
+    @business = Business.find(businesses(:businesses_001))
+    @business.sub_category_name.should_not be_nil
+  end
+  
+  it "should add sub categories to business" do
+  
+    @business = Business.find(businesses(:businesses_001))
+    @business.sub_category_name=("Clinic")
+    @business.sub_categories.should include(sub_categories(:sub_categories_002))
+  end
+  
+  it "should fetch the map for a business" do
+    @business = Business.find(businesses(:businesses_001))
+    @business.get_map.should_not be_nil
+  end
+  
   
 end

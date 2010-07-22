@@ -2,11 +2,8 @@
 module ApplicationHelper
   
   def title
-    if @title 
-			title = @title + " | Local Product Search Engine"
-		else 
-			title = "Local Product Search Engine"
-		end 
+    @title = @title ||= ""
+		title = @title + " Local Product Search Engine"
 	end
 	
   def is_favorite(business_id)
@@ -21,7 +18,7 @@ module ApplicationHelper
   def is_owner(business_id)
     business = Business.find_by_id(business_id)
     if business.business_relations.find(:first, :conditions => ["member_id = ? AND status = ?",  
-                                                                @member.id,RELATION[:OWNED]])
+                                                                session[:member_id],RELATION[:OWNED]])
                                                                
       return true
     else

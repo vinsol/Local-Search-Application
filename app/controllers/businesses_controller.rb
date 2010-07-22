@@ -12,6 +12,7 @@ class BusinessesController < ApplicationController
     @title = "Business Details - #{@business.name}"
     #Get business map
     @map = @business.get_map 
+    p @map
   end
 
   def new

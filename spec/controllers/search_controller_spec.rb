@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SearchController do
   before(:each) do
-    @valid_params = { :city => "City", :location => "Location", :names_and_categories => "NAC", :search_type => "name"}
+    @valid_params = { :city => "Delhi", :location => "Patel Nagar", :names_and_categories => "Restaurant", :search_type => "category"}
   end
   it "should allow non logged in users" do
     session[:member_id] = nil
@@ -17,6 +17,8 @@ describe SearchController do
     get :index, @valid_params
     response.should redirect_to(root_path)
   end
+  
+    
   
  
 end

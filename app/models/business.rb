@@ -92,7 +92,6 @@ class Business < ActiveRecord::Base
     city = '%' if city == 'City Name'
     location = '%' if location == 'Location'
     businesses = find_by_all(city, location, name) 
-    return businesses
   end
   
   def self.find_by_all(city, location, name)
@@ -104,7 +103,7 @@ class Business < ActiveRecord::Base
   def get_map
     unless lat == nil or lng == nil
       map = GoogleMap::Map.new(:center => GoogleMap::Point.new(lat,lng), :zoom => 15)
-      map.markers = GoogleMap::Marker.new(:map => map, :lat => lat, :lng => lng, :html => name)
+      map.markers << GoogleMap::Marker.new(:map => map, :lat => lat, :lng => lng, :html => name)
       map
     end
   end
@@ -134,7 +133,7 @@ class Business < ActiveRecord::Base
   def send_sms(number)
     url_details = URI.escape(business_details, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
     url = SMS_API + url_details + "&recipient=" + number
-    Net::HTTP.get_print URI.parse(url)
+    @message = Net::HTTP.get_print URI.parse(url)
   end
     
   protected

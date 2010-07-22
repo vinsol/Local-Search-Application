@@ -11,6 +11,7 @@ class Search < ActiveRecord::Base
       @conditions[:name] = names_and_categories if n_a_c_type == 'name' 
       @conditions[:sub_category] = names_and_categories if n_a_c_type == 'category'
     end
+    p @conditions
     @conditions 
   end
     
